@@ -1,0 +1,158 @@
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="container">
+            <h2 class="text-center" id="title">Crear un miembro</h2>
+            <p class="text-center">
+                <small id="passwordHelpInline" class="text-muted"> Para agregar un nuevo miembro, debe ingresar la
+                    información personal, de contacto y añadirlo a un grupo. </small>
+            </p>
+            <hr>
+            <div class="row">
+                <div class="col-sm">
+                    <form role="form" method="post">
+                        <p class="pull-center"><b> Información Personal</b></p>
+                        <div class="form-group">
+                            <label for="">Ingrese el número de cédula</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-id-card"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Cédula"
+                                    required="required">
+                            </div>
+
+                            <label for="">Ingrese el nombre completo </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-user"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Nombre"
+                                    required="required">
+                            </div>
+                        </div>
+                        <p class="pull-center"><b> Contacto </b></p>
+                        <div class="form-group">
+                            <label for="">Ingrese el número de celular</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-phone"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Celular"
+                                    required="required">
+                            </div>
+
+                            <label for="">Ingrese el correo electrónico</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-at"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Correo"
+                                    required="required">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-sm">
+                    <form role="form">
+                        <p class="pull-center"><b> Dirección Física</b></p>
+                        <div class="form-group">
+                            <label for="">Ingrese la provincia</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-location-arrow"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Provincia"
+                                    required="required">
+                            </div>
+                            <label for="">Ingrese el cantón</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-location-arrow"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Cantón"
+                                    required="required">
+                            </div>
+                            <label for="">Ingrese el distrito</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-location-arrow"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Distrito"
+                                    required="required">
+                            </div>
+                            <label for="">Ingrese las señas</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-location-arrow"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Señas"
+                                    required="required">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="col-sm">
+                    <p class="pull-center"><b> Agregar a un grupo</b></p>
+                    <div class="form-group">
+                        <label for="">Escoja una zona</label>
+                        <div ngbDropdown>
+                            <button class="btn btn-default" id="dropdownBasic1" ngbDropdownToggle>Toggle
+                                dropdown</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem>Action - 1</button>
+                                <button ngbDropdownItem>Another Action</button>
+                                <button ngbDropdownItem>Something else is here</button>
+                            </div>
+                        </div>
+                        <div class="my-2"></div>
+                        <label for="">Escoja una rama</label>
+                        <div ngbDropdown>
+                            <button class="btn btn-default" id="dropdownBasic1" ngbDropdownToggle>Toggle
+                                dropdown</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem>Action - 1</button>
+                                <button ngbDropdownItem>Another Action</button>
+                                <button ngbDropdownItem>Something else is here</button>
+                            </div>
+                        </div>
+                        <div class="my-2"></div>
+                        <label for="">Escoja un grupo</label>
+                        <div ngbDropdown>
+                            <button class="btn btn-default" id="dropdownBasic1" ngbDropdownToggle>Toggle
+                                dropdown</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem>Action - 1</button>
+                                <button ngbDropdownItem>Another Action</button>
+                                <button ngbDropdownItem>Something else is here</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="center">
+                <button type="button" class="btn btn-secondary center">Crear Miembro</button>
+            </div>
+        </div>
+    </div>
+</div>

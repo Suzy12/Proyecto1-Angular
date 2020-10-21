@@ -1,0 +1,84 @@
+.bg-grey {
+    background: #292929;
+}
+.logo-footer {
+    max-width: 80%;
+    margin-bottom: 40px;
+}
+footer {
+    color: white;
+}
+footer p,
+a {
+    font-size: 12px;
+}
+footer h6 {
+    margin-bottom: 40px;
+    position: relative;
+}
+footer h6:after {
+    position: absolute;
+    content: "";
+    background: white;
+    width: 12%;
+    height: 1px;
+    left: 0;
+    bottom: -20px;
+}
+.btn-footer {
+    color: white;
+
+    text-decoration: none;
+    border: 1px solid;
+    border-radius: 43px;
+    font-size: 13px;
+    padding: 7px 30px;
+    line-height: 47px;
+}
+.btn-footer:hover {
+    color: gray;
+    text-decoration: none;
+}
+::placeholder {
+    font-size: small;
+    padding-left: 10px;
+}
+
+.social .fa {
+    color: white;
+    font-size: 22px;
+    padding: 10px 15px;
+    background: #3c3c3c;
+}
+
+.social .fa:hover {
+    color: silver;
+}
+footer ul li {
+    list-style: none;
+    display: block;
+}
+footer ul {
+    padding-left: 0;
+}
+footer ul li a {
+    text-decoration: none;
+    color: white;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    color: grey !important;
+}
+.logo-part {
+    border-right: 1px solid white;
+    height: 100%;
+}
+
+.btn-sus {
+    margin-bottom: 5px;
+}
+
+.col-md-8 {
+    min-width: fit-content;
+}
