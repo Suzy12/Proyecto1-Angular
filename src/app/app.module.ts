@@ -39,7 +39,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterComponent,
     CrearMiembroComponent,
     CrearGrupoComponent,
-    CrearZonaRamaComponent,
+     CrearZonaRamaComponent,
     NavMenuComponent,
     ConsultarInfoMiembroComponent,
     ModificarInfoMiembroComponent,

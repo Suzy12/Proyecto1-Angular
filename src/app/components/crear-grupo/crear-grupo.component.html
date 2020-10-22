@@ -1,1 +1,68 @@
-<p>crear-grupo works!</p>
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="container">
+            <h2 class="text-center" id="title">Crear un grupo</h2>
+            <p class="text-center">
+                <small id="passwordHelpInline" class="text-muted"> Para agregar un nuevo grupo, debe ingresar la
+                    información del grupo. </small>
+            </p>
+            <hr>
+            <div class="row">
+                <div class="col-sm">
+                    <form role="form" method="post">
+                        <p class="pull-center"><b> Información</b></p>
+                        <div class="form-group">
+                            <label for="">Ingrese el nombre del grupo </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-user"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" placeholder="Nombre"
+                                    required="required">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm">
+                    <p class="pull-center"><b> Agregar a una rama</b></p>
+                    <div class="form-group">
+                        <label for="">Escoja una zona</label>
+                        <select class="form-control">
+                            <option>Zona 1</option>
+                            <option>Zona 2</option>
+                        </select>
+                        <div class="my-2"></div>
+                        <label for="">Escoja una rama</label>
+                        <select class="form-control">
+                            <option>Rama 1</option>
+                            <option>Rama 2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <p class="pull-center"><b> Designar monitores</b></p>
+                    <div class="form-group">
+                        <label for="">Designe un monitor</label>
+                        <select class="form-control">
+                            <option>Monitor X</option>
+                            <option>Monitor Y</option>
+                        </select>
+                        <div class="my-2"></div>
+                        <label for="">Designe otro monitor (opcional)</label>
+                        <select class="form-control">
+                            <option>Monitor X</option>
+                            <option>Monitor Y</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="center">
+                <button type="button" class="btn btn-secondary center">Crear Grupo</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+.container h2{
+	padding-top: 20px;
+}
+
+.btn-default {
+	background:transparent;
+	border-style: solid;
+	border-color: lightgray;
+}
+
+
+.center{
+    display: flex; 
+    justify-content: center;
+}
+
+.card__container{
+    min-height: 45vh;
+    width: 545px;
+}
+
+.page-content{
+    display: inline-block;
+    width: 100%;
+    padding-top: 20px;
+    transition: padding-left .3s ease;
+
+}
