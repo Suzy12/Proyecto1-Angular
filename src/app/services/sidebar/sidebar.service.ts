@@ -57,6 +57,9 @@ export class SidebarService {
         },
         {
           title: 'Modificar Miembro'
+        },
+        {
+          title: 'Modificar Movimiento'
         }
       ]
     },

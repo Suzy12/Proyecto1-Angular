@@ -23,6 +23,9 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { ConsultarInfoMiembroComponent } from './components/consultar-info-miembro/consultar-info-miembro.component';
 import { ModificarInfoMiembroComponent } from './components/modificar-info-miembro/modificar-info-miembro.component';
 import { BuscarMiembroComponent } from './components/buscar-miembro/buscar-miembro.component';
+import { ModificarGrupoComponent } from './components/modificar-grupo/modificar-grupo.component';
+import { ModificarZonaComponent } from './components/modificar-zona/modificar-zona.component';
+import { ModificarRamaComponent } from './components/modificar-rama/modificar-rama.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -43,7 +46,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NavMenuComponent,
     ConsultarInfoMiembroComponent,
     ModificarInfoMiembroComponent,
-    BuscarMiembroComponent
+    BuscarMiembroComponent,
+    ModificarGrupoComponent,
+    ModificarZonaComponent,
+    ModificarRamaComponent
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,12 @@
     border-left: 10px solid #cfb4f5;
 }
 
+@media (max-width: 480px) {
+  .card__container{
+    width: 400px;
+  }
+}
+
 .page-wrapper.toggled .sidebar {
     left: -300px;
   }
