@@ -1,6 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  FaIconLibrary
+} from "@fortawesome/angular-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { HttpClientModule } from '@angular/common/http';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -26,6 +31,11 @@ import { BuscarMiembroComponent } from './components/buscar-miembro/buscar-miemb
 import { ModificarGrupoComponent } from './components/modificar-grupo/modificar-grupo.component';
 import { ModificarZonaComponent } from './components/modificar-zona/modificar-zona.component';
 import { ModificarRamaComponent } from './components/modificar-rama/modificar-rama.component';
+import { AgregarMiembroGrupoComponent } from './components/agregar-miembro-grupo/agregar-miembro-grupo.component';
+import { CambiarMiembroGrupoComponent } from './components/cambiar-miembro-grupo/cambiar-miembro-grupo.component';
+import { ModificarMovimientoComponent } from './components/modificar-movimiento/modificar-movimiento.component';
+import { ConsultarGrupoComponent } from './components/consultar-grupo/consultar-grupo.component';
+import { VerMiembrosComponent } from './components/ver-miembros/ver-miembros.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -49,7 +59,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BuscarMiembroComponent,
     ModificarGrupoComponent,
     ModificarZonaComponent,
-    ModificarRamaComponent
+    ModificarRamaComponent,
+    AgregarMiembroGrupoComponent,
+    CambiarMiembroGrupoComponent,
+    ModificarMovimientoComponent,
+    ConsultarGrupoComponent,
+    VerMiembrosComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +73,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FontAwesomeModule,
     BrowserAnimationsModule,
     PerfectScrollbarModule,
+    HttpClientModule
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
@@ -66,4 +82,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(private library: FaIconLibrary) {
+    library.addIcons(faUpload);
+  }
+}

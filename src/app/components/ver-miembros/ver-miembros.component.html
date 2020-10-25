@@ -1,0 +1,97 @@
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="container">
+            <h2 class="text-center" id="title">Ver Miembros</h2>
+            <p class="text-center">
+                <small id="passwordHelpInline" class="text-muted"> Para consultar los miembros de una zona, rama o grupo, 
+                    debe indicar cuál de estas opciones consular.
+                    Seguidamente, debe indicar la zona, rama y/o grupo según lo escogido.
+                    Se mostrará el nombre, cédula, teléfono y correo de cada miembro. </small>
+            </p>
+            <hr>
+            <label> Consultar por: </label>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                                value="option1" checked>
+                            <label class="form-check-label" for="gridRadios1">Zona</label>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="gridRadios2">Rama</label>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="gridRadios2">Grupo</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="">Escoja una zona</label>
+                        <select class="form-control">
+                            <option>Zona 1</option>
+                            <option>Zona 2</option>
+                        </select>
+                        <div class="my-2"></div>
+                        <label for="">Escoja una rama</label>
+                        <select class="form-control">
+                            <option>Rama 1</option>
+                            <option>Rama 2</option>
+                        </select>
+                        <div class="my-2"></div>
+                        <label for="">Escoja un grupo</label>
+                        <select class="form-control">
+                            <option>Grupo 1</option>
+                            <option>Grupo 2</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-secondary center">Consultar</button>
+            </div>
+            <hr>
+            <div class="col-sm">
+                <p>Miembros</p>
+                <table class="fixed_headers">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cédula</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alejandro Tapia Álvarez</td>
+                            <td>117480362</td>
+                            <td>88908877</td>
+                            <td>aletapia1908@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <td>Susana Cob García</td>
+                            <td>117480362</td>
+                            <td>88908877</td>
+                            <td>susana.3@gmail.com</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>

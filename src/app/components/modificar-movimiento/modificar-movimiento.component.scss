@@ -1,0 +1,44 @@
+.container h2 {
+    padding-top: 20px;
+}
+
+.btn-default {
+    background: transparent;
+    border-style: solid;
+    border-color: lightgray;
+}
+
+.card__container {
+    min-height: 100vh;
+}
+
+.page-content {
+    display: inline-block;
+    width: 100%;
+    padding-top: 20px;
+    transition: padding-left 0.3s ease;
+}
+
+.card-profile-image img {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    left: 50%;
+    max-width: 100px;
+    border-radius: 0.375rem;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+i {
+    margin-right: 10px;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.col-name {
+    width: 30%;
+}

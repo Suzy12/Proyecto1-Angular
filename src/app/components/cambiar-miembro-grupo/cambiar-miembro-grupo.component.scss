@@ -8,15 +8,9 @@
 	border-color: lightgray;
 }
 
-
-.center{
-    display: flex; 
-    justify-content: center;
-}
-
 .card__container{
-    min-height: 65vh;
-    max-width: 800px;
+    min-height: 85vh;
+    max-width: 700px;
 }
 
 .page-content{
@@ -25,4 +19,8 @@
     padding-top: 20px;
     transition: padding-left .3s ease;
 
+}
+
+.rama{
+    max-width: 50%;
 }

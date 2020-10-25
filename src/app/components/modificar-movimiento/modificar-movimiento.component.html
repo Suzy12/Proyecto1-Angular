@@ -1,4 +1,4 @@
-<app-buscar-miembro></app-buscar-miembro>
+<app-nav-menu></app-nav-menu>
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
         <div class="container">
@@ -13,7 +13,7 @@
                             <span class="fa fa-user"></span>
                         </span>
                     </div>
-                    <input type="text" class="form-control" name="username" value="Alejandro Tapia Álvarez"
+                    <input type="text" class="form-control" name="username" value="Movimiento Rescate Animal"
                         required="required">
                 </div>
             </div>
@@ -22,34 +22,63 @@
                 <div class="col-sm">
                     <form role="form" method="post">
                         <div class="form-group">
-                            <label for="">Número de celular</label>
+                            <label for="">Dirección Web</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-internet-explorer"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" value="mra.com"
+                                    required="required">
+                            </div>
+                            <hr />
+
+                            <label for="">País</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-globe"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="username" value="Costa Rica"
+                                    required="required">
+                            </div>
+                            <hr />
+                            <label for="">Teléfonos</label>
+                            <select class="form-control" (change)="getSelectedOptionText($event)">
+                                <option>88040788</option>
+                                <option>89673421</option>
+                            </select>
+                            <div class="my-2"></div>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <span class="fa fa-phone"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" value="8804-0788"
+                                <input type="text" class="form-control" name="username" value="{{selectedText}}"
                                     required="required">
                             </div>
                             <hr />
-
-                            <label for="">Correo electrónico</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <span class="fa fa-at"></span>
-                                    </span>
+                            <label for="">Logo</label> 
+                            <div class="my-2"></div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">          
+                                        <div class="form-group">
+                                            <input type="file" name="image" (change)="fileProgress($event)" />
+                                        </div>
+                                        <div class="image-preview mb-3" *ngIf="previewUrl">
+                                            <img [src]="previewUrl" height="150" />                 
+                                        </div>
+                             
+                                        <div class="mb-3" *ngIf="uploadedFilePath">
+                                            {{uploadedFilePath}}
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control" name="username" value="aletapia1908@gmail.com"
-                                    required="required">
                             </div>
-                            <hr />
-                            <label for="">¿Es candidato a monitor?</label>
-                            <select class="form-control">
-                                <option>Sí</option>
-                                <option>No</option>
-                            </select>
                         </div>
 
                     </form>
@@ -107,8 +136,10 @@
             </div>
             <hr>
             <div class="center">
-                <button type="button" class="btn btn-secondary center">Modificar Miembro</button>
+                <button type="button" class="btn btn-secondary center">Modificar Movimiento</button>
             </div>
         </div>
     </div>
 </div>
+
+
