@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "https://apiservicio.herokuapp.com",
+      "target": "https://the-social-seekers-api.herokuapp.com/",
       "secure": true,
       "changeOrigin": true,
       "pathRewrite": {
