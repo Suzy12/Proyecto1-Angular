@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { SidebarService } from '../../services/sidebar/sidebar.service';
+import { SidebarService } from '../../../services/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-menu',
