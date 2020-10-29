@@ -1,4 +1,5 @@
 <app-nav></app-nav>
+<div class="my-8"></div>
 <div class="container card__container my-5 shadow-sm w-100 rounded">
   <div class="row login__row">
     <div class="col-md-6 d-flex">
@@ -7,7 +8,7 @@
     <div class="col-sm d-flex">
       <div class="align-self-center">
         <div class="card-body card-size">
-          <form action="">
+          <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
             <h2 class="text-muted text-center">Iniciar Sesión</h2>
             <div class="my-5">
               <div class="dropdown-divider my-4"></div>
@@ -17,14 +18,14 @@
               <div class="row">
                 <div class="col-sm">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
+                    <input class="form-check-input" type="radio"  value="1"
                       checked>
                     <label class="form-check-label" for="gridRadios1">Asesor General</label>
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                    <input class="form-check-input" type="radio"  value="2">
                     <label class="form-check-label" for="gridRadios2">Miembro</label>
                   </div>
                 </div>
@@ -39,7 +40,14 @@
                       <span class="fa fa-id-card"></span>
                     </span>
                   </div>
-                  <input type="text" class="form-control" name="username" placeholder="Cédula" required="required">
+                  <input class="form-control" name="username" placeholder="Cédula"
+                    formControlName="id" [ngClass]="{ 'is-invalid': submitted && form.id.errors }">
+                  <div *ngIf="submitted && form.id.errors" class="invalid-feedback">
+                    <div *ngIf="form.id.errors.required">
+                      <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El campo
+                        cédula es obligatorio</label>
+                    </div>
+                  </div>
                 </div>
                 <div class="my-3"></div>
                 <label for="">Contraseña</label>
@@ -49,7 +57,16 @@
                       <span class="fa fa-lock"></span>
                     </span>
                   </div>
-                  <input type="text" class="form-control" name="username" placeholder="Contraseña" required="required">
+                  <input type="password" class="form-control" name="username" placeholder="Contraseña" required="required"
+                    formControlName="pass" [ngClass]="{ 'is-invalid': submitted && form.pass.errors }">
+                  <div *ngIf="submitted && form.pass.errors" class="invalid-feedback">
+                    <div *ngIf="form.pass.errors.required">
+                      <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El campo
+                        contraseña es obligatorio</label>
+                    </div>
+                    <div *ngIf="form.pass.errors.pattern">
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="custom-control custom-checkbox">
@@ -57,7 +74,8 @@
                 <label class="custom-control-label" for="customCheckDisabled1">Recuérdame</label>
               </div>
               <div class="form-group">
-                <a href="#" class="btn btn-secondary btn-lg btn-block my-3">Iniciar Sesión</a>
+                <button class="btn btn-secondary btn-lg btn-block my-3" [disabled]="this.loading" type="submit">Iniciar
+                  Sesión</button>
                 <div class="d-flex justify-content-between">
                   <a href="#!">¿Olvidó su contraseña?</a>
                 </div>

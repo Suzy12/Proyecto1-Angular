@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~10.1.6",
+    "@angular/animations": "^10.1.6",
     "@angular/common": "~10.1.6",
     "@angular/compiler": "~10.1.6",
     "@angular/core": "~10.1.6",
@@ -28,9 +28,12 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "angular-font-awesome": "^3.1.2",
+    "angular-safeguard": "^2.1.0",
     "bootstrap": "^4.5.0",
     "font-awesome": "^4.7.0",
     "ngx-perfect-scrollbar": "^10.0.1",
+    "ngx-toastr": "^13.1.0",
+    "ngx-webstorage-service": "^4.1.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

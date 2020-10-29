@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router';
+import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
+import { LoginService } from '../../services/login/login.service'
+import {  LoginGuard } from '../../services/login/login.guard';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -7,9 +13,71 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IniciarSesionComponent implements OnInit {
 
-  constructor() { }
+  loginForm: FormGroup
+  submitted: Boolean = false
+  loading: Boolean = false;
 
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: LoginService,
+    private guard: LoginGuard,
+    @Inject(SESSION_STORAGE) private storage: StorageService,
+    private toastr: ToastrService
+    ) {
+    
+   }
+   
+   ngOnInit(): void {
+     this.loginForm = this.formBuilder.group({
+       id: ['', [Validators.required]],
+       pass: ['', [Validators.required]]
+       //tipo: ['1', [Validators.required]]
+    });
+  }
+
+  get form() { return this.loginForm.controls }
+
+  login = () => {
+    let loginInfo = this.loginForm.getRawValue();
+    console.log(loginInfo);
+
+    this.submitted = true;
+
+    if (this.loginForm.invalid) return;
+
+    this.authService.login(loginInfo).subscribe(res => {
+      this.authSuccess(res)
+    }, error => this.authError(error))
+
+    this.submitted = false;
+  }
+
+  authSuccess = (res) => {
+    /*this.guard.setSession(res.body.token);
+    this.storage.set('current-user', res.body.user);
+    this.storage.set('current-user-role', res.body.user.role);*/
+    this.loading = false;
+    this.loginForm.reset()
+    this.toastr.clear()
+    console.log(res.body.success);
+    if(res.body.success == false){
+      this.toastr.error("La combinacion no es correcta", 'Error', {timeOut: 5000});
+      console.log("Error");
+    }else{
+      this.toastr.success(`Bienvenido`, 'Usuario autenticado', {timeOut: 2000});
+      console.log("Bienvenido");
+    }
+    /*if (this.storage.get('current-user-role') == 1)
+    this.router.navigate(['/student-perfil'])
+    else
+    this.router.navigate(['/academy-perfil'])*/
+  }
+
+  authError = (err) => {
+    this.toastr.clear()
+    this.toastr.error(err.error.msg, 'Error');
+    console.log(err.error.msg);
+    this.loading = false;
   }
 
 }

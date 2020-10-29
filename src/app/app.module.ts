@@ -14,6 +14,12 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LockerModule } from 'angular-safeguard';
+import { StorageServiceModule } from 'ngx-webstorage-service';
+import { ToastrModule } from 'ngx-toastr';
+
+
 import { NavComponent } from './components/components-styles/nav/nav.component';
 import { MenuComponent } from './components/components-styles/menu/menu.component';
 import { PaginaPrincipalComponent } from './components/pagina-principal/pagina-principal.component';
@@ -36,6 +42,9 @@ import { CambiarMiembroGrupoComponent } from './components/cambiar-miembro-grupo
 import { ModificarMovimientoComponent } from './components/modificar/modificar-movimiento/modificar-movimiento.component';
 import { ConsultarGrupoComponent } from './components/consultar/consultar-grupo/consultar-grupo.component';
 import { VerMiembrosComponent } from './components/consultar/ver-miembros/ver-miembros.component';
+
+import { LoginService } from './services/login/login.service'
+import { LoginGuard } from './services/login/login.guard'
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -73,12 +82,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FontAwesomeModule,
     BrowserAnimationsModule,
     PerfectScrollbarModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule, 
+    ReactiveFormsModule,
+    LockerModule,
+    StorageServiceModule,
+    ToastrModule.forRoot()
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
-    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-  }
+    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    }, 
+    LoginService,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })

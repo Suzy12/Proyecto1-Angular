@@ -1,0 +1,5 @@
+export const EMAIL_REGEXP = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
+export const NUMBER_REGEXP = '^[0-9]*$'
+export const TEXT_REGEXP = '^[a-zA-Z][a-zA-Z ]*$'
+export const NUMTEXT_REGEXP = '^[A-Za-z0-9 ]+'
+export const PASSWORD_REGEXP = '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^<>&:;]).{8,12}$'
