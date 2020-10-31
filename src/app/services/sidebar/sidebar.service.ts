@@ -11,15 +11,19 @@ export class SidebarService {
       icon: 'fa fa-plus',
       active: false,
       type: 'dropdown',
+      ruta: '',
       submenus: [
         {
           title: 'Crear Miembro',
+          ruta: 'crear/miembro'
         },
         {
-          title: 'Crear Grupo'
+          title: 'Crear Grupo',
+          ruta: 'crear/grupo'
         },
         {
-          title: 'Crear Zona/Rama'
+          title: 'Crear Zona/Rama',
+          ruta: 'crear/zona-rama'
         }
       ]
     },
@@ -28,15 +32,19 @@ export class SidebarService {
       icon: 'fa fa-search',
       active: false,
       type: 'dropdown',
+      ruta: '',
       submenus: [
         {
           title: 'Consultar grupo en particular',
+          ruta: 'consultar/grupo'
         },
         {
-          title: 'Consultar miembro en particular'
+          title: 'Consultar miembro en particular',
+          ruta: 'consultar/buscar'
         },
         {
-          title: 'Ver miembros'
+          title: 'Ver miembros',
+          ruta: 'consultar/miembros'
         }
       ]
     },
@@ -45,21 +53,27 @@ export class SidebarService {
       icon: 'fa fa-pencil',
       active: false,
       type: 'dropdown',
+      ruta: '',
       submenus: [
         {
           title: 'Modificar Zona',
+          ruta: 'modificar/zona'
         },
         {
-          title: 'Modificar Rama'
+          title: 'Modificar Rama',
+          ruta: 'modificar/rama'
         },
         {
-          title: 'Modificar Grupo'
+          title: 'Modificar Grupo',
+          ruta: 'modificar/grupo'
         },
         {
-          title: 'Modificar Miembro'
+          title: 'Modificar Miembro',
+          ruta: 'modificar/info-miembro'
         },
         {
-          title: 'Modificar Movimiento'
+          title: 'Modificar Movimiento',
+          ruta: 'modificar/movimiento'
         }
       ]
     },
@@ -68,12 +82,14 @@ export class SidebarService {
       icon: 'fa fa-plus-circle',
       active: false,
       type: 'simple',
+      ruta: 'agregar-miembro-grupo'
     },
     {
       title: 'Cambiar miembro de grupo',
       icon: 'fa fa-exchange',
       active: false,
-      type: 'simple'
+      type: 'simple',
+      ruta: 'cambiar-miembro-grupo'      
     },
   ];
   constructor() { }

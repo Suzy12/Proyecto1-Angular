@@ -23,14 +23,18 @@
         <ul>
           <li *ngFor="let menu of menus"
             [ngClass]="{'active': menu.active , 'sidebar-dropdown':menu.type === 'dropdown' , 'header-menu':menu.type === 'header'}">
-            <a *ngIf="menu.type !== 'header'" href="#" (click)='toggle(menu)'>
+            <a *ngIf="menu.type === 'dropdown'" (click)='toggle(menu)'>
+              <i class="{{menu.icon}}"></i>
+              <span>{{menu.title}}</span>
+            </a>
+            <a *ngIf="menu.type === 'simple'" href="{{menu.ruta}}">
               <i class="{{menu.icon}}"></i>
               <span>{{menu.title}}</span>
             </a>
             <div *ngIf="menu.type === 'dropdown'" class="sidebar-submenu" [@slide]="getState(menu)">
               <ul>
                 <li *ngFor="let submenu of menu.submenus">
-                  <a href="#"> {{submenu.title}}</a>
+                  <a href="{{submenu.ruta}}"> {{submenu.title}}</a>
                 </li>
               </ul>
             </div>

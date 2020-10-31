@@ -53,24 +53,25 @@ export class IniciarSesionComponent implements OnInit {
   }
 
   authSuccess = (res) => {
-    /*this.guard.setSession(res.body.token);
-    this.storage.set('current-user', res.body.user);
-    this.storage.set('current-user-role', res.body.user.role);*/
-    this.loading = false;
-    this.loginForm.reset()
-    this.toastr.clear()
-    console.log(res.body.success);
+    this.toastr.clear();
     if(res.body.success == false){
       this.toastr.error("La combinacion no es correcta", 'Error', {timeOut: 5000});
       console.log("Error");
     }else{
       this.toastr.success(`Bienvenido`, 'Usuario autenticado', {timeOut: 2000});
       console.log("Bienvenido");
+      
+      let loginInfo = this.loginForm.getRawValue();
+      //this.guard.setSession(res.body.token);
+      this.storage.set('current-user', loginInfo.id);
+      this.storage.set('current-user-role', "1");
+      this.loading = false;
+      this.loginForm.reset();
+      console.log(res.body.success);
+      
+      if (this.storage.get('current-user-role') == 1)
+        this.router.navigate(['/perfil']);
     }
-    /*if (this.storage.get('current-user-role') == 1)
-    this.router.navigate(['/student-perfil'])
-    else
-    this.router.navigate(['/academy-perfil'])*/
   }
 
   authError = (err) => {
