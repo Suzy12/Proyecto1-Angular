@@ -69,7 +69,7 @@ export class SidebarService {
         },
         {
           title: 'Modificar Miembro',
-          ruta: 'modificar/info-miembro'
+          ruta: 'consultar/buscar'
         },
         {
           title: 'Modificar Movimiento',

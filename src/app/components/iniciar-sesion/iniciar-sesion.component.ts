@@ -39,7 +39,6 @@ export class IniciarSesionComponent implements OnInit {
 
   login = () => {
     let loginInfo = this.loginForm.getRawValue();
-    console.log(loginInfo);
 
     this.submitted = true;
 
@@ -55,7 +54,7 @@ export class IniciarSesionComponent implements OnInit {
   authSuccess = (res) => {
     this.toastr.clear();
     if(res.body.success == false){
-      this.toastr.error("La combinacion no es correcta", 'Error', {timeOut: 5000});
+      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
       console.log("Error");
     }else{
       this.toastr.success(`Bienvenido`, 'Usuario autenticado', {timeOut: 2000});

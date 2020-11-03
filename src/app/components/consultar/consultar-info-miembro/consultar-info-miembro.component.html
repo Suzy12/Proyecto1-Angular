@@ -1,4 +1,4 @@
-<app-buscar-miembro></app-buscar-miembro>
+<app-nav-menu></app-nav-menu>
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
         <div class="container">
@@ -6,7 +6,7 @@
                 <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
                     class="rounded-circle">
             </div>
-            <p class="text-center"> Alejandro Tapia Álvarez
+            <p class="text-center"> {{miembro.nombre}}
             </p>
             <hr>
             <div class="row">
@@ -15,25 +15,25 @@
                         <p>Número de Cédula</p>
                         <p class="text-secondary">
                             <i class="fa fa-id-card"></i>
-                            123456789
+                            {{miembro.id}}
                         </p>
                         <hr />
                         <p>Número de Celular</p>
                         <p class="text-secondary">
                             <i class="fa fa-phone"></i>
-                            8804-0788
+                            {{miembro.celular}}
                         </p>
                         <hr />
                         <p>Correo Electrónico</p>
                         <p class="text-secondary">
                             <i class="fa fa-at"></i>
-                            aletapia1908@gmail.com
+                            {{miembro.email}}
                         </p>
                         <hr />
                         <p>¿Es candidato a monitor?</p>
                         <p class="text-secondary">
                             <i class="fa fa-university"></i>
-                            Sí
+                            {{ miembro.posible_monitor == true ? 'Sí' : 'No' }}
                         </p>
                         <hr />
                     </div>
@@ -43,25 +43,25 @@
                         <p>Provincia</p>
                         <p class="text-secondary">
                             <i class="fa fa-location-arrow"></i>
-                            San José
+                            {{miembro.provincia}}
                         </p>
                         <hr />
                         <p>Cantón</p>
                         <p class="text-secondary">
                             <i class="fa fa-location-arrow"></i>
-                            Santa Ana
+                            {{miembro.canton}}
                         </p>
                         <hr />
                         <p>Distrito</p>
                         <p class="text-secondary">
                             <i class="fa fa-location-arrow"></i>
-                            Brasil
+                            {{miembro.distrito}}
                         </p>
                         <hr />
                         <p>Señas</p>
                         <p class="text-secondary">
                             <i class="fa fa-location-arrow"></i>
-                            200 mts sur del KFC de Lindora
+                            {{miembro.senas}}
                         </p>
                         <hr />
                     </div>
@@ -97,7 +97,7 @@
             </div>
             <hr>
             <div class="center">
-                <button type="button" class="btn btn-secondary center">Modificar Miembro</button>
+                <button type="button" class="btn btn-secondary center" (click) = "modificarMiembro()">Modificar Miembro</button>
             </div>
         </div>
     </div>

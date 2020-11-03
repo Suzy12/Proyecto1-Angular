@@ -40,7 +40,7 @@
                       <span class="fa fa-id-card"></span>
                     </span>
                   </div>
-                  <input class="form-control" name="username" placeholder="Cédula"
+                  <input class="form-control" placeholder="Cédula"
                     formControlName="id" [ngClass]="{ 'is-invalid': submitted && form.id.errors }">
                   <div *ngIf="submitted && form.id.errors" class="invalid-feedback">
                     <div *ngIf="form.id.errors.required">
@@ -57,14 +57,12 @@
                       <span class="fa fa-lock"></span>
                     </span>
                   </div>
-                  <input type="password" class="form-control" name="username" placeholder="Contraseña" required="required"
+                  <input type="password" class="form-control" placeholder="Contraseña" required="required"
                     formControlName="pass" [ngClass]="{ 'is-invalid': submitted && form.pass.errors }">
                   <div *ngIf="submitted && form.pass.errors" class="invalid-feedback">
                     <div *ngIf="form.pass.errors.required">
                       <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El campo
                         contraseña es obligatorio</label>
-                    </div>
-                    <div *ngIf="form.pass.errors.pattern">
                     </div>
                   </div>
                 </div>
@@ -77,7 +75,7 @@
                 <button class="btn btn-secondary btn-lg btn-block my-3" [disabled]="this.loading" type="submit">Iniciar
                   Sesión</button>
                 <div class="d-flex justify-content-between">
-                  <a href="#!">¿Olvidó su contraseña?</a>
+                  <a>¿Olvidó su contraseña?</a>
                 </div>
                 <div class="dropdown-divider my-4"></div>
               </div>

@@ -7,15 +7,14 @@
             <p class="text-center">
                 Ingrese el número de cédula del miembro
             </p>
-            <form class="card card-sm">
+            <form class="card card-sm" [formGroup]="miembroIdForm" (ngSubmit)="consultarMiembro()">
                 <div class="card-body row no-gutters align-items-center">
                     <div class="col-auto">
                         <i class="fa fa-search h7 text-body"></i>
                     </div>
                     <!--end of col-->
                     <div class="col">
-                        <input class="form-control form-control-borderless " type="search"
-                            placeholder="Número de cédula">
+                        <input class="form-control form-control-borderless" placeholder="Número de cédula" formControlName="idMiembro">
                     </div>
                     <!--end of col-->
                     <div class="col-auto">

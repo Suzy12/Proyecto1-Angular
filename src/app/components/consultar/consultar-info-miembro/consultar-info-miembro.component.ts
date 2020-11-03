@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-consultar-info-miembro',
@@ -7,7 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsultarInfoMiembroComponent implements OnInit {
 
-  constructor() { }
+  routeState: any;
+  miembro: any;
+
+  constructor(private router: Router) {
+    if (this.router.getCurrentNavigation().extras.state) {
+      this.routeState = this.router.getCurrentNavigation().extras.state;
+      if (this.routeState) {
+        console.log(this.routeState);
+        this.miembro = this.routeState.miembro;
+      }
+    }
+  }
+
+  modificarMiembro(){
+    this.router.navigate(['/modificar/info-miembro'],  { state: this.miembro  }) 
+  }
 
   ngOnInit(): void {
   }
