@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
 import { LoginService } from '../../services/login/login.service'
 import {  LoginGuard } from '../../services/login/login.guard';
+import { MovimientoService } from '../../services/movimientos/movimiento.service'
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -21,6 +22,7 @@ export class IniciarSesionComponent implements OnInit {
     private router: Router,
     private authService: LoginService,
     private guard: LoginGuard,
+    private movimientoService: MovimientoService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private toastr: ToastrService
     ) {
@@ -54,7 +56,7 @@ export class IniciarSesionComponent implements OnInit {
   authSuccess = (res) => {
     this.toastr.clear();
     if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+      this.toastr.error("La combinación no es correcta", 'Error', {timeOut: 5000});
       console.log("Error");
     }else{
       this.toastr.success(`Bienvenido`, 'Usuario autenticado', {timeOut: 2000});
@@ -66,11 +68,14 @@ export class IniciarSesionComponent implements OnInit {
       this.storage.set('current-user-role', "1");
       this.loading = false;
       this.loginForm.reset();
-      console.log(res.body.success);
+      
+      this.movimientoService.getSession().subscribe(res => {
+        console.log(res);
+      }, error => console.log(error))
       
       if (this.storage.get('current-user-role') == 1)
         this.router.navigate(['/perfil']);
-    }
+      }
   }
 
   authError = (err) => {

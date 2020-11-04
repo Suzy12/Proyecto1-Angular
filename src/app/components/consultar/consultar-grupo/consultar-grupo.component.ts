@@ -20,9 +20,9 @@ export class ConsultarGrupoComponent implements OnInit {
   selectedOptionZona: any;
   selectedOptionRama: any;
   selectedOptionGrupo: any;
-  public show:boolean = false;
-  grupoForm:FormGroup;
-  grupo = {id: 0, nombre: '', jefe1: {}, jefe2:{}}
+  public show: boolean = false;
+  grupoForm: FormGroup;
+  grupo = { id: 0, nombre: '', jefe1: {}, jefe2: {} }
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -31,7 +31,7 @@ export class ConsultarGrupoComponent implements OnInit {
     private grupoService: GrupoService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private toastr: ToastrService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getZonas();
@@ -39,84 +39,84 @@ export class ConsultarGrupoComponent implements OnInit {
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupo: ['1', [Validators.required]]
-   });
+    });
   }
   get form() { return this.grupoForm.controls }
 
   public getZonas() {
     this.zonaService.getAllZonas().subscribe(
       res => {
-        let zonasTemp:any = res.body;
-        if(zonasTemp.success == false){
-          this.toastr.error("Vuelva a intentar", 'Error', {timeOut: 5000});
+        let zonasTemp: any = res.body;
+        if (zonasTemp.success == false) {
+          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
           console.log("Error");
-        }else{
-          
+        } else {
+
           Object.values(zonasTemp.zonas).forEach(element => {
-            this.zonas.push(element);    
+            this.zonas.push(element);
           });
-        } 
+        }
       },
       err => console.log(err)
     );
   }
 
-  getRamas(newZona){
-   this.ramas = [];
-   this.grupos = [];
+  getRamas(newZona) {
+    this.ramas = [];
+    this.grupos = [];
     this.ramaService.getRama(newZona).subscribe(
       res => {
-        let ramasTemp:any = res.body;
-        if(ramasTemp.success == false){
-          this.toastr.error("Vuelva a intentar", 'Error', {timeOut: 5000});
+        let ramasTemp: any = res.body;
+        if (ramasTemp.success == false) {
+          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
           console.log("Error");
-        }else{
-          
+        } else {
+
           Object.values(ramasTemp.ramas).forEach(element => {
-            this.ramas.push(element);      
+            this.ramas.push(element);
           });
-        } 
+        }
       },
       err => console.log(err)
     )
   }
 
-  getGrupos(newRama){
+  getGrupos(newRama) {
     this.grupos = [];
-     this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
-       res => {
-         let gruposTemp:any = res.body;
-         if(gruposTemp.success == false){
-           this.toastr.error("Vuelva a intentar", 'Error', {timeOut: 5000});
-           console.log("Error");
-         }else{
-           
-           Object.values(gruposTemp.grupos).forEach(element => {
-             this.grupos.push(element);     
-           });
-         } 
-       },
-       err => console.log(err)
-     )
-   }
+    this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
+      res => {
+        let gruposTemp: any = res.body;
+        if (gruposTemp.success == false) {
+          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          console.log("Error");
+        } else {
 
-   consultarGrupo(){
+          Object.values(gruposTemp.grupos).forEach(element => {
+            this.grupos.push(element);
+          });
+        }
+      },
+      err => console.log(err)
+    )
+  }
+
+  consultarGrupo() {
     let grupoInfo = this.grupoForm.getRawValue();
-    this.grupoService.getUnGrupo(grupoInfo).subscribe(res => {  
+    this.grupoService.getUnGrupo(grupoInfo).subscribe(res => {
       console.log(res);
       this.grupoSuccess(res)
     }, error => console.log(error))
-   }
+  }
 
-   grupoSuccess = (res) => {
+  grupoSuccess = (res) => {
     this.toastr.clear();
-    
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
-      console.log("Error");
-    }else{
 
-      let grupoTemp:any = res.body.grupo;
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
+      console.log("Error");
+    } else {
+
+      let grupoTemp: any = res.body.grupo;
       this.grupo.id = grupoTemp.id;
       this.grupo.nombre = grupoTemp.nombre;
       this.show = true;
@@ -124,6 +124,6 @@ export class ConsultarGrupoComponent implements OnInit {
   }
 
 
-  
+
 
 }

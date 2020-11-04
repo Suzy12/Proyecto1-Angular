@@ -11,6 +11,6 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   public login = (loginInfo) => {
-    return this.http.post(this.authUrl, loginInfo, { observe: 'response' })
+    return this.http.post(this.authUrl, loginInfo, { observe: 'response', withCredentials: true })
   }
 }

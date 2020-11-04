@@ -7,7 +7,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
-                                <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                                <img src="{{movimiento.logo}}"
                                     class="rounded-circle">
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="text-center">
                             <div>
-                                <b>Movimiento Rescate Animal</b>
+                                <b>{{movimiento.nombre}}</b>
                             </div>
                             <div class="mt-4">
                                 Diego Cheng Gómez
@@ -48,13 +48,11 @@
                                 <i class="ni business_briefcase-24 mr-2"></i>Asesor General desde el 04/06/2019
                             </div>
                             <div class="h5 font-weight-300">
-                                <i class="fa fa-map-marker"></i>Costa Rica
+                                <i class="fa fa-map-marker"></i>{{movimiento.pais}}
                             </div>
 
                             <hr class="my-4">
-                            <p>Movimiento Rescate Animal es una asociación sin fines de lucro, teniendo por
-                                finalidad ayudar a animales abandonados, buscándoles un nuevo hogar.</p>
-                            <a href="#" target="_blank">Más información</a>
+                            <a href="{{movimiento.direccionWeb}}" appExternalUrl>Más información</a>
                         </div>
                     </div>
                 </div>
