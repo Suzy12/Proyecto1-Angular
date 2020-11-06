@@ -19,5 +19,10 @@ export class GrupoService {
     return this.http.post(this.grupoUrl + '/get-grupo', grupoInfo, { observe: 'response' })
   }
 
+  public consultarMiembrosGrupo = (idZona, idRama, idGrupo)  =>  {
+    let params = {idZona: idZona, idRama: idRama, idGrupo: idGrupo};
+    return this.http.post(this.grupoUrl + '/consultar-miembros-grupo', params, { observe: 'response' })
+  }
+
 
 }

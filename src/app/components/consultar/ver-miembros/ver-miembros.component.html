@@ -4,66 +4,74 @@
         <div class="container">
             <h2 class="text-center" id="title">Ver Miembros</h2>
             <p class="text-center">
-                <small id="passwordHelpInline" class="text-muted"> Para consultar los miembros de una zona, rama o grupo, 
+                <small id="passwordHelpInline" class="text-muted"> Para consultar los miembros de una zona, rama o
+                    grupo,
                     debe indicar cuál de estas opciones consular.
                     Seguidamente, debe indicar la zona, rama y/o grupo según lo escogido.
                     Se mostrará el nombre, cédula, teléfono y correo de cada miembro. </small>
             </p>
             <hr>
             <label> Consultar por: </label>
-            <div class="form-group">
+            <form [formGroup]="consultarForm" (ngSubmit)="consultar()" novalidate>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="nodo"
+                                    value="checkZona" checked>
+                                <label class="form-check-label">Zona</label>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="nodo"
+                                    value="checkRama">
+                                <label class="form-check-label">Rama</label>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="nodo"
+                                    value="checkGrupo">
+                                <label class="form-check-label">Grupo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                value="option1" checked>
-                            <label class="form-check-label" for="gridRadios1">Zona</label>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
-                                value="option2">
-                            <label class="form-check-label" for="gridRadios2">Rama</label>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
-                                value="option2">
-                            <label class="form-check-label" for="gridRadios2">Grupo</label>
+                        <div class="form-group">
+                            <label for="">Escoja una zona</label>
+                            <select required class="form-control" [(ngModel)]="selectedOptionZona"
+                                formControlName="idZona" (change)="getRamas($event.target.value)">
+                                <option *ngFor="let zona of zonas; let i = index" [value]="zonas[i].id">
+                                    {{zonas[i].nombre}}
+                                </option>
+                            </select>
+                            <div class="my-2"></div>
+                            <label for="">Escoja una rama</label>
+                            <select required class="form-control"  [(ngModel)]="selectedOptionRama" formControlName="idRama"
+                                (change)="getGrupos($event.target.value)">
+                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
+                                    {{ramas[i].nombre}}
+                                </option>
+                            </select>
+                            <div class="my-2"></div>
+                            <label for="">Escoja un grupo</label>
+                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo" formControlName="idGrupo">
+                                <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
+                                    {{grupos[i].nombre}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="form-group">
-                        <label for="">Escoja una zona</label>
-                        <select class="form-control">
-                            <option>Zona 1</option>
-                            <option>Zona 2</option>
-                        </select>
-                        <div class="my-2"></div>
-                        <label for="">Escoja una rama</label>
-                        <select class="form-control">
-                            <option>Rama 1</option>
-                            <option>Rama 2</option>
-                        </select>
-                        <div class="my-2"></div>
-                        <label for="">Escoja un grupo</label>
-                        <select class="form-control">
-                            <option>Grupo 1</option>
-                            <option>Grupo 2</option>
-                        </select>
-                    </div>
+                <div>
+                    <button type="submit" class="btn btn-secondary center">Consultar</button>
                 </div>
-            </div>
-            <div>
-                <button type="button" class="btn btn-secondary center">Consultar</button>
-            </div>
+            </form>
             <hr>
-            <div class="col-sm">
+            <div class="col-sm" *ngIf = "show">
                 <p>Miembros</p>
                 <table class="fixed_headers">
                     <thead>
@@ -75,19 +83,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Alejandro Tapia Álvarez</td>
-                            <td>117480362</td>
-                            <td>88908877</td>
-                            <td>aletapia1908@gmail.com</td>
-                        </tr>
-                        <tr>
-                            <td>Susana Cob García</td>
-                            <td>117480362</td>
-                            <td>88908877</td>
-                            <td>susana.3@gmail.com</td>
-                        </tr>
-                        
+                        <tr *ngFor="let miembro of miembros">
+                            <td>{{miembro.nombre}}</td>
+                            <td>{{miembro.id}}</td>
+                            <td>{{miembro.celular}}</td>
+                            <td>{{miembro.email}}</td>
+                        </tr> 
                     </tbody>
                 </table>
             </div>

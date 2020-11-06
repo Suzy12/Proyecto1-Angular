@@ -20,6 +20,7 @@ import { BuscarMiembroComponent } from './components/consultar/buscar-miembro/bu
 import { ConsultarGrupoComponent } from './components/consultar/consultar-grupo/consultar-grupo.component'
 import { ConsultarInfoMiembroComponent } from './components/consultar/consultar-info-miembro/consultar-info-miembro.component'
 import { VerMiembrosComponent } from './components/consultar/ver-miembros/ver-miembros.component'
+import { ConsultarInfoMovimientoComponent } from './components/consultar/consultar-info-movimiento/consultar-info-movimiento.component'
 
 //Modificar
 import { ModificarGrupoComponent } from './components/modificar/modificar-grupo/modificar-grupo.component'
@@ -27,6 +28,7 @@ import { ModificarInfoMiembroComponent } from './components/modificar/modificar-
 import { ModificarMovimientoComponent } from './components/modificar/modificar-movimiento/modificar-movimiento.component'
 import { ModificarRamaComponent } from './components/modificar/modificar-rama/modificar-rama.component'
 import { ModificarZonaComponent } from './components/modificar/modificar-zona/modificar-zona.component'
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -51,7 +53,8 @@ const routes: Routes = [
       { path: 'grupo', component: ConsultarGrupoComponent },
       { path: 'buscar', component: BuscarMiembroComponent },
       { path: 'info-miembro', component: ConsultarInfoMiembroComponent },
-      { path: 'miembros', component: VerMiembrosComponent }
+      { path: 'miembros', component: VerMiembrosComponent },
+      { path: 'movimiento', component: ConsultarInfoMovimientoComponent }
     ]
   },
   {

@@ -3,24 +3,29 @@
     <div class="container card__container my-5 shadow-sm w-100 rounded">
         <div class="container">
             <div class="card-profile-image center">
-                <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
-                    class="rounded-circle">
+                <img src="{{movimiento.logo}}" class="rounded-circle">
             </div>
-            <div class="container center">
-                <div class="input-group col-name">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <span class="fa fa-user"></span>
-                        </span>
+            <form [formGroup]="movimientoForm" (ngSubmit)="modificar()" novalidate>
+                <div class="container center">
+                    <div class="input-group col-name">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <span class="fa fa-user"></span>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" formControlName="nombre" value="{{movimiento.nombre}}"
+                            required="required" [ngClass]="{ 'is-invalid': submitted && form.nombre.errors }">
+                        <div *ngIf="submitted && form.nombre.errors" class="invalid-feedback">
+                            <div *ngIf="form.nombre.errors.required">
+                                <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                    campo del nombre es obligatorio</label>
+                            </div>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" name="username" value="Movimiento Rescate Animal"
-                        required="required">
                 </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm">
-                    <form role="form" method="post">
+                <hr>
+                <div class="row">
+                    <div class="col-sm">
                         <div class="form-group">
                             <label for="">Dirección Web</label>
                             <div class="input-group">
@@ -29,62 +34,71 @@
                                         <span class="fa fa-internet-explorer"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" value="mra.com"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="direccionWeb"
+                                    value="{{movimiento.direccionWeb}}" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.direccionWeb.errors }">
+                                <div *ngIf="submitted && form.direccionWeb.errors" class="invalid-feedback">
+                                    <div *ngIf="form.direccionWeb.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo de la dirección web es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                             <hr />
 
-                            <label for="">País</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <span class="fa fa-globe"></span>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control" name="username" value="Costa Rica"
-                                    required="required">
+                            <div class="col-sm">
+                                <p>Teléfonos</p>
+                                <table class="fixed_headers">
+                                    <thead>
+                                        <tr>
+                                            <th>Teléfono</th>
+                                            <th>Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control" value="89649696"
+                                                    required="required">
+                                            </td>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control" value="88040788"
+                                                    required="required">
+                                            </td>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <hr />
-                            <label for="">Teléfonos</label>
-                            <select class="form-control" (change)="getSelectedOptionText($event)">
-                                <option>88040788</option>
-                                <option>89673421</option>
-                            </select>
-                            <div class="my-2"></div>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <span class="fa fa-phone"></span>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control" name="username" value="{{selectedText}}"
-                                    required="required">
-                            </div>
-                            <hr />
-                            <label for="">Logo</label> 
+                            <label for="">Logo</label>
                             <div class="my-2"></div>
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-sm">          
-                                        <div class="form-group">
-                                            <input type="file" name="image" (change)="fileProgress($event)" />
-                                        </div>
+                                    <div class="col-sm">
+                                        <input type="file" accept="image/*" id="formImage" class="form-control-file"
+                                            formControlName="logo" (change)="readLogo($event)" />
                                         <div class="image-preview mb-3" *ngIf="previewUrl">
-                                            <img [src]="previewUrl" height="150" />                 
-                                        </div>
-                             
-                                        <div class="mb-3" *ngIf="uploadedFilePath">
-                                            {{uploadedFilePath}}
+                                            <img class="preview" [src]="previewUrl" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                    </form>
-                </div>
-                <div class="col-sm">
-                    <form role="form">
+                    </div>
+                    <div class="col-sm">
                         <div class="form-group">
                             <label for="">Provincia</label>
                             <div class="input-group">
@@ -93,8 +107,15 @@
                                         <span class="fa fa-location-arrow"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" value="San José"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="provincia"
+                                    value="{{movimiento.provincia}}" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.provincia.errors }">
+                                <div *ngIf="submitted && form.provincia.errors" class="invalid-feedback">
+                                    <div *ngIf="form.provincia.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo de la provincia es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                             <hr />
                             <label for="">Cantón</label>
@@ -104,8 +125,15 @@
                                         <span class="fa fa-location-arrow"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" value="Santa Ana"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="canton"
+                                    value="{{movimiento.canton}}" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.canton.errors }">
+                                <div *ngIf="submitted && form.canton.errors" class="invalid-feedback">
+                                    <div *ngIf="form.canton.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del canton es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                             <hr />
                             <label for="">Distrito</label>
@@ -115,8 +143,15 @@
                                         <span class="fa fa-location-arrow"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" value="Brasil"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="distrito"
+                                    value="{{movimiento.distrito}}" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.distrito.errors }">
+                                <div *ngIf="submitted && form.distrito.errors" class="invalid-feedback">
+                                    <div *ngIf="form.distrito.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del distrito es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                             <hr />
                             <label for="">Señas</label>
@@ -126,20 +161,25 @@
                                         <span class="fa fa-location-arrow"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username"
-                                    value="200 mts sur del KFC de Lindora" required="required">
+                                <input type="text" class="form-control" formControlName="senas"
+                                    value="{{movimiento.senas}}" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.senas.errors }">
+                                <div *ngIf="submitted && form.senas.errors" class="invalid-feedback">
+                                    <div *ngIf="form.senas.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del señas es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                    </form>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="center">
-                <button type="button" class="btn btn-secondary center">Modificar Movimiento</button>
-            </div>
+                <hr>
+                <div class="center">
+                    <button type="submit" class="btn btn-secondary center">Modificar Movimiento</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
-

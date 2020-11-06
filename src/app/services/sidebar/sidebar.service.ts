@@ -45,6 +45,10 @@ export class SidebarService {
         {
           title: 'Ver miembros',
           ruta: 'consultar/miembros'
+        },
+        {
+          title: 'Consultar información del movimiento',
+          ruta: 'consultar/movimiento'
         }
       ]
     },
@@ -73,7 +77,7 @@ export class SidebarService {
         },
         {
           title: 'Modificar Movimiento',
-          ruta: 'modificar/movimiento'
+          ruta: 'consultar/movimiento'
         }
       ]
     },

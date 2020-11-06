@@ -1,0 +1,93 @@
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="container">
+            <div class="card-profile-image center">
+                <img src="{{movimiento.logo}}" class="rounded-circle">
+            </div>
+            <p class="text-center"> {{movimiento.nombre}}
+            </p>
+            <hr>
+            <div class="row">
+                <div class="col-sm">
+                    <div>
+                        <p>Número de Cédula</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-id-card"></i>
+                            {{movimiento.cedula_juridica}}
+                        </p>
+                        <hr />
+                        <p>Dirección Web</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-internet-explorer"></i>
+                            {{movimiento.direccionWeb}}
+                        </p>
+                        <hr />
+                        <p>País</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-flag"></i>
+                            {{movimiento.pais}}
+                        </p>
+                        <hr />
+                    </div>
+
+                    <div class="col-sm">
+                        <p>Teléfonos</p>
+                        <table class="fixed_headers">
+                            <thead>
+                                <tr>
+                                    <th>Teléfono</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        88040788
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        88040788
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <p>Provincia</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-location-arrow"></i>
+                            {{movimiento.provincia}}
+                        </p>
+                        <hr />
+                        <p>Cantón</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-location-arrow"></i>
+                            {{movimiento.canton}}
+                        </p>
+                        <hr />
+                        <p>Distrito</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-location-arrow"></i>
+                            {{movimiento.distrito}}
+                        </p>
+                        <hr />
+                        <p>Señas</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-location-arrow"></i>
+                            {{movimiento.senas}}
+                        </p>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="center">
+                <button (click) = "modificarMovimiento()" class="btn btn-secondary center">Modificar Movimiento</button>
+            </div>
+        </div>
+    </div>
+</div>

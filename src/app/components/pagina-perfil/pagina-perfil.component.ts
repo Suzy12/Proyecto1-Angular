@@ -12,7 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PaginaPerfilComponent implements OnInit {
 
-  movimiento: any;
+  movimiento: any = {};
+  asesor: any = {};
+
 
   constructor(
     private router: Router,
@@ -35,12 +37,13 @@ export class PaginaPerfilComponent implements OnInit {
         }else{
           this.movimiento = movimientoTemp.movimiento;
           console.log(this.movimiento.idAsesor);
-          this.miembroService.getUnMiembro(this.movimiento.idAsesor).subscribe(
+          this.miembroService.getUnMiembroID(this.movimiento.idAsesor).subscribe(
             res =>{
-              console.log(res.body);
+              let asesorTemp:any = res.body;
+              this.asesor = asesorTemp.miembro;
+
             }
           );
-          console.log(this.movimiento);
 
         } 
       },

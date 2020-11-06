@@ -15,7 +15,16 @@ export class MiembroService {
     return this.http.post(this.miembroUrl + '/get-miembro', idMiembro, { observe: 'response' })
   }
 
+  public getUnMiembroID = (idMiembro)  =>  {
+    let params = {idMiembro: idMiembro};
+    return this.http.post(this.miembroUrl + '/get-miembro', params, { observe: 'response' })
+  }
+
   public modificarInfoMiembro = (infoMiembro) => {
     return this.http.post(this.miembroUrl + '/modificar-miembro', infoMiembro, {observe: 'response'})
+  }
+
+  public crearMiembro = (infoMiembro) => {
+    return this.http.post(this.miembroUrl + '/crear-miembro', infoMiembro, {observe: 'response'})
   }
 }

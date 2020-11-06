@@ -14,5 +14,14 @@ export class ZonaService {
   public getAllZonas = ()  => {
     return this.http.get(this.zonaUrl + '/consultar-zonas', { observe: 'response' })
   }
+
+  public crearZona = (zonaInfo)  => {
+    return this.http.post(this.zonaUrl + '/crear-zona', zonaInfo, { observe: 'response' })
+  }
+  
+  public consultarMiembrosZona = (idZona)  => {
+    let params = {idZona: idZona};
+    return this.http.post(this.zonaUrl + '/consultar-miembros-zona', params, { observe: 'response' })
+  }
   
 }

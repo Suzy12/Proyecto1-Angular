@@ -6,6 +6,7 @@ import { ZonaService } from '../../../services/zonas/zona.service'
 import { RamaService } from '../../../services/ramas/rama.service'
 import { GrupoService } from '../../../services/grupos/grupo.service'
 import { ToastrService } from 'ngx-toastr';
+import { MiembroService } from '../../../services/miembros/miembro.service'
 
 @Component({
   selector: 'app-consultar-grupo',
@@ -22,13 +23,18 @@ export class ConsultarGrupoComponent implements OnInit {
   selectedOptionGrupo: any;
   public show: boolean = false;
   grupoForm: FormGroup;
-  grupo = { id: 0, nombre: '', jefe1: {}, jefe2: {} }
+  grupo:any = {};
+  encargado1:any = false;
+  encargado2:any = false;
+  miembros: any = [];
+
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private zonaService: ZonaService,
     private ramaService: RamaService,
     private grupoService: GrupoService,
+    private miembroService: MiembroService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private toastr: ToastrService
   ) { }
@@ -38,7 +44,7 @@ export class ConsultarGrupoComponent implements OnInit {
     this.grupoForm = this.formBuilder.group({
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
-      idGrupo: ['1', [Validators.required]]
+      idGrupo: ['', [Validators.required]]
     });
   }
   get form() { return this.grupoForm.controls }
@@ -104,7 +110,8 @@ export class ConsultarGrupoComponent implements OnInit {
     let grupoInfo = this.grupoForm.getRawValue();
     this.grupoService.getUnGrupo(grupoInfo).subscribe(res => {
       console.log(res);
-      this.grupoSuccess(res)
+      this.grupoSuccess(res);
+      this.listaMiembros(res.body);
     }, error => console.log(error))
   }
 
@@ -117,10 +124,40 @@ export class ConsultarGrupoComponent implements OnInit {
     } else {
 
       let grupoTemp: any = res.body.grupo;
-      this.grupo.id = grupoTemp.id;
-      this.grupo.nombre = grupoTemp.nombre;
-      this.show = true;
+      this.grupo = grupoTemp;
+      if(this.grupo.encargado1 != undefined){
+        this.encargado1 = this.grupo.encargado1;
+        this.consultarEncargado1();
+      }if(this.grupo.encargado2 != undefined){
+        this.encargado2 = this.grupo.encargado2;
+        this.consultarEncargado2();
+      }
     }
+  }
+
+  listaMiembros(res){
+    this.miembros = [];
+    Object.values(res.miembros).forEach(element => {
+      this.miembros.push(element);
+    });
+    this.show = true;
+  }
+
+  consultarEncargado1(){
+    this.miembroService.getUnMiembroID(this.encargado1).subscribe(
+      res =>{
+        let encargadoTemp:any = res.body;
+        this.encargado1 = encargadoTemp.miembro;
+      }
+    );
+  }
+  consultarEncargado2(){
+    this.miembroService.getUnMiembroID(this.encargado2).subscribe(
+      res =>{
+        let encargadoTemp:any = res.body;
+        this.encargado2 = encargadoTemp.miembro;
+      }
+    );
   }
 
 

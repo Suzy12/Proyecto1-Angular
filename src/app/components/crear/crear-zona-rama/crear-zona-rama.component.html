@@ -10,7 +10,7 @@
                 </p>
                 <hr>
                 <div class="center">
-                    <form role="form" method="post">
+                    <form [formGroup]="zonaForm" (ngSubmit)="modificarZona()" novalidate>
                         <p class="pull-center"><b> Información General</b></p>
                         <div class="form-group">
                             <label for="">Ingrese el nombre de la zona </label>
@@ -20,15 +20,22 @@
                                         <span class="fa fa-user"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Nombre"
-                                    required="required">
+                                <input type="text" class="form-control" placeholder="Nombre" required="required"
+                                    formControlName="nombre"
+                                    [ngClass]="{ 'is-invalid': submitted && form.nombre.errors }">
+                                <div *ngIf="submitted && form.nombre.errors" class="invalid-feedback">
+                                    <div *ngIf="form.nombre.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo de nombre de la zona es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <hr class="separacion">
+                        <div class="center">
+                            <button type="submit" class="btn btn-secondary center">Crear Zona</button>
+                        </div>
                     </form>
-                </div>
-                <hr class="separacion">
-                <div class="center">
-                    <button type="button" class="btn btn-secondary center">Crear Zona</button>
                 </div>
             </div>
         </div>
@@ -41,7 +48,7 @@
                 </p>
                 <hr>
                 <div class="center">
-                    <form role="form" method="post">
+                    <form [formGroup]="ramaForm" (ngSubmit)="modificarRama()" novalidate>
                         <p class="pull-center"><b> Información General</b></p>
                         <div class="form-group">
                             <label for="">Ingrese el nombre de la rama</label>
@@ -51,21 +58,30 @@
                                         <span class="fa fa-user"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Nombre"
-                                    required="required">
+                                <input type="text" class="form-control" placeholder="Nombre" required="required"
+                                    formControlName="nombre"
+                                    [ngClass]="{ 'is-invalid': submittedRama && formRama.nombre.errors }">
+                                <div *ngIf="submittedRama && formRama.nombre.errors" class="invalid-feedback">
+                                    <div *ngIf="formRama.nombre.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo de nombre de la rama es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="my-2"></div>
                             <label for="">Escoja una zona</label>
-                            <select class="form-control">
-                                <option>Zona 1</option>
-                                <option>Zona 2</option>
+                            <select required class="form-control"
+                                formControlName="idZona">
+                                <option *ngFor="let zona of zonas; let i = index" [value]="zonas[i].id">
+                                    {{zonas[i].nombre}}
+                                </option>
                             </select>
                         </div>
+                        <hr>
+                        <div class="center">
+                            <button type="submit" class="btn btn-secondary center">Crear Rama</button>
+                        </div>
                     </form>
-                </div>
-                <hr>
-                <div class="center">
-                    <button type="button" class="btn btn-secondary center">Crear Rama</button>
                 </div>
             </div>
         </div>

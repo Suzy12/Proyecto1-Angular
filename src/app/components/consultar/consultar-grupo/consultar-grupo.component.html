@@ -62,15 +62,14 @@
                     </div>
                 </div>
                 <div class="my-4"></div>
-                <label for="">Primer jefe/monitor del grupo</label>
-
+                <p *ngIf = "encargado1">Primer {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }} del grupo</p>
                 <div class="my-2"></div>
-                <div class="container-jefes">
+                <div class="container-jefes"  *ngIf = "encargado1">
                     <div class="card-profile-image center">
                         <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
                             class="rounded-circle">
                     </div>
-                    <p class="text-center"> Alejandro Tapia Álvarez
+                    <p class="text-center"> {{encargado1.nombre}}
                     </p>
                     <hr>
                     <div class="row">
@@ -79,7 +78,7 @@
                                 <p>Número de Cédula</p>
                                 <p class="text-secondary">
                                     <i class="fa fa-id-card"></i>
-                                    123456789
+                                    {{encargado1.id}}
                                 </p>
                             </div>
                         </div>
@@ -88,7 +87,7 @@
                                 <p>Número de Celular</p>
                                 <p class="text-secondary">
                                     <i class="fa fa-phone"></i>
-                                    8804-0788
+                                   {{encargado1.celular}}
                                 </p>
                             </div>
                         </div>
@@ -97,7 +96,7 @@
                                 <p>Correo Electrónico</p>
                                 <p class="text-secondary">
                                     <i class="fa fa-at"></i>
-                                    aletapia1908@gmail.com
+                                     {{encargado1.email}}
                                 </p>
                             </div>
                         </div>
@@ -105,15 +104,15 @@
                 </div>
 
                 <div class="my-4"></div>
-                <label for="">Segundo jefe/monitor del grupo</label>
+                <p  *ngIf = "encargado2">Segundo {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }}  del grupo</p>
 
                 <div class="my-2"></div>
-                <div class="container-jefes">
+                <div class="container-jefes"  *ngIf = "encargado2">
                     <div class="card-profile-image center">
                         <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
                             class="rounded-circle">
                     </div>
-                    <p class="text-center"> Alejandro Tapia Álvarez
+                    <p class="text-center"> {{encargado2.nombre}}
                     </p>
                     <hr>
                     <div class="row">
@@ -122,7 +121,7 @@
                                 <p>Número de Cédula</p>
                                 <p class="text-secondary">
                                     <i class="fa fa-id-card"></i>
-                                    123456789
+                                    {{encargado2.id}}
                                 </p>
                             </div>
                         </div>
@@ -131,7 +130,7 @@
                                 <p>Número de Celular</p>
                                 <p class="text-secondary">
                                     <i class="fa fa-phone"></i>
-                                    8804-0788
+                                    {{encargado2.celular}}
                                 </p>
                             </div>
                         </div>
@@ -140,7 +139,7 @@
                                 <p>Correo Electrónico</p>
                                 <p class="text-secondary">
                                     <i class="fa fa-at"></i>
-                                    aletapia1908@gmail.com
+                                    {{encargado2.email}}
                                 </p>
                             </div>
                         </div>
@@ -148,10 +147,29 @@
                 </div>
 
                 <hr>
-                <div class="center">
-                    <button type="button" class="btn btn-secondary center">Ver Lista de Miembros</button>
+                <div class="col-sm">
+                    <p>Miembros</p>
+                    <table class="fixed_headers">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Cédula</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let miembro of miembros">
+                                <td>{{miembro.nombre}}</td>
+                                <td>{{miembro.id}}</td>
+                                <td>{{miembro.celular}}</td>
+                                <td>{{miembro.email}}</td>
+                            </tr>                           
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <hr>
     </div>
 </div>

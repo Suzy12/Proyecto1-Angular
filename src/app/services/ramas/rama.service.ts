@@ -15,5 +15,14 @@ export class RamaService {
     return this.http.post(this.ramaUrl + '/consultar-ramas', params, { observe: 'response' })
   }
 
+  public crearRama = (ramaInfo)  => {
+    return this.http.post(this.ramaUrl + '/crear-rama', ramaInfo, { observe: 'response' })
+  }
+
+  public consultarMiembrosRama = (idZona, idRama)  => {
+    let params = {idZona: idZona, idRama: idRama};
+    return this.http.post(this.ramaUrl + '/consultar-miembros-rama', params, { observe: 'response' })
+  }
+
   
 }
