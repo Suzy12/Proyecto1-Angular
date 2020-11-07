@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ConsultarInfoMovimientoComponent implements OnInit {
 
   movimiento: any = {};
+  telefonos: any = [];
 
   constructor(private router: Router,
     private movimientoService: MovimientoService,
@@ -32,6 +33,9 @@ export class ConsultarInfoMovimientoComponent implements OnInit {
         } else {
           this.movimiento = movimientoTemp.movimiento;
           console.log(this.movimiento);
+          Object.values(this.movimiento.telefonos).forEach(element => {
+            this.telefonos.push(element);
+          });
 
         }
       },

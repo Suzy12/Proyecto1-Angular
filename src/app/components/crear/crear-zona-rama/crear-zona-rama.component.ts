@@ -47,7 +47,7 @@ export class CrearZonaRamaComponent implements OnInit {
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(zonasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
 
@@ -63,20 +63,33 @@ export class CrearZonaRamaComponent implements OnInit {
 
   modificarZona(){
     let zonaInfo = this.zonaForm.getRawValue();
+
+    this.submitted = true;
+    if (this.zonaForm.invalid) return;
+
     console.log(zonaInfo);
     this.zonaService.crearZona(zonaInfo).subscribe(res => {
       console.log(res);
       this.zonaResponseController(res)
     }, error => console.log(error))
+
+    this.submitted = false;
   }
 
   modificarRama(){
     let ramaInfo = this.ramaForm.getRawValue();
+
+    this.submittedRama = true;
+    if (this.ramaForm.invalid) return;
+
+
     console.log(ramaInfo);  
     this.ramaService.crearRama(ramaInfo).subscribe(res => {
       console.log(res);
       this.ramaResponseController(res)
     }, error => console.log(error))
+
+    this.submitted = false;
   }
 
   zonaResponseController = (res) => {
@@ -99,7 +112,6 @@ export class CrearZonaRamaComponent implements OnInit {
     } else {
       this.toastr.success("La solicitud se realizó con éxito", 'Rama Agregada', {timeOut: 2000});
       console.log("Éxito"); 
-      this.getZonas();
     }
   }
 

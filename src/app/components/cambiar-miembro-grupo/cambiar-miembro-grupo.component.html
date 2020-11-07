@@ -4,66 +4,96 @@
         <div class="container">
             <h2 class="text-center" id="title">Cambiar miembro de grupo</h2>
             <p class="text-center">
-                <small id="passwordHelpInline" class="text-muted"> Para cambiar a un miembro de grupo, debe escribir el número de cédula
-                    del miembro. 
-                    Si el miembro es parte del movimiento, se mostrarán las ramas en las que está el miembro, 
-                    el grupo del que se eliminará (según la rama escogida) y los demás grupos de la rama escogida. </small>
+                <small id="passwordHelpInline" class="text-muted"> Para cambiar a un miembro de grupo, debe escribir el
+                    número de cédula
+                    del miembro.
+                    Si el miembro es parte del movimiento, se mostrarán las ramas en las que está el miembro,
+                    el grupo del que se eliminará (según la rama escogida) y los demás grupos de la rama escogida.
+                </small>
 
             </p>
             <hr>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="form-group">
-                        <label for="">Ingrese el número de cédula</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <span class="fa fa-id-card"></span>
-                                </span>
+            <form [formGroup]="miembroForm" (ngSubmit)="consultar()" novalidate>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <label for="">Ingrese el número de cédula</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-id-card"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Cédula" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.idMiembro.errors }">
+                                <div *ngIf="submitted && form.idMiembro.errors" class="invalid-feedback">
+                                    <div *ngIf="form.idMiembro.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo de la cédula es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
-                            <input type="text" class="form-control" name="username" placeholder="Cédula"
-                                required="required">
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <div>
-                <button type="button" class="btn btn-secondary center">Consultar</button>
+                <button type="submit" class="btn btn-secondary center">Consultar</button>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="form-group">
-                        <label for="">Ramas en las que está</label>
-                        <select class="form-control rama">
-                            <option>Rama 1</option>
-                            <option>Rama 2</option>
-                        </select>
-                        <div class="my-4"></div>
-                        <div class="row">
-                        <div class="col-sm">
-                            <label for="">Se elimina de grupo: </label>
-                            <p>
-                            <b>
-                                Grupo Scouts
-                            </b>
-                            </p>
+            <form [formGroup]="miembroGrupoForm" (ngSubmit)="cambiar()" novalidate>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <label for="">Ramas en las que está</label>
+                            <select required class="form-control" formControlName="idRama"
+                                (change)="getGrupoViejo($event.target.value)" required="required"
+                                [ngClass]="{ 'is-invalid': submittedCambiar && formMiembroGrupo.idRama.errors }">
+                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
+                                    {{ramas[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submittedCambiar && formMiembroGrupo.idRama.errors" class="invalid-feedback">
+                                <div *ngIf="formMiembroGrupo.idRama.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        Debe indicar una rama para el miembro</label>
+                                </div>
+                            </div>
+                            <div class="my-4"></div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="">Se elimina de grupo: </label>
+                                    <p>
+                                        <b>
+                                            {{grupoViejo.nombre}}
+                                        </b>
+                                    </p>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="">Agregar a grupo:</label>
+                                    <select required class="form-control" formControlName="idGrupo" required="required"
+                                        [ngClass]="{ 'is-invalid': submittedCambiar && formMiembroGrupo.idGrupo.errors }">
+                                        <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
+                                            {{grupos[i].nombre}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submittedCambiar && formMiembroGrupo.idGrupo.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="formMiembroGrupo.idGrupo.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                                Debe indicar un grupo para el miembro</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm">
-                        <label for="">Agregar a grupo:</label>
-                        <select class="form-control">
-                            <option>Grupo 1</option>
-                            <option>Grupo 2</option>
-                        </select>
-                        </div>
-                    </div>
                     </div>
                 </div>
-            </div>
-            <div class="my-4"></div>
-            <div class="center">
-                <button type="button" class="btn btn-secondary center">Confirmar Cambio</button>
-            </div>
+                <div class="my-4"></div>
+                <div class="center">
+                    <button type="button" class="btn btn-secondary center">Confirmar Cambio</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

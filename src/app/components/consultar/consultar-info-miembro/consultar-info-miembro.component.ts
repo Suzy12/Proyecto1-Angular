@@ -10,6 +10,7 @@ export class ConsultarInfoMiembroComponent implements OnInit {
 
   routeState: any;
   miembro: any;
+  gruposMiembro: any;
 
   constructor(private router: Router) {
     if (this.router.getCurrentNavigation().extras.state) {
@@ -17,9 +18,12 @@ export class ConsultarInfoMiembroComponent implements OnInit {
       if (this.routeState) {
         console.log(this.routeState);
         this.miembro = this.routeState.miembro;
+        this.gruposMiembro = this.routeState.grupos;
       }
     }
   }
+
+  
 
   modificarMiembro(){
     this.router.navigate(['/modificar/info-miembro'],  { state: this.miembro  }) 

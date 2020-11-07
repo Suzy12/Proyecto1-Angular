@@ -54,7 +54,7 @@ export class ConsultarGrupoComponent implements OnInit {
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(zonasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
 
@@ -74,7 +74,7 @@ export class ConsultarGrupoComponent implements OnInit {
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
 
@@ -93,7 +93,7 @@ export class ConsultarGrupoComponent implements OnInit {
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(gruposTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
 
@@ -144,7 +144,7 @@ export class ConsultarGrupoComponent implements OnInit {
   }
 
   consultarEncargado1(){
-    this.miembroService.getUnMiembroID(this.encargado1).subscribe(
+    this.miembroService.getUnMiembroxID(this.encargado1).subscribe(
       res =>{
         let encargadoTemp:any = res.body;
         this.encargado1 = encargadoTemp.miembro;
@@ -152,7 +152,7 @@ export class ConsultarGrupoComponent implements OnInit {
     );
   }
   consultarEncargado2(){
-    this.miembroService.getUnMiembroID(this.encargado2).subscribe(
+    this.miembroService.getUnMiembroxID(this.encargado2).subscribe(
       res =>{
         let encargadoTemp:any = res.body;
         this.encargado2 = encargadoTemp.miembro;

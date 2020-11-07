@@ -40,14 +40,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr *ngFor="let tel of telefonos; let i = index">
                                     <td>
-                                        88040788
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        88040788
+                                        {{tel}}
                                     </td>
                                 </tr>
                             </tbody>

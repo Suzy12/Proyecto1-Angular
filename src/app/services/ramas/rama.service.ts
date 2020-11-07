@@ -15,6 +15,12 @@ export class RamaService {
     return this.http.post(this.ramaUrl + '/consultar-ramas', params, { observe: 'response' })
   }
 
+  public getRamasDisponibles = (idMiembro)  =>  {
+    let params = {idMiembro: idMiembro};
+    return this.http.post(this.ramaUrl + '/consultar-ramas-disponibles', params, { observe: 'response' })
+  }
+
+
   public crearRama = (ramaInfo)  => {
     return this.http.post(this.ramaUrl + '/crear-rama', ramaInfo, { observe: 'response' })
   }

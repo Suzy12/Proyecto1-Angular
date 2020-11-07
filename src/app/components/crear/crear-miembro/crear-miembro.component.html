@@ -8,9 +8,9 @@
                     información personal, de contacto y añadirlo a un grupo. </small>
             </p>
             <hr>
-            <div class="row">
-                <div class="col-sm">
-                    <form role="form" method="post">
+            <form [formGroup]="miembroForm" (ngSubmit)="crearMiembro()" novalidate>
+                <div class="row">
+                    <div class="col-sm">
                         <p class="pull-center"><b> Información Personal</b></p>
                         <div class="form-group">
                             <label for="">Ingrese el número de cédula</label>
@@ -20,8 +20,16 @@
                                         <span class="fa fa-id-card"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Cédula"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="idMiembro" placeholder="Cédula"
+                                    required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.idMiembro.errors }">
+                                <div *ngIf="submitted && form.idMiembro.errors" class="invalid-feedback">
+                                    <div *ngIf="form.idMiembro.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del
+                                            número de cédulo del miembro es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
 
                             <label for="">Ingrese el nombre completo </label>
@@ -31,8 +39,15 @@
                                         <span class="fa fa-user"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Nombre"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre"
+                                    required="required" [ngClass]="{ 'is-invalid': submitted && form.nombre.errors }">
+                                <div *ngIf="submitted && form.nombre.errors" class="invalid-feedback">
+                                    <div *ngIf="form.nombre.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del
+                                            nombre del miembro es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <p class="pull-center"><b> Contacto </b></p>
@@ -44,8 +59,14 @@
                                         <span class="fa fa-phone"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Celular"
-                                    required="required">
+                                <input type="tel" pattern="[0-9]{8}" class="form-control" formControlName="celular" placeholder="Celular"
+                                    required="required" [ngClass]="{ 'is-invalid': submitted && form.celular.errors }">
+                                <div *ngIf="submitted && form.celular.errors" class="invalid-feedback">
+                                    <div *ngIf="form.celular.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del celular del miembro es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
 
                             <label for="">Ingrese el correo electrónico</label>
@@ -55,23 +76,33 @@
                                         <span class="fa fa-at"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Correo"
-                                    required="required">
+                                <input type="email" class="form-control" formControlName="email" placeholder="Correo"
+                                    required="required" [ngClass]="{ 'is-invalid': submitted && form.email.errors }">
+                                <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
+                                    <div *ngIf="form.email.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del correo electrónico del miembro es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <p class="pull-center"><b> Monitor</b></p>
                         <div class="form-group">
                             <label for="">¿Es candidato a monitor?</label>
-                            <select class="form-control">
-                                <option selected>Sí</option>
-                                <option>No</option>
+                            <select class="form-control" formControlName="posible_monitor"  required="required"
+                            [ngClass]="{ 'is-invalid': submitted && form.posible_monitor.errors }">
+                                <option>Sí</option>
+                                <option selected>No</option>
                             </select>
+                            <div *ngIf="submitted && form.posible_monitor.errors" class="invalid-feedback">
+                                <div *ngIf="form.posible_monitor.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        El campo de la condición de monitor es obligatorio</label>
+                                </div>
+                            </div>
                         </div>
-
-                    </form>
-                </div>
-                <div class="col-sm">
-                    <form role="form">
+                    </div>
+                    <div class="col-sm">
                         <p class="pull-center"><b> Dirección Física</b></p>
                         <div class="form-group">
                             <label for="">Ingrese la provincia</label>
@@ -81,8 +112,15 @@
                                         <span class="fa fa-location-arrow"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Provincia"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="provincia"
+                                    placeholder="Provincia" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.provincia.errors }">
+                                <div *ngIf="submitted && form.provincia.errors" class="invalid-feedback">
+                                    <div *ngIf="form.provincia.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo de la provincia es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                             <label for="">Ingrese el cantón</label>
                             <div class="input-group">
@@ -91,8 +129,14 @@
                                         <span class="fa fa-location-arrow"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Cantón"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="canton" placeholder="Cantón"
+                                    required="required" [ngClass]="{ 'is-invalid': submitted && form.canton.errors }">
+                                <div *ngIf="submitted && form.canton.errors" class="invalid-feedback">
+                                    <div *ngIf="form.canton.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del cantón es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                             <label for="">Ingrese el distrito</label>
                             <div class="input-group">
@@ -101,8 +145,15 @@
                                         <span class="fa fa-location-arrow"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Distrito"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="distrito"
+                                    placeholder="Distrito" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.distrito.errors }">
+                                <div *ngIf="submitted && form.distrito.errors" class="invalid-feedback">
+                                    <div *ngIf="form.distrito.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo del distrito es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                             <label for="">Ingrese las señas</label>
                             <div class="input-group">
@@ -111,41 +162,72 @@
                                         <span class="fa fa-location-arrow"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="username" placeholder="Señas"
-                                    required="required">
+                                <input type="text" class="form-control" formControlName="senas" placeholder="Señas"
+                                    required="required" [ngClass]="{ 'is-invalid': submitted && form.senas.errors }">
+                                <div *ngIf="submitted && form.senas.errors" class="invalid-feedback">
+                                    <div *ngIf="form.senas.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo de las señas es obligatorio</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                    </form>
-                </div>
-
-                <div class="col-sm">
-                    <p class="pull-center"><b> Agregar a un grupo</b></p>
-                    <div class="form-group">
-                        <label for="">Escoja una zona</label>
-                        <select class="form-control">
-                            <option>Zona 1</option>
-                            <option>Zona 2</option>
-                        </select>
-                        <div class="my-2"></div>
-                        <label for="">Escoja una rama</label>
-                        <select class="form-control">
-                            <option>Rama 1</option>
-                            <option>Rama 2</option>
-                        </select>
-                        <div class="my-2"></div>
-                        <label for="">Escoja un grupo</label>
-                        <select class="form-control">
-                            <option>Grupo 1</option>
-                            <option>Grupo 2</option>
-                        </select>
+                    <div class="col-sm">
+                        <p class="pull-center"><b> Agregar a un grupo</b></p>
+                        <div class="form-group">
+                            <label for="">Escoja una zona</label>
+                            <select required class="form-control" [(ngModel)]="selectedOptionZona"
+                                formControlName="idZona" (change)="getRamas($event.target.value)" required="required"
+                                [ngClass]="{ 'is-invalid': submitted && form.idZona.errors }">
+                                <option *ngFor="let zona of zonas; let i = index" [value]="zonas[i].id">
+                                    {{zonas[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idZona.errors" class="invalid-feedback">
+                                <div *ngIf="form.idZona.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        Debe indicar una zona para el miembro</label>
+                                </div>
+                            </div>
+                            <div class="my-2"></div>
+                            <label for="">Escoja una rama</label>
+                            <select required class="form-control" formControlName="idRama"
+                                (change)="getGrupos($event.target.value)" required="required"
+                                [ngClass]="{ 'is-invalid': submitted && form.idRama.errors }">
+                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
+                                    {{ramas[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idRama.errors" class="invalid-feedback">
+                                <div *ngIf="form.idRama.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        Debe indicar una rama para el miembro</label>
+                                </div>
+                            </div>               
+                            <div class="my-2"></div>
+                            <label for="">Escoja un grupo</label>
+                            <select required class="form-control" formControlName="idGrupo" required="required"
+                                [ngClass]="{ 'is-invalid': submitted && form.idGrupo.errors }">
+                                <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
+                                    {{grupos[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idGrupo.errors" class="invalid-feedback">
+                                <div *ngIf="form.idGrupo.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        Debe indicar un grupo para el miembro</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <div class="center">
-                <button type="button" class="btn btn-secondary center">Crear Miembro</button>
-            </div>
+                <hr>
+                <div class="center">
+                    <button type="submit" class="btn btn-secondary center">Crear Miembro</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -15,6 +15,11 @@ export class ZonaService {
     return this.http.get(this.zonaUrl + '/consultar-zonas', { observe: 'response' })
   }
 
+  public getUnaZona = (idZona)  => {
+    let params = {idZona: idZona};
+    return this.http.post(this.zonaUrl + '/get-zona' , params, { observe: 'response' })
+  }
+
   public crearZona = (zonaInfo)  => {
     return this.http.post(this.zonaUrl + '/crear-zona', zonaInfo, { observe: 'response' })
   }

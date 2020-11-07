@@ -55,7 +55,7 @@ export class VerMiembrosComponent implements OnInit {
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(zonasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
 
@@ -75,7 +75,7 @@ export class VerMiembrosComponent implements OnInit {
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
 
@@ -94,7 +94,7 @@ export class VerMiembrosComponent implements OnInit {
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(gruposTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
 
@@ -126,7 +126,7 @@ export class VerMiembrosComponent implements OnInit {
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(zonasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
           console.log(zonasTemp);
@@ -146,7 +146,7 @@ export class VerMiembrosComponent implements OnInit {
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
           console.log(ramasTemp);
@@ -165,7 +165,7 @@ export class VerMiembrosComponent implements OnInit {
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
-          this.toastr.error("Vuelva a intentar", 'Error', { timeOut: 5000 });
+          this.toastr.error(gruposTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
           console.log(gruposTemp);

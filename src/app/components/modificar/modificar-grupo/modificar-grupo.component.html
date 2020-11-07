@@ -4,9 +4,12 @@
         <div class="container">
             <h2 class="text-center" id="title">Modificar Grupo</h2>
             <p class="text-center">
-                <small id="passwordHelpInline" class="text-muted"> Para modificar un grupo, debe indicar la zona, rama y
+                <small class="text-muted"> Para modificar un grupo, debe indicar la zona, rama y
                     grupo respectivo.
-                    Se puede modificar el nombre del grupo y los jefes o monitores del mismo. </small>
+                    Se puede modificar el nombre del grupo y los jefes o monitores del mismo. Asimismo, se puede definir
+                    si el grupo
+                    pasa de la fase de evaluación, en este caso se debe asignar al menos un jefe del grupo.
+                </small>
             </p>
             <hr>
             <div class="row">
@@ -39,6 +42,11 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <label class="form-check-label" >Quitar  de la Fase de Evaluación</label>
+                        </div>
+                        <div class="my-4"></div>
                         <label for="">Nombre del Grupo</label>
                         <div class="input-group col-name">
                             <div class="input-group-prepend">

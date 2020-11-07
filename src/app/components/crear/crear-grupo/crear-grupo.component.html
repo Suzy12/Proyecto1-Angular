@@ -9,59 +9,97 @@
                     Adicionalmente, debe asignarle un monitor al grupo para dirigir a los miembros del mismo. </small>
             </p>
             <hr>
-            <div class="row">
-                <div class="col-sm">
-                    <p class="pull-center"><b> Información General</b></p>
-                    <div class="form-group">
-                        <label for="">Ingrese el número del grupo</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <span class="fa fa-id-card"></span>
-                                </span>
+            <form [formGroup]="grupoForm" (ngSubmit)="crearGrupo()" novalidate>
+                <div class="row">
+                    <div class="col-sm">
+                        <p class="pull-center"><b> Información General</b></p>
+                        <div class="form-group">
+                            <label for="">Ingrese el número del grupo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-id-card"></span>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Número de Grupo"
+                                    required="required" formControlName="idGrupo" [ngClass]="{ 'is-invalid': submitted && form.idGrupo.errors }">
+                                    <div *ngIf="submitted && form.idGrupo.errors" class="invalid-feedback">
+                                      <div *ngIf="form.idGrupo.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El campo
+                                          número de grupo es obligatorio</label>
+                                      </div>
+                                    </div>
                             </div>
-                            <input type="text" class="form-control" name="username" placeholder="Número de Grupo"
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <p class="pull-center"><b> Agregar a una rama</b></p>
+                        <div class="form-group">
+                            <label for="">Escoja una zona</label>
+                            <select required class="form-control" [(ngModel)]="selectedOptionZona"
+                                formControlName="idZona" (change)="getRamas($event.target.value)" required="required"
+                                [ngClass]="{ 'is-invalid': submitted && form.idZona.errors }">
+                                <option *ngFor="let zona of zonas; let i = index" [value]="zonas[i].id">
+                                    {{zonas[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idZona.errors" class="invalid-feedback">
+                                <div *ngIf="form.idZona.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        Debe indicar una zona</label>
+                                </div>
+                            </div>
+                            <div class="my-2"></div>
+                            <label for="">Escoja una rama</label>
+                            <select required class="form-control" formControlName="idRama"
+                                (change)="getMonitores($event.target.value)" required="required"
+                                [ngClass]="{ 'is-invalid': submitted && form.idRama.errors }">
+                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
+                                    {{ramas[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idRama.errors" class="invalid-feedback">
+                                <div *ngIf="form.idRama.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        Debe indicar una rama</label>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <p class="pull-center"><b> Designar monitores</b></p>
+                        <div class="form-group">
+                            <label for="">Designe un monitor</label>
+                            <select required class="form-control" formControlName="idEncargado1"
+                                required="required"
+                                [ngClass]="{ 'is-invalid': submitted && form.idEncargado1.errors }">
+                                <option *ngFor="let monitor of monitores; let i = index" [value]="monitor[i].id">
+                                    {{monitor[i].id}} - {{monitor[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idEncargado1.errors" class="invalid-feedback">
+                                <div *ngIf="form.idEncargado1.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        Debe indicar el primer monitor</label>
+                                </div>
+                            </div>  
+                            <div class="my-2"></div>
+                            <label for="">Designe otro monitor (opcional)</label>
+                            <select required class="form-control" formControlName="idEncargado2"
                                 required="required">
+                                <option selected [value]="">Ninguno</option>
+                                <option *ngFor="let monitor of monitores; let i = index" [value]="monitor[i].id">
+                                    {{monitor[i].id}} - {{monitor[i].nombre}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm">
-                    <p class="pull-center"><b> Agregar a una rama</b></p>
-                    <div class="form-group">
-                        <label for="">Escoja una zona</label>
-                        <select class="form-control">
-                            <option>Zona 1</option>
-                            <option>Zona 2</option>
-                        </select>
-                        <div class="my-2"></div>
-                        <label for="">Escoja una rama</label>
-                        <select class="form-control">
-                            <option>Rama 1</option>
-                            <option>Rama 2</option>
-                        </select>
-                    </div>
+                <hr>
+                <div class="center">
+                    <button type="submit" class="btn btn-secondary center">Crear Grupo</button>
                 </div>
-                <div class="col-sm">
-                    <p class="pull-center"><b> Designar monitores</b></p>
-                    <div class="form-group">
-                        <label for="">Designe un monitor</label>
-                        <select class="form-control">
-                            <option>Monitor X</option>
-                            <option>Monitor Y</option>
-                        </select>
-                        <div class="my-2"></div>
-                        <label for="">Designe otro monitor (opcional)</label>
-                        <select class="form-control">
-                            <option>Monitor X</option>
-                            <option>Monitor Y</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="center">
-                <button type="button" class="btn btn-secondary center">Crear Grupo</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>

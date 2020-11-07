@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
 import { MovimientoService } from '../../../services/movimientos/movimiento.service';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray } from '@angular/forms'
 
 @Component({
   selector: 'app-modificar-movimiento',
@@ -15,12 +15,11 @@ export class ModificarMovimientoComponent implements OnInit {
   fileData: File = null;
   previewUrl: any = null;
   movimientoForm:  FormGroup;
-  fileUploadProgress: string = null;
-  uploadedFilePath: string = null;
   movimiento: any = {};
   submitted: Boolean = false;
   routeState: any;
   encodedLogo = '';
+  telefonos: any = [];
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
@@ -32,25 +31,45 @@ export class ModificarMovimientoComponent implements OnInit {
         if (this.routeState) {
           console.log(this.routeState);
           this.movimiento = this.routeState;
+          this.telefonos = this.movimiento.telefonos;
         }
       }
     }
 
   ngOnInit(): void {
+  
     this.movimientoForm = this.formBuilder.group({
       idMovimiento: this.movimiento.cedula_juridica,
       idAsesor: this.movimiento.idAsesor,
       nombre: [this.movimiento.nombre, [Validators.required]],
       direccionWeb: [this.movimiento.direccionWeb, [Validators.required]],
-      logo: ['', [Validators.required]],
+      logo: '',
       pais: this.movimiento.pais,
       provincia: [this.movimiento.provincia, [Validators.required]],
       canton: [this.movimiento.canton, [Validators.required]],
       distrito: [this.movimiento.distrito, [Validators.required]],
-      senas: [this.movimiento.senas, [Validators.required]]
+      senas: [this.movimiento.senas, [Validators.required]],
+      telefonos: [this.telefonos, [Validators.required]]
     });
   }
 
+  initiateForm(): FormGroup {
+    return this.formBuilder.group({
+      telefono: ['', Validators.required]
+    });
+  }
+
+  addTelefono(){
+    this.telefonos.push('');
+  }
+
+  removeTelefono(i){
+    this.telefonos.splice(i, 1);
+  }
+
+  updateTelefonos(i, telefono){
+    this.telefonos[i] = telefono;
+  }
   
 
   get form() { return this.movimientoForm.controls }
@@ -66,15 +85,23 @@ export class ModificarMovimientoComponent implements OnInit {
 
     this.submitted = true;
 
-    console.log(movimientoInfo);
-
     if (this.movimientoForm.invalid) return;
 
+    for(let tel of this.telefonos) {
+      if(tel == ""){
+        this.toastr.warning("Por favor complete todos lo campos de teléfonos del movimiento", 'Advertencia', {timeOut: 10000});
+        return;
+      }
+    }
 
-   this.movimientoService.modificarMovimiento(movimientoInfo).subscribe(res => {
+    console.log(movimientoInfo);
+
+
+
+   /*this.movimientoService.modificarMovimiento(movimientoInfo).subscribe(res => {
       console.log(res.body);
       this.responseController(res);
-    }, error => console.log(error))
+    }, error => console.log(error))*/
 
     this.submitted = false;
   }

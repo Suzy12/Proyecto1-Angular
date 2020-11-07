@@ -24,5 +24,9 @@ export class GrupoService {
     return this.http.post(this.grupoUrl + '/consultar-miembros-grupo', params, { observe: 'response' })
   }
 
+  public crearGrupo = (grupoInfo)  =>  {
+    return this.http.post(this.grupoUrl + '/crear-grupo', grupoInfo, { observe: 'response' })
+  }
+
 
 }

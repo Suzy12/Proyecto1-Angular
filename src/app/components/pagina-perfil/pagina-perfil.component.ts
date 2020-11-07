@@ -37,10 +37,12 @@ export class PaginaPerfilComponent implements OnInit {
         }else{
           this.movimiento = movimientoTemp.movimiento;
           console.log(this.movimiento.idAsesor);
-          this.miembroService.getUnMiembroID(this.movimiento.idAsesor).subscribe(
+          this.miembroService.getUnMiembroxID(this.movimiento.idAsesor).subscribe(
             res =>{
               let asesorTemp:any = res.body;
-              this.asesor = asesorTemp.miembro;
+
+              if(asesorTemp.success == true)
+                this.asesor = asesorTemp.miembro;
 
             }
           );
