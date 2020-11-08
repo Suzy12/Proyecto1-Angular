@@ -21,7 +21,7 @@ export class ModificarGrupoComponent implements OnInit {
   selectedOptionZona: any;
   selectedOptionRama: any;
   selectedOptionGrupo: any;
-  nombreGrupo:any;
+  nombreGrupo: any;
   public show: boolean = false;
   grupoForm: FormGroup;
   grupoModificadoForm: FormGroup;
@@ -106,6 +106,8 @@ export class ModificarGrupoComponent implements OnInit {
       },
       err => console.log(err)
     )
+    if (this.selectedOptionRama != undefined)
+      this.getGrupos(this.selectedOptionRama);
   }
 
   getGrupos(newRama) {
@@ -130,7 +132,8 @@ export class ModificarGrupoComponent implements OnInit {
   consultarGrupo() {
     this.grupoModificadoForm.reset();
     this.grupoModificadoForm.controls['idJefeNuevo2'].setValue('Ninguno');
-    this.encargado1, this.encargado2, this.encargadoViejo1, this.encargadoViejo2 = undefined;
+    this.encargado1 = false; this.encargadoViejo1 = false; this.encargadoViejo2 = false;
+    this.encargado2 = false;
 
     let grupoInfo = this.grupoForm.getRawValue();
     this.grupoService.getUnGrupo(grupoInfo).subscribe(res => {
@@ -168,6 +171,7 @@ export class ModificarGrupoComponent implements OnInit {
         let encargadoTemp: any = res.body;
         this.encargado1 = encargadoTemp.miembro;
         this.encargadoViejo1 = this.encargado1;
+        console.log(this.encargadoViejo1.id);
       }
     );
   }
@@ -194,46 +198,56 @@ export class ModificarGrupoComponent implements OnInit {
           this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-          this.agregarEncargados(enviar.monitores);
-          this.grupoModificadoForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
-          this.encargados.push(this.encargadoViejo1);
-          if(this.encargado2){
-            this.encargados.push(this.encargadoViejo2);
-            this.grupoModificadoForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
-          }
+          setTimeout(() => {
+            this.agregarEncargados(enviar.monitores);
+            this.grupoModificadoForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
+            this.encargados.push(this.encargadoViejo1);
+            if (this.encargado2) {
+              this.encargados.push(this.encargadoViejo2);
+              this.grupoModificadoForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
+            }
+          }, 200)
         }
       }, error => console.log(error))
 
-    } else { //si no está en la fase de evaluación, busca jefes (miembros del grupo)
+    } else { //si no está en la fase de evaluación, busca jefes (miembros del grupo)   
       this.grupoService.consultarMiembrosGrupo(this.selectedOptionZona, this.selectedOptionRama, this.selectedOptionGrupo).subscribe(res => {
-        console.log(res);
-        let enviar: any = res.body;
-        if (enviar.success == false) {
-          this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
-          this.agregarEncargados(enviar.miembros);
+        {
+          console.log(res);
+          let enviar: any = res.body;
+          if (enviar.success == false) {
+            this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
+            console.log("Error");
+          } else {
+            setTimeout(() => {
+              this.agregarEncargados(enviar.miembros);
+              this.grupoModificadoForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
+              if (this.encargado2) {
+                this.grupoModificadoForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
+              }
+            }, 300)
+          }
         }
       }, error => console.log(error))
     }
   }
 
 
-  agregarEncargados(res){
+  agregarEncargados(res) {
     this.encargados = [];
     Object.values(res).forEach(element => {
       let encargado: any = element;
-      if(encargado.id == this.encargadoViejo1.id){
+      if (encargado.id == this.encargadoViejo1.id && this.cambiarFaseMonitor) {
         return;
-      }if(this.encargadoViejo2){
-        if(encargado.id == this.encargadoViejo2.id)
-        return;
+      } if (this.encargadoViejo2) {
+        if (encargado.id == this.encargadoViejo2.id && this.cambiarFaseMonitor)
+          return;
       }
       this.miembroService.getUnMiembroxID(encargado.id).subscribe(
         res => {
           let encargadoTemp: any = res.body;
 
-          if (encargadoTemp.success == true){
+          if (encargadoTemp.success == true) {
             this.encargados.push(encargadoTemp.miembro);
           }
         }
@@ -278,21 +292,20 @@ export class ModificarGrupoComponent implements OnInit {
 
   modificar() {
     this.grupoModificadoForm.controls['idJefeViejo1'].setValue(this.encargadoViejo1.id);
+    this.grupoModificadoForm.controls['idJefeViejo2'].setValue(this.encargadoViejo2.id);
     this.grupoModificadoForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.grupoModificadoForm.controls['idRama'].setValue(this.selectedOptionRama);
     this.grupoModificadoForm.controls['idGrupo'].setValue(this.selectedOptionGrupo);
     let grupoInfo = this.grupoModificadoForm.getRawValue();
-    if(grupoInfo.idJefeNuevo2 == "Ninguno"){
+    if (grupoInfo.idJefeNuevo2 == "Ninguno") {
       delete grupoInfo['idJefeNuevo2'];
     }
-    if(this.encargadoViejo2 == undefined){
+    if (this.encargadoViejo2.id == undefined) {
       delete grupoInfo['idJefeViejo2'];
-    }else{
-      grupoInfo.idJefeViejo2 = this.encargadoViejo2.id;
-    }
-    if(this.cambiarFaseMonitor){
+    } 
+    if (this.cambiarFaseMonitor) {
       grupoInfo.isMonitor = false;
-    }else{
+    } else {
       grupoInfo.isMonitor = this.grupo.isMonitor;
     }
 
@@ -310,15 +323,15 @@ export class ModificarGrupoComponent implements OnInit {
 
 
     this.submitted = false;
-  } 
+  }
 
   responseController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{
-      this.toastr.success("La solicitud se realizó con éxito", 'Grupo Modificado', {timeOut: 1000});
+    } else {
+      this.toastr.success("La solicitud se realizó con éxito", 'Grupo Modificado', { timeOut: 1000 });
       console.log("Éxito");
     }
   }

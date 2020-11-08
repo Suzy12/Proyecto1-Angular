@@ -86,6 +86,8 @@ export class VerMiembrosComponent implements OnInit {
       },
       err => console.log(err)
     )
+    if(this.selectedOptionRama != undefined)
+      this.getGrupos(this.selectedOptionRama);
   }
 
   getGrupos(newRama) {

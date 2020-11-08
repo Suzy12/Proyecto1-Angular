@@ -104,7 +104,8 @@ export class ModificarRamaComponent implements OnInit {
   consultar() {
     this.ramaModificadaForm.reset();
     this.ramaModificadaForm.controls['idJefeNuevo2'].setValue('Ninguno');
-    this.encargado1, this.encargado2, this.encargadoViejo1, this.encargadoViejo2 = undefined;
+    this.encargado1 = false; this.encargadoViejo1 = false; this.encargadoViejo2 = false;
+    this.encargado2 = false;
 
     this.ramaService.getUnaRama(this.selectedOptionZona, this.selectedOptionRama).subscribe(res => {
       console.log(res);
@@ -162,7 +163,13 @@ export class ModificarRamaComponent implements OnInit {
           this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-          this.agregarEncargados(enviar.miembros);
+          setTimeout(() => {
+            this.agregarEncargados(enviar.miembros);
+            this.ramaModificadaForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
+            if (this.encargado2) {
+              this.ramaModificadaForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
+            }
+          }, 400)
         }
     }, error => console.log(error))
   }
@@ -171,12 +178,6 @@ export class ModificarRamaComponent implements OnInit {
     this.encargados = [];
     Object.values(res).forEach(element => {
       let encargado: any = element;
-      /*if(encargado.id == this.encargadoViejo1.id){
-        return;
-      }if(this.encargadoViejo2){
-        if(encargado.id == this.encargadoViejo2.id)
-        return;
-      }*/
       this.miembroService.getUnMiembroxID(encargado.id).subscribe(
         res => {
           let encargadoTemp: any = res.body;
@@ -216,6 +217,7 @@ export class ModificarRamaComponent implements OnInit {
 
   modificar() {
     this.ramaModificadaForm.controls['idJefeViejo1'].setValue(this.encargadoViejo1.id);
+    this.ramaModificadaForm.controls['idJefeViejo2'].setValue(this.encargadoViejo2.id);
     this.ramaModificadaForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.ramaModificadaForm.controls['idRama'].setValue(this.selectedOptionRama);
     this.ramaModificadaForm.controls['nombre'].setValue(this.rama.nombre);
@@ -224,15 +226,11 @@ export class ModificarRamaComponent implements OnInit {
     if(ramaInfo.idJefeNuevo2 == "Ninguno"){
       delete ramaInfo['idJefeNuevo2'];
     }
-    if(this.encargadoViejo2 == undefined){
+    if(this.encargadoViejo2.id == undefined){
       delete ramaInfo['idJefeViejo2'];
-    }else{
-      ramaInfo.idJefeViejo2 = this.encargadoViejo2.id;
     }
-    if(this.encargadoViejo1 == undefined){
+    if(this.encargadoViejo1.id == undefined){
       delete ramaInfo['idJefeViejo1'];
-    }else{
-      ramaInfo.idJefeViejo1 = this.encargadoViejo1.id;
     }
 
     console.log(ramaInfo);

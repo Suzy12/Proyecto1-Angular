@@ -85,7 +85,8 @@ export class ConsultarGrupoComponent implements OnInit {
       },
       err => console.log(err)
     )
-    //this.getGrupos(this.selectedOptionRama);
+    if(this.selectedOptionRama != undefined)
+      this.getGrupos(this.selectedOptionRama);
   }
 
   getGrupos(newRama) {

@@ -80,7 +80,8 @@ export class ModificarZonaComponent implements OnInit {
   consultar() {
     this.zonaModificadaForm.reset();
     this.zonaModificadaForm.controls['idJefeNuevo2'].setValue('Ninguno');
-    this.encargado1, this.encargado2, this.encargadoViejo1, this.encargadoViejo2 = undefined;
+    this.encargado1 = false; this.encargadoViejo1 = false; this.encargadoViejo2 = false;
+    this.encargado2 = false;
 
     this.zonaService.getUnaZona(this.selectedOptionZona).subscribe(res => {
       console.log(res);
@@ -138,7 +139,13 @@ export class ModificarZonaComponent implements OnInit {
           this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-          this.agregarEncargados(enviar.miembros);
+          setTimeout(() => {
+            this.agregarEncargados(enviar.miembros);
+            this.zonaModificadaForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
+            if (this.encargado2) {
+              this.zonaModificadaForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
+            }
+          }, 400)
         }
     }, error => console.log(error))
   }
@@ -147,12 +154,6 @@ export class ModificarZonaComponent implements OnInit {
     this.encargados = [];
     Object.values(res).forEach(element => {
       let encargado: any = element;
-      /*if(encargado.id == this.encargadoViejo1.id){
-        return;
-      }if(this.encargadoViejo2){
-        if(encargado.id == this.encargadoViejo2.id)
-        return;
-      }*/
       this.miembroService.getUnMiembroxID(encargado.id).subscribe(
         res => {
           let encargadoTemp: any = res.body;
@@ -191,6 +192,8 @@ export class ModificarZonaComponent implements OnInit {
   }
 
   modificar() {
+    this.zonaModificadaForm.controls['idJefeViejo1'].setValue(this.encargadoViejo1.id);
+    this.zonaModificadaForm.controls['idJefeViejo2'].setValue(this.encargadoViejo2.id);
     this.zonaModificadaForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.zonaModificadaForm.controls['nombre'].setValue(this.zona.nombre);
     let zonaInfo = this.zonaModificadaForm.getRawValue();
@@ -198,15 +201,11 @@ export class ModificarZonaComponent implements OnInit {
     if(zonaInfo.idJefeNuevo2 == "Ninguno"){
       delete zonaInfo['idJefeNuevo2'];
     }
-    if(this.encargadoViejo2 == undefined){
+    if(this.encargadoViejo2.id == undefined){
       delete zonaInfo['idJefeViejo2'];
-    }else{
-      zonaInfo.idJefeViejo2 = this.encargadoViejo2.id;
     }
-    if(this.encargadoViejo1 == undefined){
+    if(this.encargadoViejo1.id == undefined){
       delete zonaInfo['idJefeViejo1'];
-    }else{
-      zonaInfo.idJefeViejo1 = this.encargadoViejo1.id;
     }
     
     console.log(zonaInfo);
