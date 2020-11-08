@@ -10,13 +10,19 @@ export class RamaService {
 
   constructor(private http: HttpClient) { }
 
-  public getRama = (idZona)  =>  {
+  public getRamas = (idZona)  =>  {
     let params = {idZona: idZona};
     return this.http.post(this.ramaUrl + '/consultar-ramas', params, { observe: 'response' })
   }
 
+  public getUnaRama = (idZona, idRama)  =>  {
+    let params = {idZona: idZona, idRama: idRama};
+    return this.http.post(this.ramaUrl + '/get-rama', params, { observe: 'response' })
+  }
+
   public getRamasDisponibles = (idMiembro)  =>  {
     let params = {idMiembro: idMiembro};
+    console.log(params);
     return this.http.post(this.ramaUrl + '/consultar-ramas-disponibles', params, { observe: 'response' })
   }
 
@@ -30,5 +36,13 @@ export class RamaService {
     return this.http.post(this.ramaUrl + '/consultar-miembros-rama', params, { observe: 'response' })
   }
 
+  public consultarRamaDeMiembro = (idMiembro)  => {
+    let params = {idMiembro: idMiembro};
+    return this.http.post(this.ramaUrl + '/consultar-ramas-miembro', params, { observe: 'response' })
+  }
+
+  public modificarRama = (ramaInfo)  => {
+    return this.http.post(this.ramaUrl + '/modificar-rama', ramaInfo, { observe: 'response' })
+  }
   
 }

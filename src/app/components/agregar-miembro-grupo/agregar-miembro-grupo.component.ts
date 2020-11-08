@@ -23,6 +23,7 @@ export class AgregarMiembroGrupoComponent implements OnInit {
   submitted: Boolean = false;
   submittedAgregar: Boolean = false;
   miembro:any = {}
+  show:Boolean = false;
 
 
   constructor(
@@ -36,20 +37,21 @@ export class AgregarMiembroGrupoComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-  get form() { return this.miembroForm.controls }
-  get formMiembroGrupo() { return this.miembroGrupoForm.controls }
 
   ngOnInit(): void {
     this.miembroForm = this.formBuilder.group({
       idMiembro: ['', [Validators.required]]
     });
     this.miembroGrupoForm = this.formBuilder.group({
-      idZona: [this.selectedOptionZona, [Validators.required]],
+      idZona: '',
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]],
-      idMiembro: this.miembro.id
+      idMiembro: '',
     });
   }
+
+  get form() { return this.miembroForm.controls }
+  get formMiembroGrupo() { return this.miembroGrupoForm.controls }
 
   consultar(){
     let miembroInfo = this.miembroForm.getRawValue();
@@ -67,8 +69,9 @@ export class AgregarMiembroGrupoComponent implements OnInit {
           console.log("Error");
         } else {
           this.miembro = miembroTemp.miembro;
-          this.selectedOptionZona = miembroTemp.grupos[0].idZona;
+          this.selectedOptionZona = miembroTemp.grupos[0].id_zona+"";
           this.getRamas(this.miembro.id);
+          this.show = true;
         }
       },
       err => console.log(err)
@@ -84,11 +87,12 @@ export class AgregarMiembroGrupoComponent implements OnInit {
     this.ramaService.getRamasDisponibles(idMiembro).subscribe(
       res => {
         let ramasTemp: any = res.body;
+        console.log(ramasTemp);
         if (ramasTemp.success == false) {
           this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-
+          
           Object.values(ramasTemp.ramas).forEach(element => {
             this.ramas.push(element);
           });
@@ -107,7 +111,7 @@ export class AgregarMiembroGrupoComponent implements OnInit {
           this.toastr.error(gruposTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-
+          console.log(gruposTemp);
           Object.values(gruposTemp.grupos).forEach(element => {
             this.grupos.push(element);
           });
@@ -118,12 +122,19 @@ export class AgregarMiembroGrupoComponent implements OnInit {
   }
 
   agregar(){
-    let agregarInfo = this.miembroGrupoForm.getRawValue();
     
     this.submittedAgregar = true;
 
+    this.miembroGrupoForm.controls['idZona'].setValue(this.selectedOptionZona);
+    this.miembroGrupoForm.controls['idMiembro'].setValue(this.miembro.id);
+
+    let agregarInfo = this.miembroGrupoForm.getRawValue();
+
+    console.log(agregarInfo);
 
     if (this.miembroGrupoForm.invalid) return;
+
+    console.log(agregarInfo);
 
     this.miembroService.agregarMiembroGrupo(agregarInfo).subscribe(
       res => {
@@ -138,6 +149,7 @@ export class AgregarMiembroGrupoComponent implements OnInit {
       },
       err => console.log(err)
     )
+
 
     this.submittedAgregar = false;
 

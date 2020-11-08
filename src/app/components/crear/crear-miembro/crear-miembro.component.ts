@@ -77,7 +77,7 @@ export class CrearMiembroComponent implements OnInit {
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRama(newZona).subscribe(
+    this.ramaService.getRamas(newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -125,7 +125,7 @@ export class CrearMiembroComponent implements OnInit {
     
     console.log(miembroInfo);
 
-    this.miembroService.modificarInfoMiembro(miembroInfo).subscribe(res => {
+    this.miembroService.crearMiembro(miembroInfo).subscribe(res => {
       console.log(res.body);
       this.responseController(res);
     }, error => console.log(error))

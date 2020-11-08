@@ -24,8 +24,21 @@ export class GrupoService {
     return this.http.post(this.grupoUrl + '/consultar-miembros-grupo', params, { observe: 'response' })
   }
 
+  public consultarMiembrosGrupoForm = (grupoInfo)  =>  {
+    return this.http.post(this.grupoUrl + '/consultar-miembros-grupo', grupoInfo, { observe: 'response' })
+  }
+
   public crearGrupo = (grupoInfo)  =>  {
     return this.http.post(this.grupoUrl + '/crear-grupo', grupoInfo, { observe: 'response' })
+  }
+
+  public consultarGrupoDeMiembro = (idZona, idRama, idMiembro) => {
+    let params = { idZona: idZona, idRama: idRama , idMiembro: idMiembro}
+    return this.http.post(this.grupoUrl + '/consultar-grupo-miembro-en-rama', params, { observe: 'response' })
+  }
+
+  public modificarGrupo = (grupoInfo)  =>  {
+    return this.http.post(this.grupoUrl + '/modificar-grupo', grupoInfo, { observe: 'response' })
   }
 
 

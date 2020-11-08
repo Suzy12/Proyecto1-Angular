@@ -24,24 +24,18 @@
                                         <span class="fa fa-id-card"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Cédula" required="required"
-                                    [ngClass]="{ 'is-invalid': submitted && form.idMiembro.errors }">
-                                <div *ngIf="submitted && form.idMiembro.errors" class="invalid-feedback">
-                                    <div *ngIf="form.idMiembro.errors.required">
-                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
-                                            campo de la cédula es obligatorio</label>
-                                    </div>
-                                </div>
+                                <input type="text" class="form-control" placeholder="Cédula"
+                                formControlName="idMiembro" required="required">
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
             <div>
                 <button type="submit" class="btn btn-secondary center">Consultar</button>
             </div>
+        </form>
             <hr>
-            <form [formGroup]="miembroGrupoForm" (ngSubmit)="cambiar()" novalidate>
+            <form [formGroup]="miembroGrupoForm" (ngSubmit)="cambiar()" novalidate *ngIf = "show">
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
@@ -49,7 +43,7 @@
                             <select required class="form-control" formControlName="idRama"
                                 (change)="getGrupoViejo($event.target.value)" required="required"
                                 [ngClass]="{ 'is-invalid': submittedCambiar && formMiembroGrupo.idRama.errors }">
-                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
+                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">
                                     {{ramas[i].nombre}}
                                 </option>
                             </select>
@@ -71,15 +65,15 @@
                                 </div>
                                 <div class="col-sm">
                                     <label for="">Agregar a grupo:</label>
-                                    <select required class="form-control" formControlName="idGrupo" required="required"
-                                        [ngClass]="{ 'is-invalid': submittedCambiar && formMiembroGrupo.idGrupo.errors }">
+                                    <select required class="form-control" formControlName="idGrupoNuevo" required="required"
+                                        [ngClass]="{ 'is-invalid': submittedCambiar && formMiembroGrupo.idGrupoNuevo.errors }">
                                         <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
                                             {{grupos[i].nombre}}
                                         </option>
                                     </select>
-                                    <div *ngIf="submittedCambiar && formMiembroGrupo.idGrupo.errors"
+                                    <div *ngIf="submittedCambiar && formMiembroGrupo.idGrupoNuevo.errors"
                                         class="invalid-feedback">
-                                        <div *ngIf="formMiembroGrupo.idGrupo.errors.required">
+                                        <div *ngIf="formMiembroGrupo.idGrupoNuevo.errors.required">
                                             <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
                                                 Debe indicar un grupo para el miembro</label>
                                         </div>
@@ -91,7 +85,7 @@
                 </div>
                 <div class="my-4"></div>
                 <div class="center">
-                    <button type="button" class="btn btn-secondary center">Confirmar Cambio</button>
+                    <button type="submit" class="btn btn-secondary center">Confirmar Cambio</button>
                 </div>
             </form>
         </div>

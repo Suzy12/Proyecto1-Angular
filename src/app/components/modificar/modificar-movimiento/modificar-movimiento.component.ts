@@ -97,11 +97,10 @@ export class ModificarMovimientoComponent implements OnInit {
     console.log(movimientoInfo);
 
 
-
-   /*this.movimientoService.modificarMovimiento(movimientoInfo).subscribe(res => {
+   this.movimientoService.modificarMovimiento(movimientoInfo).subscribe(res => {
       console.log(res.body);
       this.responseController(res);
-    }, error => console.log(error))*/
+    }, error => console.log(error))
 
     this.submitted = false;
   }

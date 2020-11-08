@@ -70,7 +70,7 @@ export class ConsultarGrupoComponent implements OnInit {
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRama(newZona).subscribe(
+    this.ramaService.getRamas(newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -85,6 +85,7 @@ export class ConsultarGrupoComponent implements OnInit {
       },
       err => console.log(err)
     )
+    //this.getGrupos(this.selectedOptionRama);
   }
 
   getGrupos(newRama) {

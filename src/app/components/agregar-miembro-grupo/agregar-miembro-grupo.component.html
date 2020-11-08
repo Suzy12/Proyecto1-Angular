@@ -23,15 +23,8 @@
                                         <span class="fa fa-id-card"></span>
                                     </span>
                                 </div>
-                                <input type="submit" class="form-control" formControlName="idMiembro"
-                                    placeholder="Cédula" required="required"
-                                    [ngClass]="{ 'is-invalid': submitted && form.idMiembro.errors }">
-                                <div *ngIf="submitted && form.idMiembro.errors" class="invalid-feedback">
-                                    <div *ngIf="form.idMiembro.errors.required">
-                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
-                                            campo de la cédula es obligatorio</label>
-                                    </div>
-                                </div>
+                                <input  class="form-control" formControlName="idMiembro"
+                                    placeholder="Cédula" required="required">
                             </div>
                         </div>
                     </div>
@@ -41,7 +34,7 @@
                 </div>
             </form>
             <hr>
-            <form [formGroup]="miembroGrupoForm" (ngSubmit)="agregar()" novalidate>
+            <form [formGroup]="miembroGrupoForm" (ngSubmit)="agregar()" novalidate *ngIf = "show">
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
@@ -49,7 +42,7 @@
                             <select required class="form-control" formControlName="idRama"
                                 (change)="getGrupos($event.target.value)" required="required"
                                 [ngClass]="{ 'is-invalid': submittedAgregar && formMiembroGrupo.idRama.errors }">
-                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
+                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">
                                     {{ramas[i].nombre}}
                                 </option>
                             </select>

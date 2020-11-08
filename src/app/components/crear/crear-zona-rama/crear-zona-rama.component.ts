@@ -50,7 +50,6 @@ export class CrearZonaRamaComponent implements OnInit {
           this.toastr.error(zonasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-
           Object.values(zonasTemp.zonas).forEach(element => {
             this.zonas.push(element);
           });
@@ -68,7 +67,7 @@ export class CrearZonaRamaComponent implements OnInit {
     if (this.zonaForm.invalid) return;
 
     console.log(zonaInfo);
-    this.zonaService.crearZona(zonaInfo).subscribe(res => {
+   this.zonaService.crearZona(zonaInfo).subscribe(res => {
       console.log(res);
       this.zonaResponseController(res)
     }, error => console.log(error))

@@ -52,7 +52,7 @@
                             <div class="my-2"></div>
                             <label for="">Escoja una rama</label>
                             <select required class="form-control" formControlName="idRama"
-                                (change)="getMonitores($event.target.value)" required="required"
+                                required="required"
                                 [ngClass]="{ 'is-invalid': submitted && form.idRama.errors }">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
                                     {{ramas[i].nombre}}
@@ -72,9 +72,10 @@
                             <label for="">Designe un monitor</label>
                             <select required class="form-control" formControlName="idEncargado1"
                                 required="required"
-                                [ngClass]="{ 'is-invalid': submitted && form.idEncargado1.errors }">
-                                <option *ngFor="let monitor of monitores; let i = index" [value]="monitor[i].id">
-                                    {{monitor[i].id}} - {{monitor[i].nombre}}
+                                [ngClass]="{ 'is-invalid': submitted && form.idEncargado1.errors }"
+                                (change)="changeEncargado1($event.target.value)">
+                                <option *ngFor="let monitor of monitores; let i = index" [value]="monitores[i].cedula">
+                                    {{monitores[i].cedula}} - {{monitores[i].nombre}}
                                 </option>
                             </select>
                             <div *ngIf="submitted && form.idEncargado1.errors" class="invalid-feedback">
@@ -86,10 +87,10 @@
                             <div class="my-2"></div>
                             <label for="">Designe otro monitor (opcional)</label>
                             <select required class="form-control" formControlName="idEncargado2"
-                                required="required">
+                                required="required" (change)="changeEncargado2($event.target.value)">
                                 <option selected [value]="">Ninguno</option>
-                                <option *ngFor="let monitor of monitores; let i = index" [value]="monitor[i].id">
-                                    {{monitor[i].id}} - {{monitor[i].nombre}}
+                                <option *ngFor="let monitor of monitores; let i = index" [value]="monitores[i].cedula">
+                                    {{monitores[i].cedula}} - {{monitores[i].nombre}}
                                 </option>
                             </select>
                         </div>

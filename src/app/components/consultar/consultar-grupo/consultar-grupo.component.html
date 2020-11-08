@@ -22,7 +22,7 @@
                             </select>
                             <div class="my-2"></div>
                             <label for="">Escoja una rama</label>
-                            <select required class="form-control" formControlName="idRama"
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama" formControlName="idRama"
                                 (change)="getGrupos($event.target.value)">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
                                     {{ramas[i].nombre}}
@@ -30,7 +30,7 @@
                             </select>
                             <div class="my-2"></div>
                             <label for="">Escoja un grupo</label>
-                            <select required class="form-control" formControlName="idGrupo">
+                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo" formControlName="idGrupo">
                                 <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
                                     {{grupos[i].nombre}}
                                 </option>

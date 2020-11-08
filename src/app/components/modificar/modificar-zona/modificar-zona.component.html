@@ -4,130 +4,150 @@
         <div class="container">
             <h2 class="text-center" id="title">Modificar Zona</h2>
             <p class="text-center">
-                <small id="passwordHelpInline" class="text-muted"> Para modificar una zona, debe indicar la zona a modificar.
+                <small id="passwordHelpInline" class="text-muted"> Para modificar una zona, debe indicar la zona a
+                    modificar.
                     Se puede modificar los jefes. </small>
             </p>
             <hr>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="form-group">
-                        <div class="my-2"></div>
-                        <label for="">Escoja una zona</label>
-                        <select class="form-control">
-                            <option>Zona 1</option>
-                            <option>Zona 2</option>
-                        </select>
+            <form [formGroup]="zonaForm" (ngSubmit)="consultar()" novalidate>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <div class="my-2"></div>
+                            <label for="">Escoja una zona</label>
+                            <select required class="form-control" [(ngModel)]="selectedOptionZona"
+                                formControlName="idZona">
+                                <option *ngFor="let zona of zonas; let i = index" [value]="zonas[i].id">
+                                    {{zonas[i].nombre}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="center">
-                <button type="button" class="btn btn-secondary center">Consultar</button>
-            </div>
+                <div class="center">
+                    <button type="submit" class="btn btn-secondary center">Consultar</button>
+                </div>
+            </form>
             <hr>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="form-group">
-                        <div class="my-4"></div>
-                        <label for="">Primer jefe</label>
-                        <select class="form-control">
-                            <option>Jefe 1</option>
-                            <option>Jefe 2</option>
-                        </select>
+            <form [formGroup]="zonaModificadaForm" (ngSubmit)="modificar()" novalidate *ngIf = "show">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <div class="my-4"></div>
+                            <label for="">Primer jefe (Obligatorio)</label>
+                            <select required class="form-control" formControlName="idJefeNuevo1" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && formZona.idJefeNuevo1.errors }"
+                                    (change)="changeEncargado1($event.target.value)">
+                                    <option *ngFor="let encargado of encargados; let i = index" [value]="encargados[i].id">
+                                        {{encargados[i].id}} - {{encargados[i].nombre}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && formZona.idJefeNuevo1.errors" class="invalid-feedback">
+                                    <div *ngIf="formZona.idJefeNuevo1.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                            El primer encargado es obligatorio</label>
+                                    </div>
+                                </div>
 
-                        <div class="my-2"></div>
-                        <div class="container-jefes">
-                            <div class="card-profile-image center">
-                                <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
-                                    class="rounded-circle">
+                            <div class="my-2"></div>
+                            <div class="container-jefes">
+                                <div class="card-profile-image center">
+                                    <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                                        class="rounded-circle">
+                                </div>
+                                <p class="text-center"> {{encargado1.nombre}}
+                                </p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div>
+                                            <p>Número de Cédula</p>
+                                            <p class="text-secondary">
+                                                <i class="fa fa-id-card"></i>
+                                                {{encargado1.id}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div>
+                                            <p>Número de Celular</p>
+                                            <p class="text-secondary">
+                                                <i class="fa fa-phone"></i>
+                                                {{encargado1.celular}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div>
+                                            <p>Correo Electrónico</p>
+                                            <p class="text-secondary">
+                                                <i class="fa fa-at"></i>
+                                                {{encargado1.email}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-center"> Alejandro Tapia Álvarez
-                            </p>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm">
-                                    <div>
-                                        <p>Número de Cédula</p>
-                                        <p class="text-secondary">
-                                            <i class="fa fa-id-card"></i>
-                                            123456789
-                                        </p>
-                                    </div>
+
+                            <div class="my-4"></div>
+                            <label for="">Segundo jefe (Opcional)</label>
+                            <select class="form-control" formControlName="idJefeNuevo2"
+                                (change)="changeEncargado2($event.target.value)">
+                                <option >Ninguno</option>
+                                <option *ngFor="let encargado of encargados; let i = index" [value]="encargados[i].id">
+                                    {{encargados[i].id}} - {{encargados[i].nombre}}
+                                </option>
+                            </select>
+
+                            <div class="my-2"></div>
+                            <div class="container-jefes" *ngIf = "encargado2">
+                                <div class="card-profile-image center">
+                                    <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                                        class="rounded-circle">
                                 </div>
-                                <div class="col-sm">
-                                    <div>
-                                        <p>Número de Celular</p>
-                                        <p class="text-secondary">
-                                            <i class="fa fa-phone"></i>
-                                            8804-0788
-                                        </p>
+                                <p class="text-center"> {{encargado2.nombre}}
+                                </p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div>
+                                            <p>Número de Cédula</p>
+                                            <p class="text-secondary">
+                                                <i class="fa fa-id-card"></i>
+                                                {{encargado2.id}}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div>
-                                        <p>Correo Electrónico</p>
-                                        <p class="text-secondary">
-                                            <i class="fa fa-at"></i>
-                                            aletapia1908@gmail.com
-                                        </p>
+                                    <div class="col-sm">
+                                        <div>
+                                            <p>Número de Celular</p>
+                                            <p class="text-secondary">
+                                                <i class="fa fa-phone"></i>
+                                                {{encargado2.celular}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div>
+                                            <p>Correo Electrónico</p>
+                                            <p class="text-secondary">
+                                                <i class="fa fa-at"></i>
+                                                {{encargado2.email}}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-
-                        <div class="my-4"></div>
-                        <label for="">Segundo jefe</label>
-                        <select class="form-control">
-                            <option>Jefe 1</option>
-                            <option>Jefe 2</option>
-                        </select>
-
-                        <div class="my-2"></div>
-                        <div class="container-jefes">
-                            <div class="card-profile-image center">
-                                <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
-                                    class="rounded-circle">
-                            </div>
-                            <p class="text-center"> Alejandro Tapia Álvarez
-                            </p>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm">
-                                    <div>
-                                        <p>Número de Cédula</p>
-                                        <p class="text-secondary">
-                                            <i class="fa fa-id-card"></i>
-                                            123456789
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div>
-                                        <p>Número de Celular</p>
-                                        <p class="text-secondary">
-                                            <i class="fa fa-phone"></i>
-                                            8804-0788
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div>
-                                        <p>Correo Electrónico</p>
-                                        <p class="text-secondary">
-                                            <i class="fa fa-at"></i>
-                                            aletapia1908@gmail.com
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
-            </div>
-            <div class="my-4"></div>
-            <div class="center">
-                <button type="button" class="btn btn-secondary center">Modificar</button>
-            </div>
+                <div class="my-4"></div>
+                <div class="center">
+                    <button type="submit" class="btn btn-secondary center">Modificar</button>
+                </div>
+            </form>
         </div>
+        <hr>
     </div>
 </div>

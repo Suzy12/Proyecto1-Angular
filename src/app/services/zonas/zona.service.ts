@@ -17,6 +17,7 @@ export class ZonaService {
 
   public getUnaZona = (idZona)  => {
     let params = {idZona: idZona};
+    console.log(params);
     return this.http.post(this.zonaUrl + '/get-zona' , params, { observe: 'response' })
   }
 
@@ -27,6 +28,10 @@ export class ZonaService {
   public consultarMiembrosZona = (idZona)  => {
     let params = {idZona: idZona};
     return this.http.post(this.zonaUrl + '/consultar-miembros-zona', params, { observe: 'response' })
+  }
+
+  public modificarZona = (zonaInfo)  => {
+    return this.http.post(this.zonaUrl + '/modificar-zona', zonaInfo, { observe: 'response' })
   }
   
 }

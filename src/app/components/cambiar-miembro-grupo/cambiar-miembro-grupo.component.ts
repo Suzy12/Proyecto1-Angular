@@ -7,7 +7,6 @@ import { RamaService } from '../../services/ramas/rama.service'
 import { GrupoService } from '../../services/grupos/grupo.service'
 import { ToastrService } from 'ngx-toastr';
 import { MiembroService } from '../../services/miembros/miembro.service'
-import { faElementor } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-cambiar-miembro-grupo',
@@ -24,7 +23,8 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   submitted: Boolean = false;
   submittedCambiar: Boolean = false;
   miembro:any = {}
-  grupoViejo: any;
+  grupoViejo: any = "Scouts";
+  show: Boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -49,6 +49,9 @@ export class CambiarMiembroGrupoComponent implements OnInit {
 
   }
 
+  get form() { return this.miembroForm.controls }
+  get formMiembroGrupo() { return this.miembroGrupoForm.controls }
+
   consultar(){
     let miembroInfo = this.miembroForm.getRawValue();
 
@@ -64,13 +67,13 @@ export class CambiarMiembroGrupoComponent implements OnInit {
           console.log("Error");
         } else {
           this.miembro = miembroTemp.miembro;
-          this.selectedOptionZona = miembroTemp.grupos[0].idZona;
+          this.selectedOptionZona = miembroTemp.grupos[0].id_zona+"";
           this.getRamas(this.miembro.id);
-          this.getGrupoViejo();
         }
       },
       err => console.log(err)
     )
+    this.show = true;
 
     this.submitted = false;
 
@@ -79,13 +82,14 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   getRamas(idMiembro) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRamasDisponibles(idMiembro).subscribe( /////////////////
+    this.ramaService.consultarRamaDeMiembro(idMiembro).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
           this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
+          console.log(ramasTemp);
 
           Object.values(ramasTemp.ramas).forEach(element => {
             this.ramas.push(element);
@@ -97,12 +101,17 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   }
 
   getGrupoViejo(newRama){
-    /*let grupoInfo = { idZona: this.selectedOptionZona, idRama: newRama, idGrupo }
-    this.grupoService.getUnGrupo().subscribe(res => {
-      console.log(res);
-      this.grupoSuccess(res);
-      this.listaMiembros(res.body);
-    }, error => console.log(error))*/
+    this.grupoService.consultarGrupoDeMiembro(this.selectedOptionZona, newRama+"", this.miembro.id).subscribe(res => {
+      let grupoTemp: any = res.body;
+        if (grupoTemp.success == false) {
+          this.toastr.error(grupoTemp.error.message, 'Error', { timeOut: 5000 });
+          console.log("Error");
+        } else {
+          this.grupoViejo = grupoTemp.grupo[0];
+          this.getGrupos(newRama+"");
+
+        }
+    }, error => console.log(error));
   }
 
   getGrupos(newRama) {
@@ -110,14 +119,19 @@ export class CambiarMiembroGrupoComponent implements OnInit {
     this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
+        console.log(gruposTemp);
         if (gruposTemp.success == false) {
           this.toastr.error(gruposTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-          for(let grupo of gruposTemp.grupos) {
-            if(grupo.idGrupo != this.grupoViejo.id)
+          console.log(gruposTemp);
+          
+          Object.values(gruposTemp.grupos).forEach(element => {
+            let grupo:any = element;
+            if(grupo.id != this.grupoViejo.id_grupo)
               this.grupos.push(grupo);
-          }
+          });
+
         }
       },
       err => console.log(err)
@@ -125,12 +139,19 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   }
 
   cambiar(){
+
+    this.miembroGrupoForm.controls['idZona'].setValue(this.selectedOptionZona);
+    this.miembroGrupoForm.controls['idMiembro'].setValue(this.miembro.id);
+    this.miembroGrupoForm.controls['idGrupoViejo'].setValue(this.grupoViejo.id_grupo+"");
+
     let cambiarInfo = this.miembroGrupoForm.getRawValue();
     
     this.submittedCambiar = true;
 
 
     if (this.miembroGrupoForm.invalid) return;
+
+    console.log(cambiarInfo);
 
     this.miembroService.cambiarMiembroGrupo(cambiarInfo).subscribe(
       res => {
@@ -139,7 +160,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
           this.toastr.error(miembroTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-          this.toastr.success("La solicitud se realizó con éxito", 'Miembro Cambiado a Nuevo Grupo', {timeOut: 2000});
+          this.toastr.success("La solicitud se realizó con éxito", 'Miembro Cambiado a Nuevo Grupo', {timeOut: 5000});
           console.log("Éxito"); 
         }
       },

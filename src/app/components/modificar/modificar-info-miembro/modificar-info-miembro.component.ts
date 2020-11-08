@@ -65,10 +65,10 @@ export class ModificarInfoMiembroComponent implements OnInit {
     }
     console.log(miembroInfo);
 
-   this.miembroService.modificarInfoMiembro(miembroInfo).subscribe(res => {
+   /*this.miembroService.modificarInfoMiembro(miembroInfo).subscribe(res => {
       console.log(res.body);
       this.consultarController(res);
-    }, error => console.log(error))
+    }, error => console.log(error))*/
 
     this.submitted = false;
   }

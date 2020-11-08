@@ -79,17 +79,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>San José</td>
-                                <td>Escazú</td>
-                                <td>Scouts</td>
-                                <td>Miembro</td>
-                            </tr>
-                            <tr>
-                                <td>San José</td>
-                                <td>Guácima</td>
-                                <td>Grupo 02</td>
-                                <td>Jefe de grupo</td>
+                            <tr *ngFor="let grupo of gruposMiembro">
+                                <td>{{grupo.id_zona}}</td>
+                                <td>{{grupo.id_rama}}</td>
+                                <td>{{grupo.nombre}}</td>
+                                <td>{{grupo.nombre_lider}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -23,6 +23,7 @@ export class CrearGrupoComponent implements OnInit {
   grupoForm: FormGroup;
   grupo:any = {};
   submitted: Boolean = false;
+  encargado1: any;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -39,9 +40,8 @@ export class CrearGrupoComponent implements OnInit {
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]],
-      nombre: ['', [Validators.required]],
       idEncargado1: ['', [Validators.required]],
-      idEncargado2: ['', [Validators.required]],
+      idEncargado2: ['Ninguno', [Validators.required]],
       isMonitor: true
     });
   }
@@ -68,7 +68,7 @@ export class CrearGrupoComponent implements OnInit {
 
   getRamas(newZona) {
     this.ramas = [];
-    this.ramaService.getRama(newZona).subscribe(
+    this.ramaService.getRamas(newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -83,6 +83,7 @@ export class CrearGrupoComponent implements OnInit {
       },
       err => console.log(err)
     )
+    this.getMonitores(newZona);
   }
 
   getMonitores(idZona) {
@@ -94,14 +95,30 @@ export class CrearGrupoComponent implements OnInit {
           this.toastr.error(monitoresTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-          console.log(monitoresTemp);
-          /*Object.values(monitoresTemp).forEach(element => {
-            this.ramas.push(element);
-          });*/
+          console.log(monitoresTemp.monitores);
+          Object.values(monitoresTemp.monitores).forEach(element => {
+            this.monitores.push(element);
+          });
         }
       },
       err => console.log(err)
     )
+  }
+
+  changeEncargado1(id) {
+    for (let encargado of this.monitores) {
+      if (encargado.cedula == id) {
+        this.encargado1 = encargado;
+      }
+    }
+  }
+
+  changeEncargado2(id) {
+    if (this.encargado1.cedula == id) {
+      this.toastr.clear();
+      this.toastr.warning("Por favor utilice un Encargado 2 diferente al Encargado 1", 'Advertencia', { timeOut: 10000 });
+      this.grupoForm.controls['idEncargado2'].setValue('Ninguno');
+    }
   }
 
   crearGrupo(){
@@ -109,9 +126,10 @@ export class CrearGrupoComponent implements OnInit {
 
     this.submitted = true;
 
+    console.log(grupoInfo);
+
     if (this.grupoForm.invalid) return;
 
-    console.log(grupoInfo);
 
     if(grupoInfo.idEncargado2 == "Ninguno"){
       delete grupoInfo['idEncargado2'];
@@ -136,6 +154,9 @@ export class CrearGrupoComponent implements OnInit {
       this.toastr.success("La solicitud se realizó con éxito", 'Grupo Creado', {timeOut: 2000});
       console.log("Éxito");
       this.grupoForm.reset();
+      this.grupoForm.controls['idEncargado2'].setValue('Ninguno');
+      this.grupoForm.controls['isMonitor'].setValue(true);
+
     }
   }
 
