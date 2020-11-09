@@ -266,11 +266,18 @@ export class ModificarGrupoComponent implements OnInit {
 
 
   changeEncargado1(id) {
-    for (let encargado of this.encargados) {
-      if (encargado.id == id) {
-        this.encargado1 = encargado;
-      }
+    if (this.encargado2.id == id) {
+      this.toastr.clear();
+      this.toastr.warning("Por favor utilice un Encargado 2 diferente al Encargado 1", 'Advertencia', { timeOut: 10000 });
+      
+      this.encargado2 = false;
+      this.grupoModificadoForm.controls['idJefeNuevo2'].setValue('Ninguno');
     }
+      for (let encargado of this.encargados) {
+        if (encargado.id == id) {
+          this.encargado1 = encargado;
+        }
+      }
   }
 
   changeEncargado2(id) {
@@ -302,7 +309,7 @@ export class ModificarGrupoComponent implements OnInit {
     }
     if (this.encargadoViejo2.id == undefined) {
       delete grupoInfo['idJefeViejo2'];
-    } 
+    }
     if (this.cambiarFaseMonitor) {
       grupoInfo.isMonitor = false;
     } else {

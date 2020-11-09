@@ -40,7 +40,7 @@
                     <div class="col-sm">
                         <div class="form-group">
                             <label for="">Ramas en las que está</label>
-                            <select required class="form-control" formControlName="idRama"
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama" formControlName="idRama"
                                 (change)="getGrupoViejo($event.target.value)" required="required"
                                 [ngClass]="{ 'is-invalid': submittedCambiar && formMiembroGrupo.idRama.errors }">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">

@@ -18,6 +18,7 @@ export class AgregarMiembroGrupoComponent implements OnInit {
   ramas: any = [];
   grupos: any = [];
   selectedOptionZona: any;
+  selectedOptionRama: any;
   miembroForm: FormGroup;
   miembroGrupoForm: FormGroup;
   submitted: Boolean = false;
@@ -54,6 +55,8 @@ export class AgregarMiembroGrupoComponent implements OnInit {
   get formMiembroGrupo() { return this.miembroGrupoForm.controls }
 
   consultar(){
+    this.miembro = {};
+    this.miembroGrupoForm.reset();
     let miembroInfo = this.miembroForm.getRawValue();
 
     this.submitted = true;
@@ -68,8 +71,8 @@ export class AgregarMiembroGrupoComponent implements OnInit {
           this.toastr.error(miembroTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
+          //console.log(miembroTemp.miembro);
           this.miembro = miembroTemp.miembro;
-          this.selectedOptionZona = miembroTemp.grupos[0].id_zona+"";
           this.getRamas(this.miembro.id);
           this.show = true;
         }
@@ -92,7 +95,8 @@ export class AgregarMiembroGrupoComponent implements OnInit {
           this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-          
+          this.selectedOptionZona = ramasTemp.ramas[0].id_zona+"";
+          console.log(this.selectedOptionZona);
           Object.values(ramasTemp.ramas).forEach(element => {
             this.ramas.push(element);
           });
@@ -100,10 +104,14 @@ export class AgregarMiembroGrupoComponent implements OnInit {
       },
       err => console.log(err)
     )
+    if(this.selectedOptionRama != undefined)
+      this.getGrupos(this.selectedOptionRama);
   }
 
   getGrupos(newRama) {
     this.grupos = [];
+    console.log(this.selectedOptionZona);
+    console.log(newRama);
     this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;

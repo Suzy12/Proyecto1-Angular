@@ -23,7 +23,8 @@ export class CrearGrupoComponent implements OnInit {
   grupoForm: FormGroup;
   grupo:any = {};
   submitted: Boolean = false;
-  encargado1: any;
+  encargado1: any = false;
+  encargado2: any = false;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -106,6 +107,12 @@ export class CrearGrupoComponent implements OnInit {
   }
 
   changeEncargado1(id) {
+    if (this.encargado2.cedula == id) {
+      this.toastr.clear();
+      this.toastr.warning("Por favor utilice un Encargado 2 diferente al Encargado 1", 'Advertencia', { timeOut: 10000 });
+      this.encargado2 = false;
+      this.grupoForm.controls['idEncargado2'].setValue('Ninguno');
+    }
     for (let encargado of this.monitores) {
       if (encargado.cedula == id) {
         this.encargado1 = encargado;
@@ -118,6 +125,12 @@ export class CrearGrupoComponent implements OnInit {
       this.toastr.clear();
       this.toastr.warning("Por favor utilice un Encargado 2 diferente al Encargado 1", 'Advertencia', { timeOut: 10000 });
       this.grupoForm.controls['idEncargado2'].setValue('Ninguno');
+    }else{
+      for (let encargado of this.monitores) {
+        if (encargado.cedula == id) {
+          this.encargado2 = encargado;
+        }
+      }
     }
   }
 

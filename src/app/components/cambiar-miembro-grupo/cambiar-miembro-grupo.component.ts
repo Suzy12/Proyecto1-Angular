@@ -18,12 +18,13 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   ramas: any = [];
   grupos: any = [];
   selectedOptionZona: any;
+  selectedOptionRama: any;
   miembroForm: FormGroup;
   miembroGrupoForm: FormGroup;
   submitted: Boolean = false;
   submittedCambiar: Boolean = false;
   miembro:any = {}
-  grupoViejo: any = "Scouts";
+  grupoViejo: any = "";
   show: Boolean = false;
 
   constructor(private formBuilder: FormBuilder,
@@ -53,6 +54,8 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   get formMiembroGrupo() { return this.miembroGrupoForm.controls }
 
   consultar(){
+    this.miembro = {};
+    this.grupoViejo = "";
     let miembroInfo = this.miembroForm.getRawValue();
 
     this.submitted = true;
@@ -67,7 +70,6 @@ export class CambiarMiembroGrupoComponent implements OnInit {
           console.log("Error");
         } else {
           this.miembro = miembroTemp.miembro;
-          this.selectedOptionZona = miembroTemp.grupos[0].id_zona+"";
           this.getRamas(this.miembro.id);
         }
       },
@@ -90,7 +92,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
           console.log("Error");
         } else {
           console.log(ramasTemp);
-
+          this.selectedOptionZona = ramasTemp.ramas[0].id_zona+"";
           Object.values(ramasTemp.ramas).forEach(element => {
             this.ramas.push(element);
           });
@@ -98,15 +100,21 @@ export class CambiarMiembroGrupoComponent implements OnInit {
       },
       err => console.log(err)
     )
+    if (this.selectedOptionRama != undefined)
+      this.getGrupoViejo(this.selectedOptionRama);
   }
 
   getGrupoViejo(newRama){
+    console.log(this.selectedOptionZona);
+    console.log(newRama);
+    console.log(this.miembro.id);
     this.grupoService.consultarGrupoDeMiembro(this.selectedOptionZona, newRama+"", this.miembro.id).subscribe(res => {
       let grupoTemp: any = res.body;
         if (grupoTemp.success == false) {
           this.toastr.error(grupoTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
+          console.log(grupoTemp);
           this.grupoViejo = grupoTemp.grupo[0];
           this.getGrupos(newRama+"");
 
@@ -119,7 +127,6 @@ export class CambiarMiembroGrupoComponent implements OnInit {
     this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
-        console.log(gruposTemp);
         if (gruposTemp.success == false) {
           this.toastr.error(gruposTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");

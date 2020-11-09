@@ -39,7 +39,7 @@
                     <div class="col-sm">
                         <div class="form-group">
                             <label for="">Escoja una rama</label>
-                            <select required class="form-control" formControlName="idRama"
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama" formControlName="idRama"
                                 (change)="getGrupos($event.target.value)" required="required"
                                 [ngClass]="{ 'is-invalid': submittedAgregar && formMiembroGrupo.idRama.errors }">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">
