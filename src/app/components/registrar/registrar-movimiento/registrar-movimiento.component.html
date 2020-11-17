@@ -1,0 +1,667 @@
+<app-nav></app-nav>
+<!-- MultiStep Form -->
+<div class="row">
+    <div class="col w-100 center">
+        <form id="msform" novalidate>
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active">Información Básica</li>
+                <li [ngClass]="{'active' : secondSlide || thirdSlide}">Asesor General</li>
+                <li [ngClass]="{'active' : thirdSlide}">Estructura Base</li>
+            </ul>
+            <!-- fieldsets -->
+            <hr>
+            <!--Step 1: Informacion Basica del Movimiento-->
+            <form [formGroup]="movimientoForm">
+                <fieldset *ngIf="firstSlide">
+                    <h2 class="fs-title">Información Básica del Movimiento</h2>
+                    <h3 class="fs-subtitle">En este paso, indique la información general del movimiento</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="">Cédula Juridica</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-user"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="cedulaJuridica"
+                                        placeholder="Cédula Jurídica" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.cedulaJuridica.errors }">
+                                    <div *ngIf="submitted && form.cedulaJuridica.errors" class="invalid-feedback">
+                                        <div *ngIf="form.cedulaJuridica.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo de la cédula es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-2"></div>
+                                <label for="">Nombre</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-user"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="nombreMovimiento"
+                                        placeholder="Nombre" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.nombreMovimiento.errors }">
+                                    <div *ngIf="submitted && form.nombreMovimiento.errors" class="invalid-feedback">
+                                        <div *ngIf="form.nombreMovimiento.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del nombre es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-2"></div>
+                                <label for="">Dirección Web</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-internet-explorer"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="direccionWeb"
+                                        placeholder="Dirección Web" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.direccionWeb.errors }">
+                                    <div *ngIf="submitted && form.direccionWeb.errors" class="invalid-feedback">
+                                        <div *ngIf="form.direccionWeb.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo de la dirección web es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-2"></div>
+                                <p>Teléfonos</p>
+                                <table class="fixed_headers" id="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Teléfono</th>
+                                            <th>Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let tel of telefonos; let i = index">
+                                            <td>
+                                                <input type="tel" class="form-control" placeholder="Teléfono"
+                                                    value="{{tel}}" required="required"
+                                                    (change)="updateTelefonos(i, $event.target.value)">
+                                            </td>
+                                            <td (click)="removeTelefono(i)">
+                                                <i class="fa fa-trash"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="my-2">
+                                    <button (click)="addTelefono()" class="btn btn-secondary">
+                                        <i class="fa fa-plus"></i>
+                                        Agregar Teléfono
+                                    </button>
+                                </div>
+                                <label for="">Logo</label>
+                                <div class="my-2"></div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <input type="file" accept="image/*" id="formImage" class="form-control-file"
+                                                (change)="readLogo($event)" />
+                                            <div class="image-preview mb-3" *ngIf="previewUrl">
+                                                <img class="preview" [src]="previewUrl" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="">País</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="pais" placeholder="País"
+                                        required="required" [ngClass]="{ 'is-invalid': submitted && form.pais.errors }">
+                                    <div *ngIf="submitted && form.pais.errors" class="invalid-feedback">
+                                        <div *ngIf="form.pais.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del país es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-2"></div>
+                                <label for="">Provincia</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="provinciaMovimiento"
+                                        placeholder="Provincia" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.provinciaMovimiento.errors }">
+                                    <div *ngIf="submitted && form.provinciaMovimiento.errors" class="invalid-feedback">
+                                        <div *ngIf="form.provinciaMovimiento.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo de la provincia es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-2"></div>
+                                <label for="">Cantón</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="cantonMovimiento"
+                                        placeholder="Cantón" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.cantonMovimiento.errors }">
+                                    <div *ngIf="submitted && form.cantonMovimiento.errors" class="invalid-feedback">
+                                        <div *ngIf="form.cantonMovimiento.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del canton es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-2"></div>
+                                <label for="">Distrito</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="distritoMovimiento"
+                                        placeholder="Distrito" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.distritoMovimiento.errors }">
+                                    <div *ngIf="submitted && form.distritoMovimiento.errors" class="invalid-feedback">
+                                        <div *ngIf="form.distritoMovimiento.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del distrito es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-2"></div>
+                                <label for="">Señas</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="senasMovimiento"
+                                        placeholder="Señas" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.senas.errors }">
+                                    <div *ngIf="submitted && form.senasMovimiento.errors" class="invalid-feedback">
+                                        <div *ngIf="form.senasMovimiento.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo de señas es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="center">
+                        <input type="button" name="next" class="next action-button" value="Siguiente"
+                            (click)="nextSlide()" />
+                    </div>
+                </fieldset>
+
+                <!--Step 2: Crear Asesor General-->
+                <fieldset *ngIf="secondSlide">
+                    <h2 class="fs-title">Crear Asesor General</h2>
+                    <h3 class="fs-subtitle">En este paso, debe indicar la persona encargada de ser
+                        el asesor general del movimiento.<br /> Debe ingresar su
+                        información personal, de contacto y una contraseña para ingresar a la plataforma. </h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm">
+                            <p class="pull-center"><b> Información Personal</b></p>
+                            <div class="form-group">
+                                <label for="">Ingrese el número de cédula</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-id-card"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="idAsesor"
+                                        placeholder="Cédula" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.idAsesor.errors }">
+                                    <div *ngIf="submitted && form.idAsesor.errors" class="invalid-feedback">
+                                        <div *ngIf="form.idAsesor.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del
+                                                número de cédula es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label for="">Ingrese el nombre completo </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-user"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="nombre"
+                                        placeholder="Nombre" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.nombre.errors }">
+                                    <div *ngIf="submitted && form.nombre.errors" class="invalid-feedback">
+                                        <div *ngIf="form.nombre.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del
+                                                nombre es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="">Ingrese una contraseña</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-lock"></span>
+                                        </span>
+                                    </div>
+                                    <input type="password" class="form-control" placeholder="Contraseña"
+                                        required="required" formControlName="contrasena"
+                                        [ngClass]="{ 'is-invalid': submitted && form.contrasena.errors }">
+                                    <div *ngIf="submitted && form.contrasena.errors" class="invalid-feedback">
+                                        <div *ngIf="form.contrasena.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo
+                                                contraseña es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="pull-center"><b> Contacto </b></p>
+                            <div class="form-group">
+                                <label for="">Ingrese el número de celular</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-phone"></span>
+                                        </span>
+                                    </div>
+                                    <input type="tel" pattern="[0-9]{8}" class="form-control" formControlName="celular"
+                                        placeholder="Celular" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.celular.errors }">
+                                    <div *ngIf="submitted && form.celular.errors" class="invalid-feedback">
+                                        <div *ngIf="form.celular.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del celular es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label for="">Ingrese el correo electrónico</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-at"></span>
+                                        </span>
+                                    </div>
+                                    <input type="email" class="form-control" formControlName="email"
+                                        placeholder="Correo" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.email.errors }">
+                                    <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
+                                        <div *ngIf="form.email.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del correo electrónico es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <p class="pull-center"><b> Dirección Física</b></p>
+                            <div class="form-group">
+                                <label for="">Ingrese la provincia</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="provincia"
+                                        placeholder="Provincia" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.provincia.errors }">
+                                    <div *ngIf="submitted && form.provincia.errors" class="invalid-feedback">
+                                        <div *ngIf="form.provincia.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo de la provincia es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="">Ingrese el cantón</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="canton"
+                                        placeholder="Cantón" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.canton.errors }">
+                                    <div *ngIf="submitted && form.canton.errors" class="invalid-feedback">
+                                        <div *ngIf="form.canton.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del cantón es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="">Ingrese el distrito</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="distrito"
+                                        placeholder="Distrito" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.distrito.errors }">
+                                    <div *ngIf="submitted && form.distrito.errors" class="invalid-feedback">
+                                        <div *ngIf="form.distrito.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del distrito es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="">Ingrese las señas</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="senas" placeholder="Señas"
+                                        required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && form.senas.errors }">
+                                    <div *ngIf="submitted && form.senas.errors" class="invalid-feedback">
+                                        <div *ngIf="form.senas.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo de las señas es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="center">
+                        <input type="button" name="previous" class="previous action-button-previous" value="Anterior"
+                            (click)="previousSlide()" />
+                        <input type="button" name="next" class="next action-button" value="Siguiente"
+                            (click)="nextSlide()" />
+                    </div>
+                </fieldset>
+            </form>
+
+            <!--Step 3: Crear Estructura Base-->
+            <form [formGroup]="estructuraForm">
+                <fieldset *ngIf="thirdSlide">
+                    <h2 class="fs-title">Crear la Estructura Base</h2>
+                    <h3 class="fs-subtitle">
+                        En este paso, debe formar una estructura base del movimeiento. Esta estructura consiste en
+                        <br />
+                        una zona, una rama, un grupo y un miembro monitor del grupo. Esta estructura debe estar
+                        relacionada,
+                        <br />
+                        es decir, el grupo que se indique pertenece a la rama que se indique y a la zona que se indique
+                        <br /> en este paso. Asimismo con el miembro monitor.
+                    </h3>
+                    <hr>
+
+                    <!--Step 3.1: Crear Zona, Rama, Grupo-->
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label class="pull-center"><b> Zona</b></label><br>
+                                <label for="">Ingrese el nombre de la zona </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-user"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="nombreZona"
+                                        placeholder="Nombre" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.nombreZona.errors }">
+                                    <div *ngIf="submitted && formEstructura.nombreZona.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.nombreZona.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del
+                                                nombre de la zona es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pull-center"><b> Rama</b></label><br>
+                                <label for="">Ingrese el nombre de la rama</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-user"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="nombreRama"
+                                        placeholder="Nombre" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.nombreRama.errors }">
+                                    <div *ngIf="submitted && formEstructura.nombreRama.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.nombreRama.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del
+                                                nombre de la rama es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="pull-center"><b> Grupo</b></label><br>
+                                <label for="">Ingrese el número de grupo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-id-card"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="idGrupo"
+                                        placeholder="Número de Grupo" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.idGrupo.errors }">
+                                    <div *ngIf="submitted && formEstructura.idGrupo.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.idGrupo.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del número del grupo es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!--Step 3.2: Crear Miembro Monitor-->
+                    <div class="row">
+                        <div class="col-sm">
+                            <h5 class="pull-center"><b>Monitor</b><br /></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <p class="pull-center"><b> Información Personal</b></p>
+                            <div class="form-group">
+                                <label for="">Ingrese el número de cédula</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-id-card"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="idMiembro"
+                                        placeholder="Cédula" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.idMiembro.errors }">
+                                    <div *ngIf="submitted && formEstructura.idMiembro.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.idMiembro.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del
+                                                número de cédulo del miembro es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label for="">Ingrese el nombre completo </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-user"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="nombreMiembro"
+                                        placeholder="Nombre" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.nombreMiembro.errors }">
+                                    <div *ngIf="submitted && formEstructura.nombreMiembro.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.nombreMiembro.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del
+                                                nombre del miembro es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="pull-center"><b> Contacto </b></p>
+                            <div class="form-group">
+                                <label for="">Ingrese el número de celular</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-phone"></span>
+                                        </span>
+                                    </div>
+                                    <input type="tel" pattern="[0-9]{8}" class="form-control" formControlName="celular"
+                                        placeholder="Celular" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.celular.errors }">
+                                    <div *ngIf="submitted && formEstructura.celular.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.celular.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del celular del miembro es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label for="">Ingrese el correo electrónico</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-at"></span>
+                                        </span>
+                                    </div>
+                                    <input type="email" class="form-control" formControlName="email"
+                                        placeholder="Correo" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.email.errors }">
+                                    <div *ngIf="submitted && formEstructura.email.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.email.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del correo electrónico del miembro es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <p class="pull-center"><b> Dirección Física</b></p>
+                            <div class="form-group">
+                                <label for="">Ingrese la provincia</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="provincia"
+                                        placeholder="Provincia" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.provincia.errors }">
+                                    <div *ngIf="submitted && formEstructura.provincia.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.provincia.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo de la provincia es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="">Ingrese el cantón</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="canton"
+                                        placeholder="Cantón" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.canton.errors }">
+                                    <div *ngIf="submitted && formEstructura.canton.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.canton.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del cantón es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="">Ingrese el distrito</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="distrito"
+                                        placeholder="Distrito" required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.distrito.errors }">
+                                    <div *ngIf="submitted && formEstructura.distrito.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.distrito.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo del distrito es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="">Ingrese las señas</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-location-arrow"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="senas" placeholder="Señas"
+                                        required="required"
+                                        [ngClass]="{ 'is-invalid': submitted && formEstructura.senas.errors }">
+                                    <div *ngIf="submitted && formEstructura.senas.errors" class="invalid-feedback">
+                                        <div *ngIf="formEstructura.senas.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo de las señas es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="center">
+                        <input type="button" name="previous" class="previous action-button-previous" value="Anterior"
+                            (click)="previousSlide()" />
+                        <input type="button" name="next" class="next action-button" (click)="crearMovimiento()"
+                            value="Crear Movimiento" />
+                    </div>
+                </fieldset>
+            </form>
+        </form>
+    </div>
+</div>
+<!-- /.MultiStep Form -->

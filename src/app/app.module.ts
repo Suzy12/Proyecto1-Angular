@@ -45,7 +45,10 @@ import { VerMiembrosComponent } from './components/consultar/ver-miembros/ver-mi
 
 import { LoginService } from './services/login/login.service'
 import { LoginGuard } from './services/login/login.guard';
-import { ConsultarInfoMovimientoComponent } from './components/consultar/consultar-info-movimiento/consultar-info-movimiento.component'
+import { ConsultarInfoMovimientoComponent } from './components/consultar/consultar-info-movimiento/consultar-info-movimiento.component';
+import { RegistrarMovimientoComponent } from './components/registrar/registrar-movimiento/registrar-movimiento.component';
+import { EditarPerfilComponent } from './components/perfil/editar-perfil/editar-perfil.component';
+import { ConsultarPerfilComponent } from './components/perfil/consultar-perfil/consultar-perfil.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -75,7 +78,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModificarMovimientoComponent,
     ConsultarGrupoComponent,
     VerMiembrosComponent,
-    ConsultarInfoMovimientoComponent
+    ConsultarInfoMovimientoComponent,
+    RegistrarMovimientoComponent,
+    EditarPerfilComponent,
+    ConsultarPerfilComponent
   ],
   imports: [
     BrowserModule,

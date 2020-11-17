@@ -61,11 +61,13 @@ export class IniciarSesionComponent implements OnInit {
     }else{
       this.toastr.success(`Bienvenido`, 'Usuario autenticado', {timeOut: 2000});
       console.log("Bienvenido");
+      console.log(res.body);
       
       let loginInfo = this.loginForm.getRawValue();
       //this.guard.setSession(res.body.token);
       this.storage.set('current-user', loginInfo.id);
       this.storage.set('current-user-role', "1");
+      this.storage.set('current-user-movimiento', res.body.movimiento);
       this.loading = false;
       this.loginForm.reset();
       

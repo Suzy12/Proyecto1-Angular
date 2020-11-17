@@ -124,7 +124,6 @@ export class CrearMiembroComponent implements OnInit {
     miembroInfo.posible_monitor == 'No' ? miembroInfo.posible_monitor = false : miembroInfo.posible_monitor = true; 
     
     console.log(miembroInfo);
-
     this.miembroService.crearMiembro(miembroInfo).subscribe(res => {
       console.log(res.body);
       this.responseController(res);
@@ -142,6 +141,7 @@ export class CrearMiembroComponent implements OnInit {
       this.toastr.success("La solicitud se realizó con éxito", 'Miembro Creado', {timeOut: 2000});
       console.log("Éxito");
       this.miembroForm.reset();
+      this.miembroForm.controls['posible_monitor'].setValue('No');
     }
   }
 }

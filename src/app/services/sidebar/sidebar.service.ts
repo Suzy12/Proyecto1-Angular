@@ -14,16 +14,16 @@ export class SidebarService {
       ruta: '',
       submenus: [
         {
-          title: 'Crear Miembro',
-          ruta: 'crear/miembro'
+          title: 'Crear Zona/Rama',
+          ruta: 'crear/zona-rama'
         },
         {
           title: 'Crear Grupo',
           ruta: 'crear/grupo'
         },
         {
-          title: 'Crear Zona/Rama',
-          ruta: 'crear/zona-rama'
+          title: 'Crear Miembro',
+          ruta: 'crear/miembro'
         }
       ]
     },
@@ -35,20 +35,20 @@ export class SidebarService {
       ruta: '',
       submenus: [
         {
+          title: 'Consultar información del movimiento',
+          ruta: 'consultar/movimiento'
+        },
+        {
           title: 'Consultar grupo en particular',
           ruta: 'consultar/grupo'
         },
         {
-          title: 'Consultar miembro en particular',
-          ruta: 'consultar/buscar'
-        },
-        {
-          title: 'Ver miembros',
+          title: 'Consultar miembros',
           ruta: 'consultar/miembros'
         },
         {
-          title: 'Consultar información del movimiento',
-          ruta: 'consultar/movimiento'
+          title: 'Consultar miembro en particular',
+          ruta: 'consultar/buscar'
         }
       ]
     },
@@ -59,6 +59,10 @@ export class SidebarService {
       type: 'dropdown',
       ruta: '',
       submenus: [
+        {
+          title: 'Modificar Movimiento',
+          ruta: 'consultar/movimiento'
+        },
         {
           title: 'Modificar Zona',
           ruta: 'modificar/zona'
@@ -74,10 +78,6 @@ export class SidebarService {
         {
           title: 'Modificar Miembro',
           ruta: 'consultar/buscar'
-        },
-        {
-          title: 'Modificar Movimiento',
-          ruta: 'consultar/movimiento'
         }
       ]
     },

@@ -28,7 +28,8 @@ export class PaginaPerfilComponent implements OnInit {
   }
 
   getMovimiento(){
-    this.movimientoService.getMovimiento("4000042145").subscribe(
+    let movimiento = this.storage.get('current-user-movimiento');
+    this.movimientoService.getMovimiento(movimiento).subscribe(
       res => {
         let movimientoTemp:any = res.body;
         if(movimientoTemp.success == false){

@@ -10,6 +10,10 @@ import { PaginaPerfilComponent } from './components/pagina-perfil/pagina-perfil.
 import { AgregarMiembroGrupoComponent } from './components/agregar-miembro-grupo/agregar-miembro-grupo.component'
 import { CambiarMiembroGrupoComponent } from './components/cambiar-miembro-grupo/cambiar-miembro-grupo.component'
 
+//Perfil
+import { ConsultarPerfilComponent } from './components/perfil/consultar-perfil/consultar-perfil.component'
+import { EditarPerfilComponent } from './components/perfil/editar-perfil/editar-perfil.component'
+
 //Crear
 import { CrearGrupoComponent } from './components/crear/crear-grupo/crear-grupo.component'
 import { CrearMiembroComponent } from './components/crear/crear-miembro/crear-miembro.component'
@@ -29,14 +33,20 @@ import { ModificarMovimientoComponent } from './components/modificar/modificar-m
 import { ModificarRamaComponent } from './components/modificar/modificar-rama/modificar-rama.component'
 import { ModificarZonaComponent } from './components/modificar/modificar-zona/modificar-zona.component'
 
+//Registrar
+import { RegistrarMovimientoComponent } from "./components/registrar/registrar-movimiento/registrar-movimiento.component"
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', pathMatch: 'full', component: IniciarSesionComponent },
   { path: 'home', pathMatch: 'full', component: PaginaPrincipalComponent },
   { path: 'perfil', pathMatch: 'full', component: PaginaPerfilComponent },
+  { path: 'registrar-movimiento', pathMatch: 'full', component: RegistrarMovimientoComponent },
   { path: 'agregar-miembro-grupo', pathMatch: 'full', component: AgregarMiembroGrupoComponent },
   { path: 'cambiar-miembro-grupo', pathMatch: 'full', component: CambiarMiembroGrupoComponent },
+  { path: 'editar-perfil', pathMatch: 'full', component: EditarPerfilComponent },
+  { path: 'consultar-perfil', pathMatch: 'full', component: ConsultarPerfilComponent },
   {
     path: 'crear',
     children: [
