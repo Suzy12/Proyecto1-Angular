@@ -11,27 +11,28 @@ export class ZonaService {
 
   constructor(private http: HttpClient) { }
 
-  public getAllZonas = ()  => {
-    return this.http.get(this.zonaUrl + '/consultar-zonas', { observe: 'response' })
+  public getAllZonas = (idMovimiento)  => {
+    let params = {idMovimiento: idMovimiento}
+    return this.http.post(this.zonaUrl + '/consultar-zonas', params, { observe: 'response' })
   }
 
-  public getUnaZona = (idZona)  => {
-    let params = {idZona: idZona};
+  public getUnaZona = (idMovimiento, idZona)  => {
+    let params = {idMovimiento: idMovimiento, idZona: idZona};
     console.log(params);
-    return this.http.post(this.zonaUrl + '/get-zona' , params, { observe: 'response', withCredentials: true })
+    return this.http.post(this.zonaUrl + '/get-zona' , params, { observe: 'response' })
   }
 
   public crearZona = (zonaInfo)  => {
-    return this.http.post(this.zonaUrl + '/crear-zona', zonaInfo, { observe: 'response', withCredentials: true })
+    return this.http.post(this.zonaUrl + '/crear-zona', zonaInfo, { observe: 'response' })
   }
   
-  public consultarMiembrosZona = (idZona)  => {
-    let params = {idZona: idZona};
-    return this.http.post(this.zonaUrl + '/consultar-miembros-zona', params, { observe: 'response', withCredentials: true })
+  public consultarMiembrosZona = (idMovimiento, idZona)  => {
+    let params = {idMovimiento: idMovimiento, idZona: idZona};
+    return this.http.post(this.zonaUrl + '/consultar-miembros-zona', params, { observe: 'response'})
   }
 
   public modificarZona = (zonaInfo)  => {
-    return this.http.post(this.zonaUrl + '/modificar-zona', zonaInfo, { observe: 'response', withCredentials: true })
+    return this.http.post(this.zonaUrl + '/modificar-zona', zonaInfo, { observe: 'response' })
   }
   
 }

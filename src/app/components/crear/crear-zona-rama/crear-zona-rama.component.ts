@@ -18,6 +18,7 @@ export class CrearZonaRamaComponent implements OnInit {
   ramaForm: FormGroup;
   submitted: Boolean = false;
   submittedRama: Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -29,10 +30,12 @@ export class CrearZonaRamaComponent implements OnInit {
   ngOnInit(): void {
     this.getZonas();
     this.zonaForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       nombre: ['', [Validators.required]]
     });
     this.ramaForm = this.formBuilder.group({
       idZona: ['', [Validators.required]],
+      idMovimiento: this.movimiento,
       nombre: ['', [Validators.required]]
     });
   }
@@ -43,7 +46,7 @@ export class CrearZonaRamaComponent implements OnInit {
 
   public getZonas() {
     this.zonas = [];
-    this.zonaService.getAllZonas().subscribe(
+    this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {

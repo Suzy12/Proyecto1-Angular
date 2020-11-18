@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ConsultarPerfilComponent implements OnInit {
 
   miembro: any = {};
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -27,7 +28,7 @@ export class ConsultarPerfilComponent implements OnInit {
 
   getUsuario(){
     let id = this.storage.get('current-user');
-    this.miembroService.getUnMiembroxID(id).subscribe(res => {
+    this.miembroService.getUnMiembroxID(this.movimiento, id).subscribe(res => {
       this.resController(res);
     }, error => console.log(error))
   }

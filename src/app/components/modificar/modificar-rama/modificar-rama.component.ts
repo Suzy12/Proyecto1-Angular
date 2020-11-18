@@ -32,6 +32,7 @@ export class ModificarRamaComponent implements OnInit {
   ramaModificadaForm: FormGroup;
   rama: any = {};
   submitted: Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,10 +48,12 @@ export class ModificarRamaComponent implements OnInit {
   ngOnInit(): void {
     this.getZonas();
     this.ramaForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]]
     });
     this.ramaModificadaForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: this.selectedOptionZona,
       idRama: this.selectedOptionRama,
       nombre: '',
@@ -65,7 +68,7 @@ export class ModificarRamaComponent implements OnInit {
   get formRama() { return this.ramaModificadaForm.controls }
 
   public getZonas() {
-    this.zonaService.getAllZonas().subscribe(
+    this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
@@ -84,7 +87,7 @@ export class ModificarRamaComponent implements OnInit {
 
   getRamas(newZona) {
     this.ramas = [];
-    this.ramaService.getRamas(newZona).subscribe(
+    this.ramaService.getRamas(this.movimiento, newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -107,7 +110,7 @@ export class ModificarRamaComponent implements OnInit {
     this.encargado1 = false; this.encargadoViejo1 = false; this.encargadoViejo2 = false;
     this.encargado2 = false;
 
-    this.ramaService.getUnaRama(this.selectedOptionZona, this.selectedOptionRama).subscribe(res => {
+    this.ramaService.getUnaRama(this.movimiento, this.selectedOptionZona, this.selectedOptionRama).subscribe(res => {
       console.log(res);
       this.ramaSuccess(res);
       this.show = true;
@@ -135,7 +138,7 @@ export class ModificarRamaComponent implements OnInit {
   }
 
   consultarEncargado1() {
-    this.miembroService.getUnMiembroxID(this.encargado1).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
       res => {
         let encargadoTemp: any = res.body;
         this.encargado1 = encargadoTemp.miembro;
@@ -145,7 +148,7 @@ export class ModificarRamaComponent implements OnInit {
   }
 
   consultarEncargado2() {
-    this.miembroService.getUnMiembroxID(this.encargado2).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
       res => {
         let encargadoTemp: any = res.body;
         this.encargado2 = encargadoTemp.miembro;
@@ -156,7 +159,7 @@ export class ModificarRamaComponent implements OnInit {
 
   getPosiblesEncargados() {
     this.toastr.clear();
-    this.ramaService.consultarMiembrosRama(this.selectedOptionZona, this.selectedOptionRama).subscribe(res => {
+    this.ramaService.consultarMiembrosRama(this.movimiento, this.selectedOptionZona, this.selectedOptionRama).subscribe(res => {
         console.log(res);
         let enviar: any = res.body;
         if (enviar.success == false) {
@@ -178,7 +181,7 @@ export class ModificarRamaComponent implements OnInit {
     this.encargados = [];
     Object.values(res).forEach(element => {
       let encargado: any = element;
-      this.miembroService.getUnMiembroxID(encargado.id).subscribe(
+      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe(
         res => {
           let encargadoTemp: any = res.body;
 
@@ -228,6 +231,7 @@ export class ModificarRamaComponent implements OnInit {
     this.ramaModificadaForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.ramaModificadaForm.controls['idRama'].setValue(this.selectedOptionRama);
     this.ramaModificadaForm.controls['nombre'].setValue(this.rama.nombre);
+    this.ramaModificadaForm.controls['idMovimiento'].setValue(this.movimiento);
     let ramaInfo = this.ramaModificadaForm.getRawValue();
 
     if(ramaInfo.idJefeNuevo2 == "Ninguno"){

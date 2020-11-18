@@ -193,7 +193,6 @@ export class RegistrarMovimientoComponent implements OnInit {
     console.log(movimientoInfo);
     console.log(estructuraInfo);
 
-
     this.movimientoService.crearMovimiento(movimientoInfo).subscribe(res => {
       console.log(res);
       this.toastr.clear();
@@ -202,20 +201,20 @@ export class RegistrarMovimientoComponent implements OnInit {
         this.toastr.error(response.error.message, 'Error', { timeOut: 5000 });
         console.log("Error");
         return;
-      }
-    }, error => console.log(error));
-
-    this.movimientoService.crearEstructuraMovimiento(estructuraInfo).subscribe(res => {
-      console.log(res);
-      this.toastr.clear();
-      let response: any = res.body
-      if (response.success == false) {
-        this.toastr.error(response.error.message, 'Error', { timeOut: 5000 });
-        console.log("Error");
-        return;
-      } else {
-        this.toastr.success("La solicitud se realizó con éxito", 'Movimiento Creado', { timeOut: 1000 });
-        console.log("Éxito");
+      }else{
+        this.movimientoService.crearEstructuraMovimiento(estructuraInfo).subscribe(res => {
+          console.log(res);
+          this.toastr.clear();
+          let response: any = res.body
+          if (response.success == false) {
+            this.toastr.error(response.error.message, 'Error', { timeOut: 5000 });
+            console.log("Error");
+            return;
+          } else {
+            this.toastr.success("La solicitud se realizó con éxito", 'Movimiento Creado', { timeOut: 1000 });
+            console.log("Éxito");
+          }
+        }, error => console.log(error));
       }
     }, error => console.log(error));
 
@@ -231,5 +230,6 @@ export class RegistrarMovimientoComponent implements OnInit {
 
     this.submitted = false;
   }
+
 
 }

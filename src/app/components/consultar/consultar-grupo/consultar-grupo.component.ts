@@ -27,6 +27,7 @@ export class ConsultarGrupoComponent implements OnInit {
   encargado1:any = false;
   encargado2:any = false;
   miembros: any = [];
+  movimiento = this.storage.get('current-user-movimiento');
 
 
   constructor(private formBuilder: FormBuilder,
@@ -42,6 +43,7 @@ export class ConsultarGrupoComponent implements OnInit {
   ngOnInit(): void {
     this.getZonas();
     this.grupoForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]]
@@ -50,7 +52,7 @@ export class ConsultarGrupoComponent implements OnInit {
   get form() { return this.grupoForm.controls }
 
   public getZonas() {
-    this.zonaService.getAllZonas().subscribe(
+    this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
@@ -70,7 +72,7 @@ export class ConsultarGrupoComponent implements OnInit {
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRamas(newZona).subscribe(
+    this.ramaService.getRamas(this.movimiento, newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -91,7 +93,7 @@ export class ConsultarGrupoComponent implements OnInit {
 
   getGrupos(newRama) {
     this.grupos = [];
-    this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
+    this.grupoService.getGrupos(this.movimiento,this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
@@ -146,7 +148,7 @@ export class ConsultarGrupoComponent implements OnInit {
   }
 
   consultarEncargado1(){
-    this.miembroService.getUnMiembroxID(this.encargado1).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
       res =>{
         let encargadoTemp:any = res.body;
         this.encargado1 = encargadoTemp.miembro;
@@ -154,7 +156,7 @@ export class ConsultarGrupoComponent implements OnInit {
     );
   }
   consultarEncargado2(){
-    this.miembroService.getUnMiembroxID(this.encargado2).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
       res =>{
         let encargadoTemp:any = res.body;
         this.encargado2 = encargadoTemp.miembro;

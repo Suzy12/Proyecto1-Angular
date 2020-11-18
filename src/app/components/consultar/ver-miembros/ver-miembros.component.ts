@@ -25,6 +25,7 @@ export class VerMiembrosComponent implements OnInit {
   consultarForm: FormGroup;
   nodo:any = {};
   miembros: any = [];
+  movimiento = this.storage.get('current-user-movimiento');
 
 
   constructor(
@@ -41,6 +42,7 @@ export class VerMiembrosComponent implements OnInit {
   ngOnInit(): void {
     this.getZonas();
     this.consultarForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]],
@@ -51,7 +53,7 @@ export class VerMiembrosComponent implements OnInit {
   get form() { return this.consultarForm.controls }
 
   public getZonas() {
-    this.zonaService.getAllZonas().subscribe(
+    this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
@@ -71,7 +73,7 @@ export class VerMiembrosComponent implements OnInit {
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRamas(newZona).subscribe(
+    this.ramaService.getRamas(this.movimiento, newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -92,7 +94,7 @@ export class VerMiembrosComponent implements OnInit {
 
   getGrupos(newRama) {
     this.grupos = [];
-    this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
+    this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
@@ -125,7 +127,7 @@ export class VerMiembrosComponent implements OnInit {
 
   consultarMiembrosZona(){
     this.miembros = [];
-    this.zonaService.consultarMiembrosZona(this.selectedOptionZona).subscribe(
+    this.zonaService.consultarMiembrosZona(this.movimiento, this.selectedOptionZona).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
@@ -145,7 +147,7 @@ export class VerMiembrosComponent implements OnInit {
 
   consultarMiembrosRama(){
     this.miembros = [];
-    this.ramaService.consultarMiembrosRama(this.selectedOptionZona, this.selectedOptionRama).subscribe(
+    this.ramaService.consultarMiembrosRama(this.movimiento, this.selectedOptionZona, this.selectedOptionRama).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -164,7 +166,7 @@ export class VerMiembrosComponent implements OnInit {
   }
   consultarMiembrosGrupo(){
     this.miembros = [];
-    this.grupoService.consultarMiembrosGrupo(this.selectedOptionZona, this.selectedOptionRama, this.selectedOptionGrupo).subscribe(
+    this.grupoService.consultarMiembrosGrupo(this.movimiento, this.selectedOptionZona, this.selectedOptionRama, this.selectedOptionGrupo).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {

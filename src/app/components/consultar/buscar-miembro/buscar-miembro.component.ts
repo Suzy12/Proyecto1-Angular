@@ -14,6 +14,7 @@ export class BuscarMiembroComponent implements OnInit {
 
   idMiembro:any = '';
   miembroIdForm: FormGroup;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -24,6 +25,7 @@ export class BuscarMiembroComponent implements OnInit {
 
   ngOnInit(): void {
     this.miembroIdForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idMiembro: ['', [Validators.required]]
    });
   }

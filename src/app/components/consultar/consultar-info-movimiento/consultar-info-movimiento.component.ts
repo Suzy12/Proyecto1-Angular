@@ -24,7 +24,8 @@ export class ConsultarInfoMovimientoComponent implements OnInit {
   }
 
   getMovimiento() {
-    this.movimientoService.getMovimiento("4000042145").subscribe(
+    let mov = this.storage.get('current-user-movimiento');
+    this.movimientoService.getMovimiento(mov).subscribe(
       res => {
         let movimientoTemp: any = res.body;
         if (movimientoTemp.success == false) {

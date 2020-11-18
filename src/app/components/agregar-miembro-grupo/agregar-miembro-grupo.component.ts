@@ -25,6 +25,7 @@ export class AgregarMiembroGrupoComponent implements OnInit {
   submittedAgregar: Boolean = false;
   miembro:any = {}
   show:Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
 
   constructor(
@@ -41,9 +42,11 @@ export class AgregarMiembroGrupoComponent implements OnInit {
 
   ngOnInit(): void {
     this.miembroForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idMiembro: ['', [Validators.required]]
     });
     this.miembroGrupoForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: '',
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]],
@@ -87,7 +90,7 @@ export class AgregarMiembroGrupoComponent implements OnInit {
   getRamas(idMiembro) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRamasDisponibles(idMiembro).subscribe(
+    this.ramaService.getRamasDisponibles(this.movimiento,idMiembro).subscribe(
       res => {
         let ramasTemp: any = res.body;
         console.log(ramasTemp);
@@ -112,7 +115,7 @@ export class AgregarMiembroGrupoComponent implements OnInit {
     this.grupos = [];
     console.log(this.selectedOptionZona);
     console.log(newRama);
-    this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
+    this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
@@ -135,6 +138,7 @@ export class AgregarMiembroGrupoComponent implements OnInit {
 
     this.miembroGrupoForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.miembroGrupoForm.controls['idMiembro'].setValue(this.miembro.id);
+    this.miembroGrupoForm.controls['idMovimiento'].setValue(this.movimiento);
 
     let agregarInfo = this.miembroGrupoForm.getRawValue();
 

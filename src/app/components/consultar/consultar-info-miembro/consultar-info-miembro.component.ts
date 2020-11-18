@@ -16,6 +16,7 @@ export class ConsultarInfoMiembroComponent implements OnInit {
   miembro: any;
   gruposMiembro: any = [];
   disable: Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(private router: Router,
     private zonaService: ZonaService,
@@ -46,7 +47,7 @@ export class ConsultarInfoMiembroComponent implements OnInit {
   }
 
   getNombreZona(zona, i) {
-    this.zonaService.getUnaZona(zona).subscribe(
+    this.zonaService.getUnaZona(this.movimiento, zona).subscribe(
       res => {
         let zonaTemp: any = res.body;
         if (zonaTemp.success == false) {
@@ -61,7 +62,7 @@ export class ConsultarInfoMiembroComponent implements OnInit {
   }
 
   getNombreRama(zona, rama, i) {
-    this.ramaService.getUnaRama(zona, rama).subscribe(
+    this.ramaService.getUnaRama(this.movimiento, zona, rama).subscribe(
       res => {
         let ramaTemp: any = res.body;
         if (ramaTemp.success == false) {

@@ -26,6 +26,7 @@ export class ModificarGrupoComponent implements OnInit {
   grupoForm: FormGroup;
   grupoModificadoForm: FormGroup;
   grupo: any = {};
+  movimiento = this.storage.get('current-user-movimiento');
 
   encargado1: any = false;
   encargado2: any = false;
@@ -50,11 +51,13 @@ export class ModificarGrupoComponent implements OnInit {
   ngOnInit(): void {
     this.getZonas();
     this.grupoForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]]
     });
     this.grupoModificadoForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: this.selectedOptionZona,
       idRama: this.selectedOptionRama,
       idGrupo: this.selectedOptionGrupo,
@@ -71,7 +74,7 @@ export class ModificarGrupoComponent implements OnInit {
   get formGrupo() { return this.grupoModificadoForm.controls }
 
   public getZonas() {
-    this.zonaService.getAllZonas().subscribe(
+    this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
@@ -91,7 +94,7 @@ export class ModificarGrupoComponent implements OnInit {
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRamas(newZona).subscribe(
+    this.ramaService.getRamas(this.movimiento, newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -112,7 +115,7 @@ export class ModificarGrupoComponent implements OnInit {
 
   getGrupos(newRama) {
     this.grupos = [];
-    this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
+    this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
@@ -166,7 +169,7 @@ export class ModificarGrupoComponent implements OnInit {
   }
 
   consultarEncargado1() {
-    this.miembroService.getUnMiembroxID(this.encargado1).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
       res => {
         let encargadoTemp: any = res.body;
         this.encargado1 = encargadoTemp.miembro;
@@ -177,7 +180,7 @@ export class ModificarGrupoComponent implements OnInit {
   }
 
   consultarEncargado2() {
-    this.miembroService.getUnMiembroxID(this.encargado2).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
       res => {
         let encargadoTemp: any = res.body;
         this.encargado2 = encargadoTemp.miembro;
@@ -206,12 +209,12 @@ export class ModificarGrupoComponent implements OnInit {
               this.encargados.push(this.encargadoViejo2);
               this.grupoModificadoForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
             }
-          }, 200)
+          }, 500)
         }
       }, error => console.log(error))
 
     } else { //si no está en la fase de evaluación, busca jefes (miembros del grupo)   
-      this.grupoService.consultarMiembrosGrupo(this.selectedOptionZona, this.selectedOptionRama, this.selectedOptionGrupo).subscribe(res => {
+      this.grupoService.consultarMiembrosGrupo(this.movimiento, this.selectedOptionZona, this.selectedOptionRama, this.selectedOptionGrupo).subscribe(res => {
         {
           console.log(res);
           let enviar: any = res.body;
@@ -225,7 +228,7 @@ export class ModificarGrupoComponent implements OnInit {
               if (this.encargado2) {
                 this.grupoModificadoForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
               }
-            }, 300)
+            }, 500)
           }
         }
       }, error => console.log(error))
@@ -243,7 +246,7 @@ export class ModificarGrupoComponent implements OnInit {
         if (encargado.id == this.encargadoViejo2.id && this.cambiarFaseMonitor)
           return;
       }
-      this.miembroService.getUnMiembroxID(encargado.id).subscribe(
+      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe(
         res => {
           let encargadoTemp: any = res.body;
 
@@ -303,8 +306,9 @@ export class ModificarGrupoComponent implements OnInit {
     this.grupoModificadoForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.grupoModificadoForm.controls['idRama'].setValue(this.selectedOptionRama);
     this.grupoModificadoForm.controls['idGrupo'].setValue(this.selectedOptionGrupo);
+    this.grupoModificadoForm.controls['idMovimiento'].setValue(this.movimiento);
     let grupoInfo = this.grupoModificadoForm.getRawValue();
-    if (grupoInfo.idJefeNuevo2 == "Ninguno") {
+    if (grupoInfo.idJefeNuevo2 == "Ninguno" || grupoInfo.idJefeNuevo2 == '') {
       delete grupoInfo['idJefeNuevo2'];
     }
     if (this.encargadoViejo2.id == undefined) {

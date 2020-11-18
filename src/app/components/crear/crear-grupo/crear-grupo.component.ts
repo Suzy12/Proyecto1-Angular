@@ -25,6 +25,7 @@ export class CrearGrupoComponent implements OnInit {
   submitted: Boolean = false;
   encargado1: any = false;
   encargado2: any = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -38,6 +39,7 @@ export class CrearGrupoComponent implements OnInit {
   ngOnInit(): void {
     this.getZonas();
     this.grupoForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]],
@@ -50,7 +52,7 @@ export class CrearGrupoComponent implements OnInit {
   get form() { return this.grupoForm.controls }
 
   public getZonas() {
-    this.zonaService.getAllZonas().subscribe(
+    this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
@@ -69,7 +71,7 @@ export class CrearGrupoComponent implements OnInit {
 
   getRamas(newZona) {
     this.ramas = [];
-    this.ramaService.getRamas(newZona).subscribe(
+    this.ramaService.getRamas(this.movimiento, newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -89,7 +91,7 @@ export class CrearGrupoComponent implements OnInit {
 
   getMonitores(idZona) {
     this.monitores = [];
-    this.miembroService.getAllMonitores(idZona).subscribe(
+    this.miembroService.getAllMonitores(this.movimiento, idZona).subscribe(
       res => {
         let monitoresTemp: any = res.body;
         if (monitoresTemp.success == false) {
@@ -169,6 +171,7 @@ export class CrearGrupoComponent implements OnInit {
       this.grupoForm.reset();
       this.grupoForm.controls['idEncargado2'].setValue('Ninguno');
       this.grupoForm.controls['isMonitor'].setValue(true);
+      this.grupoForm.controls['idMovimiento'].setValue(this.movimiento);
 
     }
   }

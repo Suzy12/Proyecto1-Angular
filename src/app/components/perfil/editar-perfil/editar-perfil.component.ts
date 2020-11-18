@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { MiembroService } from '../../../services/miembros/miembro.service'
 import { ToastrService } from 'ngx-toastr';
-
+import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -16,11 +16,13 @@ export class EditarPerfilComponent implements OnInit {
   miembro: any;
   miembroForm: FormGroup;
   submitted: Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private miembroService: MiembroService,
-    private toastr: ToastrService) { 
+    private toastr: ToastrService,
+    @Inject(SESSION_STORAGE) private storage: StorageService) { 
       if (this.router.getCurrentNavigation().extras.state) {
         this.routeState = this.router.getCurrentNavigation().extras.state;
         if (this.routeState) {
@@ -32,6 +34,7 @@ export class EditarPerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.miembroForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idMiembro: this.miembro.id,
       nombre: [this.miembro.nombre, [Validators.required]],
       celular: [this.miembro.celular, [Validators.required]],

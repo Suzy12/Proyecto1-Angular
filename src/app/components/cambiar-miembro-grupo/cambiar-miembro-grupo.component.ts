@@ -26,6 +26,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   miembro:any = {}
   grupoViejo: any = "";
   show: Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -38,9 +39,11 @@ export class CambiarMiembroGrupoComponent implements OnInit {
 
   ngOnInit(): void {
     this.miembroForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idMiembro: ['', [Validators.required]]
     });
     this.miembroGrupoForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: [this.selectedOptionZona, [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupoViejo: this.grupoViejo.id,
@@ -56,6 +59,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   consultar(){
     this.miembro = {};
     this.grupoViejo = "";
+    this.miembroGrupoForm.reset();
     let miembroInfo = this.miembroForm.getRawValue();
 
     this.submitted = true;
@@ -84,7 +88,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   getRamas(idMiembro) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.consultarRamaDeMiembro(idMiembro).subscribe(
+    this.ramaService.consultarRamaDeMiembro(this.movimiento, idMiembro).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -108,7 +112,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
     console.log(this.selectedOptionZona);
     console.log(newRama);
     console.log(this.miembro.id);
-    this.grupoService.consultarGrupoDeMiembro(this.selectedOptionZona, newRama+"", this.miembro.id).subscribe(res => {
+    this.grupoService.consultarGrupoDeMiembro(this.movimiento, this.selectedOptionZona, newRama+"", this.miembro.id).subscribe(res => {
       let grupoTemp: any = res.body;
         if (grupoTemp.success == false) {
           this.toastr.error(grupoTemp.error.message, 'Error', { timeOut: 5000 });
@@ -124,7 +128,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
 
   getGrupos(newRama) {
     this.grupos = [];
-    this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
+    this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
@@ -150,6 +154,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
     this.miembroGrupoForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.miembroGrupoForm.controls['idMiembro'].setValue(this.miembro.id);
     this.miembroGrupoForm.controls['idGrupoViejo'].setValue(this.grupoViejo.id_grupo+"");
+    this.miembroGrupoForm.controls['idMovimiento'].setValue(this.movimiento);
 
     let cambiarInfo = this.miembroGrupoForm.getRawValue();
     

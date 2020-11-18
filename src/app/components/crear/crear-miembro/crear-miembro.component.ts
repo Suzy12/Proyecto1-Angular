@@ -24,6 +24,7 @@ export class CrearMiembroComponent implements OnInit {
   selectedOptionGrupo: any;
   miembroForm: FormGroup;
   submitted: Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +40,7 @@ export class CrearMiembroComponent implements OnInit {
   ngOnInit(): void {
     this.getZonas();
     this.miembroForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]],
@@ -57,7 +59,7 @@ export class CrearMiembroComponent implements OnInit {
   get form() { return this.miembroForm.controls }
 
   public getZonas() {
-    this.zonaService.getAllZonas().subscribe(
+    this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
@@ -77,7 +79,7 @@ export class CrearMiembroComponent implements OnInit {
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRamas(newZona).subscribe(
+    this.ramaService.getRamas(this.movimiento, newZona).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
@@ -96,7 +98,7 @@ export class CrearMiembroComponent implements OnInit {
 
   getGrupos(newRama) {
     this.grupos = [];
-    this.grupoService.getGrupos(this.selectedOptionZona, newRama).subscribe(
+    this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
@@ -142,6 +144,7 @@ export class CrearMiembroComponent implements OnInit {
       console.log("Éxito");
       this.miembroForm.reset();
       this.miembroForm.controls['posible_monitor'].setValue('No');
+      this.miembroForm.controls['idMovimiento'].setValue(this.movimiento);
     }
   }
 }

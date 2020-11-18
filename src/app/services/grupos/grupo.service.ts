@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,8 @@ export class GrupoService {
 
   constructor(private http: HttpClient) { }
 
-  public getGrupos = (idZona, idRama)  =>  {
-    let params = {idZona: idZona, idRama: idRama};
+  public getGrupos = (idMovimiento, idZona, idRama)  =>  {
+    let params = {idMovimiento: idMovimiento, idZona: idZona, idRama: idRama};
     return this.http.post(this.grupoUrl + '/consultar-grupos', params, { observe: 'response' })
   }
 
@@ -19,8 +19,8 @@ export class GrupoService {
     return this.http.post(this.grupoUrl + '/get-grupo', grupoInfo, { observe: 'response' })
   }
 
-  public consultarMiembrosGrupo = (idZona, idRama, idGrupo)  =>  {
-    let params = {idZona: idZona, idRama: idRama, idGrupo: idGrupo};
+  public consultarMiembrosGrupo = (idMovimiento, idZona, idRama, idGrupo)  =>  {
+    let params = {idMovimiento: idMovimiento, idZona: idZona, idRama: idRama, idGrupo: idGrupo};
     return this.http.post(this.grupoUrl + '/consultar-miembros-grupo', params, { observe: 'response' })
   }
 
@@ -32,8 +32,8 @@ export class GrupoService {
     return this.http.post(this.grupoUrl + '/crear-grupo', grupoInfo, { observe: 'response' })
   }
 
-  public consultarGrupoDeMiembro = (idZona, idRama, idMiembro) => {
-    let params = { idZona: idZona, idRama: idRama , idMiembro: idMiembro}
+  public consultarGrupoDeMiembro = (idMovimiento, idZona, idRama, idMiembro) => {
+    let params = { idMovimiento: idMovimiento, idZona: idZona, idRama: idRama , idMiembro: idMiembro}
     return this.http.post(this.grupoUrl + '/consultar-grupo-miembro-en-rama', params, { observe: 'response' })
   }
 

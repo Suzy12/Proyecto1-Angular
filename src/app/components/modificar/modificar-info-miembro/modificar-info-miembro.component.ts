@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { MiembroService } from '../../../services/miembros/miembro.service'
 import { ToastrService } from 'ngx-toastr';
+import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
 
 @Component({
   selector: 'app-modificar-info-miembro',
@@ -15,12 +16,14 @@ export class ModificarInfoMiembroComponent implements OnInit {
   miembro: any;
   miembroForm: FormGroup;
   submitted: Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private miembroService: MiembroService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    @Inject(SESSION_STORAGE) private storage: StorageService
     ) {
     if (this.router.getCurrentNavigation().extras.state) {
       this.routeState = this.router.getCurrentNavigation().extras.state;
@@ -33,6 +36,7 @@ export class ModificarInfoMiembroComponent implements OnInit {
 
   ngOnInit(): void {
     this.miembroForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idMiembro: this.miembro.id,
       nombre: [this.miembro.nombre, [Validators.required]],
       celular: [this.miembro.celular, [Validators.required]],
@@ -42,9 +46,6 @@ export class ModificarInfoMiembroComponent implements OnInit {
       distrito: [this.miembro.distrito, [Validators.required]],
       senas: [this.miembro.senas, [Validators.required]],
       posible_monitor: '',
-      idZona: '1',
-      idRama: '1',
-      idGrupo: '1',
    });
 
   }

@@ -71,10 +71,6 @@ export class IniciarSesionComponent implements OnInit {
       this.loading = false;
       this.loginForm.reset();
       
-      this.movimientoService.getSession().subscribe(res => {
-        console.log(res);
-      }, error => console.log(error))
-      
       if (this.storage.get('current-user-role') == 1)
         this.router.navigate(['/perfil']);
       }

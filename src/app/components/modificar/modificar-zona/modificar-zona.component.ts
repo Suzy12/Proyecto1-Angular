@@ -30,6 +30,7 @@ export class ModificarZonaComponent implements OnInit {
   zonaModificadaForm: FormGroup;
   zona: any = {};
   submitted: Boolean = false;
+  movimiento = this.storage.get('current-user-movimiento');
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,9 +46,11 @@ export class ModificarZonaComponent implements OnInit {
   ngOnInit(): void {
     this.getZonas();
     this.zonaForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: ['', [Validators.required]]
     });
     this.zonaModificadaForm = this.formBuilder.group({
+      idMovimiento: this.movimiento,
       idZona: this.selectedOptionZona,
       nombre: '',
       idJefeNuevo1: [this.zona.encargado1, [Validators.required]],
@@ -61,7 +64,7 @@ export class ModificarZonaComponent implements OnInit {
   get formZona() { return this.zonaModificadaForm.controls }
 
   public getZonas() {
-    this.zonaService.getAllZonas().subscribe(
+    this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
@@ -83,7 +86,7 @@ export class ModificarZonaComponent implements OnInit {
     this.encargado1 = false; this.encargadoViejo1 = false; this.encargadoViejo2 = false;
     this.encargado2 = false;
 
-    this.zonaService.getUnaZona(this.selectedOptionZona).subscribe(res => {
+    this.zonaService.getUnaZona(this.movimiento, this.selectedOptionZona).subscribe(res => {
       console.log(res);
       this.zonaSuccess(res);
       this.show = true;
@@ -111,7 +114,7 @@ export class ModificarZonaComponent implements OnInit {
   }
 
   consultarEncargado1() {
-    this.miembroService.getUnMiembroxID(this.encargado1).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
       res => {
         let encargadoTemp: any = res.body;
         this.encargado1 = encargadoTemp.miembro;
@@ -121,7 +124,7 @@ export class ModificarZonaComponent implements OnInit {
   }
 
   consultarEncargado2() {
-    this.miembroService.getUnMiembroxID(this.encargado2).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
       res => {
         let encargadoTemp: any = res.body;
         this.encargado2 = encargadoTemp.miembro;
@@ -132,7 +135,7 @@ export class ModificarZonaComponent implements OnInit {
 
   getPosiblesEncargados() {
     this.toastr.clear();
-    this.zonaService.consultarMiembrosZona(this.selectedOptionZona).subscribe(res => {
+    this.zonaService.consultarMiembrosZona(this.movimiento,this.selectedOptionZona).subscribe(res => {
         console.log(res);
         let enviar: any = res.body;
         if (enviar.success == false) {
@@ -154,7 +157,7 @@ export class ModificarZonaComponent implements OnInit {
     this.encargados = [];
     Object.values(res).forEach(element => {
       let encargado: any = element;
-      this.miembroService.getUnMiembroxID(encargado.id).subscribe(
+      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe(
         res => {
           let encargadoTemp: any = res.body;
 
@@ -203,6 +206,7 @@ export class ModificarZonaComponent implements OnInit {
     this.zonaModificadaForm.controls['idJefeViejo2'].setValue(this.encargadoViejo2.id);
     this.zonaModificadaForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.zonaModificadaForm.controls['nombre'].setValue(this.zona.nombre);
+    this.zonaModificadaForm.controls['idMovimiento'].setValue(this.movimiento);
     let zonaInfo = this.zonaModificadaForm.getRawValue();
 
     if(zonaInfo.idJefeNuevo2 == "Ninguno"){

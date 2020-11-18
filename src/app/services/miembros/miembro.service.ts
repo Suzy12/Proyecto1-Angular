@@ -15,8 +15,8 @@ export class MiembroService {
     return this.http.post(this.miembroUrl + '/get-miembro', idMiembro, { observe: 'response', withCredentials: true })
   }
 
-  public getUnMiembroxID = (idMiembro)  =>  {
-    let params = {idMiembro: idMiembro};
+  public getUnMiembroxID = (idMovimiento, idMiembro)  =>  {
+    let params = {idMovimiento: idMovimiento, idMiembro: idMiembro};
     return this.http.post(this.miembroUrl + '/get-miembro', params, { observe: 'response', withCredentials: true })
   }
 
@@ -25,28 +25,28 @@ export class MiembroService {
   }
 
   public crearMiembro = (infoMiembro) => {
-    return this.http.post(this.miembroUrl + '/crear-miembro', infoMiembro, {observe: 'response', withCredentials: true})
+    return this.http.post(this.miembroUrl + '/crear-miembro', infoMiembro, {observe: 'response'})
   }
 
-  public getAllMonitores = (idZona) => {
-    let params = {idZona: idZona};
-    return this.http.post(this.miembroUrl + '/consultar-monitores-zona', params, {observe: 'response', withCredentials: true})
+  public getAllMonitores = (idMovimiento, idZona) => {
+    let params = {idMovimiento: idMovimiento, idZona: idZona};
+    return this.http.post(this.miembroUrl + '/consultar-monitores-zona', params, {observe: 'response'})
   }
 
   public getMonitoresPosibles = (infoGrupo) => {
-    return this.http.post(this.miembroUrl + '/consultar-monitores-probables', infoGrupo, {observe: 'response', withCredentials: true})
+    return this.http.post(this.miembroUrl + '/consultar-monitores-probables', infoGrupo, {observe: 'response'})
   }
 
   public agregarMiembroGrupo = (info) => {
-    return this.http.post(this.miembroUrl + '/agregar-miembro-grupo', info, {observe: 'response', withCredentials: true})
+    return this.http.post(this.miembroUrl + '/agregar-miembro-grupo', info, {observe: 'response'})
   }
 
   public cambiarMiembroGrupo = (info) => {
-    return this.http.post(this.miembroUrl + '/cambio-de-grupo', info, {observe: 'response', withCredentials: true})
+    return this.http.post(this.miembroUrl + '/cambio-de-grupo', info, {observe: 'response'})
   }
 
   public modificarAsesor = (info) => {
-    return this.http.post(this.miembroUrl + '/modificar-asesor', info, {observe: 'response', withCredentials: true})
+    return this.http.post(this.miembroUrl + '/modificar-asesor', info, {observe: 'response'})
   }
 
 

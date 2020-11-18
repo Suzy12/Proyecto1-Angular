@@ -38,7 +38,7 @@ export class PaginaPerfilComponent implements OnInit {
         }else{
           this.movimiento = movimientoTemp.movimiento;
           console.log(this.movimiento.idAsesor);
-          this.miembroService.getUnMiembroxID(this.movimiento.idAsesor).subscribe(
+          this.miembroService.getUnMiembroxID(movimiento, this.movimiento.idAsesor).subscribe(
             res =>{
               let asesorTemp:any = res.body;
 
