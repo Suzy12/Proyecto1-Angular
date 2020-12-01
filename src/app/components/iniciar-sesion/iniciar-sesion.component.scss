@@ -1,38 +1,33 @@
 .center {
-    border: 1px dotted silver;
-  }
-  
-  
-  input {
-    font-size: medium;
-  }
-  
-  body {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-  
-  .login__body {
-    min-height: 100vh;
-  }
-  
-  .login__image {
-    -o-object-fit: contain;
-    object-fit: contain;
-  }
-  
-  .login__row {
-    min-height: 100vh;
-  }
-  
-  .card-size {
-    min-width: 400px;
-  }
-  
-  .input-group-text {
-    border-color: #e1e1e1;
-  }
+  border: 1px dotted silver;
+}
 
+input {
+  font-size: medium;
+}
 
-  
-  
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.login__body {
+  min-height: 100vh;
+}
+
+.login__image {
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+
+.login__row {
+  min-height: 100vh;
+}
+
+.card-size {
+  min-width: 400px;
+}
+
+.input-group-text {
+  border-color: #e1e1e1;
+}

@@ -2,6 +2,7 @@
 <div class="containter-fluid center">
     <div class="row">
         <div class="col">
+            <!--Container Crear Zona-->
             <div class="container card__container my-5 shadow-sm rounded">
                 <h2 class="text-center" id="title">Crear una Zona</h2>
                 <p class="text-center">
@@ -10,6 +11,7 @@
                 </p>
                 <hr>
                 <div class="center">
+                    <!--Form Crear Zona-->
                     <form [formGroup]="zonaForm" (ngSubmit)="modificarZona()" novalidate>
                         <p class="pull-center"><b> Información General</b></p>
                         <div class="form-group">
@@ -36,10 +38,13 @@
                             <button type="submit" class="btn btn-secondary center">Crear Zona</button>
                         </div>
                     </form>
+                    <!--End of Form-->
                 </div>
             </div>
+            <!--End of Container-->
         </div>
         <div class="col">
+            <!--Container Crear Rama-->
             <div class="container card__container my-5 shadow-sm rounded">
                 <h2 class="text-center" id="title">Crear una Rama</h2>
                 <p class="text-center">
@@ -48,6 +53,7 @@
                 </p>
                 <hr>
                 <div class="center">
+                    <!--Form Crear Rama-->
                     <form [formGroup]="ramaForm" (ngSubmit)="modificarRama()" novalidate>
                         <p class="pull-center"><b> Información General</b></p>
                         <div class="form-group">
@@ -70,8 +76,7 @@
                             </div>
                             <div class="my-2"></div>
                             <label for="">Escoja una zona</label>
-                            <select required class="form-control"
-                                formControlName="idZona">
+                            <select required class="form-control" formControlName="idZona">
                                 <option *ngFor="let zona of zonas; let i = index" [value]="zonas[i].id">
                                     {{zonas[i].nombre}}
                                 </option>
@@ -82,8 +87,10 @@
                             <button type="submit" class="btn btn-secondary center">Crear Rama</button>
                         </div>
                     </form>
+                    <!--End of Form-->
                 </div>
             </div>
+            <!--End of Container-->
         </div>
     </div>
 </div>

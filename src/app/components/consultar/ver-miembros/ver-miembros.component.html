@@ -12,27 +12,32 @@
             </p>
             <hr>
             <label> Consultar por: </label>
+            <!--Form Consultar Nodo-->
             <form [formGroup]="consultarForm" (ngSubmit)="consultar()" novalidate>
                 <div class="form-group">
                     <div class="row">
+
+                        <!--Consultar por Zona-->
                         <div class="col-sm">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" formControlName="nodo"
-                                    value="checkZona" checked>
+                                <input class="form-check-input" type="radio" formControlName="nodo" value="checkZona"
+                                    checked>
                                 <label class="form-check-label">Zona</label>
                             </div>
                         </div>
+
+                        <!--Consultar por Rama-->
                         <div class="col-sm">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" formControlName="nodo"
-                                    value="checkRama">
+                                <input class="form-check-input" type="radio" formControlName="nodo" value="checkRama">
                                 <label class="form-check-label">Rama</label>
                             </div>
                         </div>
+
+                        <!--Consultar por Grupo-->
                         <div class="col-sm">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" formControlName="nodo"
-                                    value="checkGrupo">
+                                <input class="form-check-input" type="radio" formControlName="nodo" value="checkGrupo">
                                 <label class="form-check-label">Grupo</label>
                             </div>
                         </div>
@@ -41,6 +46,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
+                            <!--Zona-->
                             <label for="">Escoja una zona</label>
                             <select required class="form-control" [(ngModel)]="selectedOptionZona"
                                 formControlName="idZona" (change)="getRamas($event.target.value)">
@@ -48,17 +54,22 @@
                                     {{zonas[i].nombre}}
                                 </option>
                             </select>
+
+                            <!--Rama-->
                             <div class="my-2"></div>
                             <label for="">Escoja una rama</label>
-                            <select required class="form-control"  [(ngModel)]="selectedOptionRama" formControlName="idRama"
-                                (change)="getGrupos($event.target.value)">
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama"
+                                formControlName="idRama" (change)="getGrupos($event.target.value)">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
                                     {{ramas[i].nombre}}
                                 </option>
                             </select>
+
+                            <!--Grupo-->
                             <div class="my-2"></div>
                             <label for="">Escoja un grupo</label>
-                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo" formControlName="idGrupo">
+                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo"
+                                formControlName="idGrupo">
                                 <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
                                     {{grupos[i].nombre}}
                                 </option>
@@ -70,8 +81,11 @@
                     <button type="submit" class="btn btn-secondary center">Consultar</button>
                 </div>
             </form>
+            <!--End of Form-->
             <hr>
-            <div class="col-sm" *ngIf = "show">
+
+            <!--Tabla de Miembros-->
+            <div class="col-sm" *ngIf="show">
                 <p>Miembros</p>
                 <table class="fixed_headers">
                     <thead>
@@ -88,10 +102,11 @@
                             <td>{{miembro.id}}</td>
                             <td>{{miembro.celular}}</td>
                             <td>{{miembro.email}}</td>
-                        </tr> 
+                        </tr>
                     </tbody>
                 </table>
             </div>
+            <!--End of Tabla de Miembros-->
         </div>
         <hr>
     </div>

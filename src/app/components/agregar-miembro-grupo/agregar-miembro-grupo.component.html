@@ -1,4 +1,6 @@
 <app-nav-menu></app-nav-menu>
+
+<!--Card-->
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
         <div class="container">
@@ -12,6 +14,8 @@
                     los grupos de cada rama. </small>
             </p>
             <hr>
+
+            <!--Form Consultar Cedula-->
             <form [formGroup]="miembroForm" (ngSubmit)="consultar()" novalidate>
                 <div class="row">
                     <div class="col-sm">
@@ -23,8 +27,8 @@
                                         <span class="fa fa-id-card"></span>
                                     </span>
                                 </div>
-                                <input  class="form-control" formControlName="idMiembro"
-                                    placeholder="Cédula" required="required">
+                                <input class="form-control" formControlName="idMiembro" placeholder="Cédula"
+                                    required="required">
                             </div>
                         </div>
                     </div>
@@ -33,14 +37,18 @@
                     <button type="submit" class="btn btn-secondary center">Consultar</button>
                 </div>
             </form>
+            <!--End of Form-->
             <hr>
-            <form [formGroup]="miembroGrupoForm" (ngSubmit)="agregar()" novalidate *ngIf = "show">
+
+            <!--Form Agregar a Grupo-->
+            <form [formGroup]="miembroGrupoForm" (ngSubmit)="agregar()" novalidate *ngIf="show">
                 <div class="row">
                     <div class="col-sm">
+                        <!--Ramas Disponibles (ramas en las que no es miembro)-->
                         <div class="form-group">
                             <label for="">Escoja una rama</label>
-                            <select required class="form-control" [(ngModel)]="selectedOptionRama" formControlName="idRama"
-                                (change)="getGrupos($event.target.value)" required="required"
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama"
+                                formControlName="idRama" (change)="getGrupos($event.target.value)" required="required"
                                 [ngClass]="{ 'is-invalid': submittedAgregar && formMiembroGrupo.idRama.errors }">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">
                                     {{ramas[i].nombre}}
@@ -51,7 +59,8 @@
                                     <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
                                         Debe indicar una rama para el miembro</label>
                                 </div>
-                            </div>               
+                            </div>
+                            <!--Grupos de la Rama escogida-->
                             <div class="my-2"></div>
                             <label for="">Escoja un grupo</label>
                             <select required class="form-control" formControlName="idGrupo" required="required"
@@ -75,6 +84,9 @@
                     <button type="submit" class="btn btn-secondary center">Confirmar Cambio</button>
                 </div>
             </form>
+            <!--End of Form-->
+
         </div>
     </div>
 </div>
+<!--End of Card-->

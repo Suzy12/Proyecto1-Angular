@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BuscarMiembroComponent implements OnInit {
 
-  idMiembro:any = '';
+  idMiembro: any = '';
   miembroIdForm: FormGroup;
   movimiento = this.storage.get('current-user-movimiento');
 
@@ -21,13 +21,13 @@ export class BuscarMiembroComponent implements OnInit {
     private miembroService: MiembroService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private toastr: ToastrService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.miembroIdForm = this.formBuilder.group({
       idMovimiento: this.movimiento,
       idMiembro: ['', [Validators.required]]
-   });
+    });
   }
 
   consultarMiembro = () => {
@@ -43,12 +43,12 @@ export class BuscarMiembroComponent implements OnInit {
 
   resController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{  
-      console.log(res); 
-      this.router.navigate(['/consultar/info-miembro'],  { state: res.body  })  
+    } else {
+      console.log(res);
+      this.router.navigate(['/consultar/info-miembro'], { state: res.body }) //pasar a la ventana de informacion de miembro
     }
   }
 

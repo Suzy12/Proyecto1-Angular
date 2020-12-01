@@ -5,6 +5,8 @@
             <div class="card-profile-image center">
                 <img src="{{movimiento.logo}}" class="rounded-circle">
             </div>
+
+            <!--Form Modificar Movimiento-->
             <form [formGroup]="movimientoForm" (ngSubmit)="modificar()" novalidate>
                 <div class="container center">
                     <div class="input-group col-name">
@@ -13,6 +15,7 @@
                                 <span class="fa fa-user"></span>
                             </span>
                         </div>
+                        <!--Nombre-->
                         <input type="text" class="form-control" formControlName="nombre" value="{{movimiento.nombre}}"
                             required="required" [ngClass]="{ 'is-invalid': submitted && form.nombre.errors }">
                         <div *ngIf="submitted && form.nombre.errors" class="invalid-feedback">
@@ -21,6 +24,7 @@
                                     campo del nombre es obligatorio</label>
                             </div>
                         </div>
+                        <!--End of Nombre-->
                     </div>
                 </div>
                 <hr>
@@ -45,7 +49,7 @@
                                 </div>
                             </div>
                             <hr />
-
+                            <!--Tabla de Telefonos-->
                             <div class="col-sm">
                                 <p>Teléfonos</p>
                                 <table class="fixed_headers" id="table">
@@ -57,9 +61,10 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let tel of telefonos; let i = index">
-                                            <td> 
+                                            <td>
                                                 <input type="tel" class="form-control" value="{{tel}}"
-                                                    required="required" (change)="updateTelefonos(i, $event.target.value)">
+                                                    required="required"
+                                                    (change)="updateTelefonos(i, $event.target.value)">
                                             </td>
                                             <td (click)="removeTelefono(i)">
                                                 <i class="fa fa-trash"></i>
@@ -67,13 +72,14 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div class = "my-2">
+                                <div class="my-2">
                                     <button (click)="addTelefono()" class="btn btn-secondary">
-                                      <i class="fa fa-plus"></i>
-                                      Agregar Teléfono
+                                        <i class="fa fa-plus"></i>
+                                        Agregar Teléfono
                                     </button>
                                 </div>
                             </div>
+                            <!--End of Tabla-->
                             <hr />
                             <label for="">Logo</label>
                             <div class="my-2"></div>
@@ -173,6 +179,7 @@
                     <button type="submit" class="btn btn-secondary center">Modificar Movimiento</button>
                 </div>
             </form>
+            <!--End of Form-->
         </div>
     </div>
 </div>

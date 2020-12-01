@@ -21,7 +21,7 @@ export class CrearGrupoComponent implements OnInit {
   monitores: any = [];
   selectedOptionZona: any;
   grupoForm: FormGroup;
-  grupo:any = {};
+  grupo: any = {};
   submitted: Boolean = false;
   encargado1: any = false;
   encargado2: any = false;
@@ -51,6 +51,8 @@ export class CrearGrupoComponent implements OnInit {
 
   get form() { return this.grupoForm.controls }
 
+  
+  //=============Get all zonas del movimiento===============
   public getZonas() {
     this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
@@ -69,6 +71,7 @@ export class CrearGrupoComponent implements OnInit {
     );
   }
 
+  //=============Get all ramas del movimiento===============
   getRamas(newZona) {
     this.ramas = [];
     this.ramaService.getRamas(this.movimiento, newZona).subscribe(
@@ -89,6 +92,7 @@ export class CrearGrupoComponent implements OnInit {
     this.getMonitores(newZona);
   }
 
+  //=============Get all monitores del movimiento===============
   getMonitores(idZona) {
     this.monitores = [];
     this.miembroService.getAllMonitores(this.movimiento, idZona).subscribe(
@@ -108,6 +112,7 @@ export class CrearGrupoComponent implements OnInit {
     )
   }
 
+  //=============Listener Encargado 1===============
   changeEncargado1(id) {
     if (this.encargado2.cedula == id) {
       this.toastr.clear();
@@ -115,20 +120,21 @@ export class CrearGrupoComponent implements OnInit {
       this.encargado2 = false;
       this.grupoForm.controls['idEncargado2'].setValue('Ninguno');
     }
-    for (let encargado of this.monitores) {
+    for (let encargado of this.monitores) { //busco el id en la lista de monitores para saber el nombre
       if (encargado.cedula == id) {
         this.encargado1 = encargado;
       }
     }
   }
 
+  //=============Listener Encargado 2===============
   changeEncargado2(id) {
     if (this.encargado1.cedula == id) {
       this.toastr.clear();
       this.toastr.warning("Por favor utilice un Encargado 2 diferente al Encargado 1", 'Advertencia', { timeOut: 10000 });
       this.grupoForm.controls['idEncargado2'].setValue('Ninguno');
-    }else{
-      for (let encargado of this.monitores) {
+    } else {
+      for (let encargado of this.monitores) { //busco el id en la lista de monitores para saber el nombre
         if (encargado.cedula == id) {
           this.encargado2 = encargado;
         }
@@ -136,7 +142,8 @@ export class CrearGrupoComponent implements OnInit {
     }
   }
 
-  crearGrupo(){
+  //=============Crear el grupo==============
+  crearGrupo() {
     let grupoInfo = this.grupoForm.getRawValue();
 
     this.submitted = true;
@@ -146,8 +153,8 @@ export class CrearGrupoComponent implements OnInit {
     if (this.grupoForm.invalid) return;
 
 
-    if(grupoInfo.idEncargado2 == "Ninguno"){
-      delete grupoInfo['idEncargado2'];
+    if (grupoInfo.idEncargado2 == "Ninguno") {
+      delete grupoInfo['idEncargado2']; //se manda como undefined
     }
 
     console.log(grupoInfo);
@@ -156,17 +163,17 @@ export class CrearGrupoComponent implements OnInit {
       console.log(res.body);
       this.responseController(res);
     }, error => console.log(error))
-    
+
     this.submitted = false;
   }
 
   responseController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{
-      this.toastr.success("La solicitud se realizó con éxito", 'Grupo Creado', {timeOut: 2000});
+    } else {
+      this.toastr.success("La solicitud se realizó con éxito", 'Grupo Creado', { timeOut: 2000 });
       console.log("Éxito");
       this.grupoForm.reset();
       this.grupoForm.controls['idEncargado2'].setValue('Ninguno');

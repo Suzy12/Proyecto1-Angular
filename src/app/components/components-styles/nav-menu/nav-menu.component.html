@@ -1,15 +1,16 @@
+<!--Nav con el menu de funcionalidades-->
 <div class="page-wrapper" [ngClass]="{'toggled' : getSideBarState()}">
-    <app-menu></app-menu>
-    <main class="page-content">
-            <nav class="navbar navbar-expand navbar-dark nav-tss">
-                <a class="btn btn-outline-danger mr-1 mb-1" (click)="toggleSidebar()"><i class="fa fa-bars"></i></a>
-                <img class="nav-saco-logo" src="../../../assets/img/the-social-seekers-logo.png">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav  ml-auto">
-                    <a href="#" class="nav-item active nav-link">Cerrar Sesión</a>
-                  </ul>
-                </div>
-            </nav>
-        <div class="overlay" (click)="toggleSidebar()" [ngClass]="{'show' : !getSideBarState()}"></div>
-    </main>
+  <app-menu></app-menu>
+  <main class="page-content">
+    <nav class="navbar navbar-expand navbar-dark nav-tss">
+      <a class="btn btn-outline-danger mr-1 mb-1" (click)="toggleSidebar()"><i class="fa fa-bars"></i></a>
+      <img class="nav-saco-logo" src="../../../assets/img/the-social-seekers-logo.png">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav  ml-auto">
+          <a href="#" class="nav-item active nav-link">Cerrar Sesión</a>
+        </ul>
+      </div>
+    </nav>
+    <div class="overlay" (click)="toggleSidebar()" [ngClass]="{'show' : !getSideBarState()}"></div>
+  </main>
 </div>

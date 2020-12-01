@@ -1,6 +1,7 @@
 <app-nav-menu></app-nav-menu>
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <!--Informacion del miembro-->
         <div class="container">
             <div class="card-profile-image center">
                 <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
@@ -28,6 +29,12 @@
                         <p class="text-secondary">
                             <i class="fa fa-at"></i>
                             {{miembro.email}}
+                        </p>
+                        <hr />
+                        <p>¿Es candidato a monitor?</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-university"></i>
+                            {{ miembro.posible_monitor == true ? 'Sí' : 'No' }}
                         </p>
                         <hr />
                     </div>
@@ -60,11 +67,37 @@
                         <hr />
                     </div>
                 </div>
+
+                <!--Grupos a los que pertenece el miembro-->
+                <div class="col-sm">
+                    <p>Grupos</p>
+                    <table class="fixed_headers">
+                        <thead>
+                            <tr>
+                                <th>Zona</th>
+                                <th>Rama</th>
+                                <th>Grupo</th>
+                                <th>Rol</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let grupo of gruposMiembro">
+                                <td>{{grupo.id_zona}}</td>
+                                <td>{{grupo.id_rama}}</td>
+                                <td>{{grupo.nombre}}</td>
+                                <td>{{grupo.nombre_lider}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--End of Grupos-->
             </div>
             <hr>
             <div class="center">
-                <button type="button" class="btn btn-secondary center" (click) = "modificarMiembro()">Modificar Perfil</button>
+                <button type="button" class="btn btn-secondary center" (click)="modificarMiembro()">Modificar
+                    Miembro</button>
             </div>
         </div>
+        <!--End of Informacion del miembro-->
     </div>
 </div>

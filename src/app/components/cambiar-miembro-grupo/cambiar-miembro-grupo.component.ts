@@ -23,7 +23,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   miembroGrupoForm: FormGroup;
   submitted: Boolean = false;
   submittedCambiar: Boolean = false;
-  miembro:any = {}
+  miembro: any = {}
   grupoViejo: any = "";
   show: Boolean = false;
   movimiento = this.storage.get('current-user-movimiento');
@@ -56,7 +56,9 @@ export class CambiarMiembroGrupoComponent implements OnInit {
   get form() { return this.miembroForm.controls }
   get formMiembroGrupo() { return this.miembroGrupoForm.controls }
 
-  consultar(){
+
+  //=============Consultar miembro por cedula===============
+  consultar() {
     this.miembro = {};
     this.grupoViejo = "";
     this.miembroGrupoForm.reset();
@@ -85,6 +87,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
 
   }
 
+  //===================Get Ramas en las que esta el miembro consultado=========================
   getRamas(idMiembro) {
     this.ramas = [];
     this.grupos = [];
@@ -96,7 +99,7 @@ export class CambiarMiembroGrupoComponent implements OnInit {
           console.log("Error");
         } else {
           console.log(ramasTemp);
-          this.selectedOptionZona = ramasTemp.ramas[0].id_zona+"";
+          this.selectedOptionZona = ramasTemp.ramas[0].id_zona + "";
           Object.values(ramasTemp.ramas).forEach(element => {
             this.ramas.push(element);
           });
@@ -108,24 +111,28 @@ export class CambiarMiembroGrupoComponent implements OnInit {
       this.getGrupoViejo(this.selectedOptionRama);
   }
 
-  getGrupoViejo(newRama){
+
+  //=============Get Grupo del cual el miembro sera eliminado (su grupo actual)==================
+  getGrupoViejo(newRama) {
     console.log(this.selectedOptionZona);
     console.log(newRama);
     console.log(this.miembro.id);
-    this.grupoService.consultarGrupoDeMiembro(this.movimiento, this.selectedOptionZona, newRama+"", this.miembro.id).subscribe(res => {
+    this.grupoService.consultarGrupoDeMiembro(this.movimiento, this.selectedOptionZona, newRama + "", this.miembro.id).subscribe(res => {
       let grupoTemp: any = res.body;
-        if (grupoTemp.success == false) {
-          this.toastr.error(grupoTemp.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
-          console.log(grupoTemp);
-          this.grupoViejo = grupoTemp.grupo[0];
-          this.getGrupos(newRama+"");
+      if (grupoTemp.success == false) {
+        this.toastr.error(grupoTemp.error.message, 'Error', { timeOut: 5000 });
+        console.log("Error");
+      } else {
+        console.log(grupoTemp);
+        this.grupoViejo = grupoTemp.grupo[0];
+        this.getGrupos(newRama + "");
 
-        }
+      }
     }, error => console.log(error));
   }
 
+
+  //============Get los demas grupos de la rama seleccionada===============
   getGrupos(newRama) {
     this.grupos = [];
     this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
@@ -136,10 +143,10 @@ export class CambiarMiembroGrupoComponent implements OnInit {
           console.log("Error");
         } else {
           console.log(gruposTemp);
-          
+
           Object.values(gruposTemp.grupos).forEach(element => {
-            let grupo:any = element;
-            if(grupo.id != this.grupoViejo.id_grupo)
+            let grupo: any = element;
+            if (grupo.id != this.grupoViejo.id_grupo) //eliminar grupo actual de la lista de grupos a los que puede cambiarse
               this.grupos.push(grupo);
           });
 
@@ -149,15 +156,18 @@ export class CambiarMiembroGrupoComponent implements OnInit {
     )
   }
 
-  cambiar(){
 
+  //============Cambiar miembro de grupo================
+  cambiar() {
+
+    //Agregar los valores que faltan al form/JSON
     this.miembroGrupoForm.controls['idZona'].setValue(this.selectedOptionZona);
     this.miembroGrupoForm.controls['idMiembro'].setValue(this.miembro.id);
-    this.miembroGrupoForm.controls['idGrupoViejo'].setValue(this.grupoViejo.id_grupo+"");
+    this.miembroGrupoForm.controls['idGrupoViejo'].setValue(this.grupoViejo.id_grupo + "");
     this.miembroGrupoForm.controls['idMovimiento'].setValue(this.movimiento);
 
     let cambiarInfo = this.miembroGrupoForm.getRawValue();
-    
+
     this.submittedCambiar = true;
 
 
@@ -172,8 +182,8 @@ export class CambiarMiembroGrupoComponent implements OnInit {
           this.toastr.error(miembroTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-          this.toastr.success("La solicitud se realizó con éxito", 'Miembro Cambiado a Nuevo Grupo', {timeOut: 5000});
-          console.log("Éxito"); 
+          this.toastr.success("La solicitud se realizó con éxito", 'Miembro Cambiado a Nuevo Grupo', { timeOut: 5000 });
+          console.log("Éxito");
         }
       },
       err => console.log(err)

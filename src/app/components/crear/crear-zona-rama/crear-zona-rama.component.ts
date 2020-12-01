@@ -40,10 +40,10 @@ export class CrearZonaRamaComponent implements OnInit {
     });
   }
 
-  get form() { return this.zonaForm.controls }
-  
-  get formRama() { return this.ramaForm.controls }
+  get form() { return this.zonaForm.controls } //form de crear zona
+  get formRama() { return this.ramaForm.controls } //forma de crear rama
 
+  //=============Get all zonas del movimiento==============
   public getZonas() {
     this.zonas = [];
     this.zonaService.getAllZonas(this.movimiento).subscribe(
@@ -63,14 +63,15 @@ export class CrearZonaRamaComponent implements OnInit {
     console.log(this.zonas);
   }
 
-  modificarZona(){
+  //=============Crear la zona==============
+  modificarZona() {
     let zonaInfo = this.zonaForm.getRawValue();
 
     this.submitted = true;
     if (this.zonaForm.invalid) return;
 
     console.log(zonaInfo);
-   this.zonaService.crearZona(zonaInfo).subscribe(res => {
+    this.zonaService.crearZona(zonaInfo).subscribe(res => {
       console.log(res);
       this.zonaResponseController(res)
     }, error => console.log(error))
@@ -78,14 +79,15 @@ export class CrearZonaRamaComponent implements OnInit {
     this.submitted = false;
   }
 
-  modificarRama(){
+  //=============Crear la rama==============
+  modificarRama() {
     let ramaInfo = this.ramaForm.getRawValue();
 
     this.submittedRama = true;
     if (this.ramaForm.invalid) return;
 
 
-    console.log(ramaInfo);  
+    console.log(ramaInfo);
     this.ramaService.crearRama(ramaInfo).subscribe(res => {
       console.log(res);
       this.ramaResponseController(res)
@@ -100,8 +102,8 @@ export class CrearZonaRamaComponent implements OnInit {
       this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
     } else {
-      this.toastr.success("La solicitud se realizó con éxito", 'Zona Agregada', {timeOut: 2000});
-      console.log("Éxito"); 
+      this.toastr.success("La solicitud se realizó con éxito", 'Zona Agregada', { timeOut: 2000 });
+      console.log("Éxito");
       this.getZonas();
     }
   }
@@ -112,8 +114,8 @@ export class CrearZonaRamaComponent implements OnInit {
       this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
     } else {
-      this.toastr.success("La solicitud se realizó con éxito", 'Rama Agregada', {timeOut: 2000});
-      console.log("Éxito"); 
+      this.toastr.success("La solicitud se realizó con éxito", 'Rama Agregada', { timeOut: 2000 });
+      console.log("Éxito");
     }
   }
 

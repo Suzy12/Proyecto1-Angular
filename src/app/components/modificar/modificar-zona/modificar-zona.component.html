@@ -9,6 +9,7 @@
                     Se puede modificar los jefes. </small>
             </p>
             <hr>
+            <!--Form Consultar Zona-->
             <form [formGroup]="zonaForm" (ngSubmit)="consultar()" novalidate>
                 <div class="row">
                     <div class="col-sm">
@@ -28,27 +29,32 @@
                     <button type="submit" class="btn btn-secondary center">Consultar</button>
                 </div>
             </form>
+            <!--End of Form-->
             <hr>
-            <form [formGroup]="zonaModificadaForm" (ngSubmit)="modificar()" novalidate *ngIf = "show">
+
+            <!--Form Modificar Zona-->
+            <form [formGroup]="zonaModificadaForm" (ngSubmit)="modificar()" novalidate *ngIf="show">
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
                             <div class="my-4"></div>
+                            <!--Modificar Encargado 1-->
                             <label for="">Primer jefe (Obligatorio)</label>
                             <select required class="form-control" formControlName="idJefeNuevo1" required="required"
-                                    [ngClass]="{ 'is-invalid': submitted && formZona.idJefeNuevo1.errors }"
-                                    (change)="changeEncargado1($event.target.value)">
-                                    <option *ngFor="let encargado of encargados; let i = index" [value]="encargados[i].id">
-                                        {{encargados[i].id}} - {{encargados[i].nombre}}
-                                    </option>
-                                </select>
-                                <div *ngIf="submitted && formZona.idJefeNuevo1.errors" class="invalid-feedback">
-                                    <div *ngIf="formZona.idJefeNuevo1.errors.required">
-                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
-                                            El primer encargado es obligatorio</label>
-                                    </div>
+                                [ngClass]="{ 'is-invalid': submitted && formZona.idJefeNuevo1.errors }"
+                                (change)="changeEncargado1($event.target.value)">
+                                <option *ngFor="let encargado of encargados; let i = index" [value]="encargados[i].id">
+                                    {{encargados[i].id}} - {{encargados[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && formZona.idJefeNuevo1.errors" class="invalid-feedback">
+                                <div *ngIf="formZona.idJefeNuevo1.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        El primer encargado es obligatorio</label>
                                 </div>
+                            </div>
 
+                            <!--Container Encargado 1-->
                             <div class="my-2"></div>
                             <div class="container-jefes">
                                 <div class="card-profile-image center">
@@ -88,19 +94,22 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--End of container-->
 
+                            <!--Modificar Encargado 2-->
                             <div class="my-4"></div>
                             <label for="">Segundo jefe (Opcional)</label>
                             <select class="form-control" formControlName="idJefeNuevo2"
                                 (change)="changeEncargado2($event.target.value)">
-                                <option >Ninguno</option>
+                                <option>Ninguno</option>
                                 <option *ngFor="let encargado of encargados; let i = index" [value]="encargados[i].id">
                                     {{encargados[i].id}} - {{encargados[i].nombre}}
                                 </option>
                             </select>
 
+                            <!--Container Encargado 2-->
                             <div class="my-2"></div>
-                            <div class="container-jefes" *ngIf = "encargado2">
+                            <div class="container-jefes" *ngIf="encargado2">
                                 <div class="card-profile-image center">
                                     <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
                                         class="rounded-circle">
@@ -138,6 +147,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--End of Container-->
 
                         </div>
                     </div>
@@ -147,6 +157,7 @@
                     <button type="submit" class="btn btn-secondary center">Modificar</button>
                 </div>
             </form>
+            <!--End of Form-->
         </div>
         <hr>
     </div>

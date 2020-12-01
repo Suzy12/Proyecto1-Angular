@@ -25,27 +25,29 @@ export class ConsultarInfoMiembroComponent implements OnInit {
     private toastr: ToastrService
   ) {
     if (this.router.getCurrentNavigation().extras.state) {
+      //Obtener la informacion pasada desde la pagina anterior
       this.routeState = this.router.getCurrentNavigation().extras.state;
       if (this.routeState) {
         console.log(this.routeState);
         this.miembro = this.routeState.miembro;
-        let name = this.storage.get('current-user');
-        if (name != this.miembro.id) {
-          this.disable = true; 
-          this.gruposMiembro = this.routeState.grupos;
+        let ced = this.storage.get('current-user'); //id del usuario actual
+        if (ced != this.miembro.id) {
+          this.disable = true; //no modificar al asesor
+          this.gruposMiembro = this.routeState.grupos; 
           Object.values(this.gruposMiembro).forEach((element, index) => {
             let grupo: any = element;
-            this.getNombreZona(grupo.id_zona + "", index);
+            this.getNombreZona(grupo.id_zona + "", index); //Get la zona del grupo actual
           });
           Object.values(this.gruposMiembro).forEach((element, index) => {
             let grupo: any = element;
-            this.getNombreRama(grupo.id_zona + "", grupo.id_rama + "", index);
+            this.getNombreRama(grupo.id_zona + "", grupo.id_rama + "", index); //get la rama del grupo actual
           });
         }
       }
     }
   }
 
+  //=============Get Info de una zona===============
   getNombreZona(zona, i) {
     this.zonaService.getUnaZona(this.movimiento, zona).subscribe(
       res => {
@@ -61,6 +63,7 @@ export class ConsultarInfoMiembroComponent implements OnInit {
     );
   }
 
+  //=============Get info de una rama===============
   getNombreRama(zona, rama, i) {
     this.ramaService.getUnaRama(this.movimiento, zona, rama).subscribe(
       res => {
@@ -76,12 +79,8 @@ export class ConsultarInfoMiembroComponent implements OnInit {
     );
   }
 
-
-
-
-
   modificarMiembro() {
-    this.router.navigate(['/modificar/info-miembro'], { state: this.miembro })
+    this.router.navigate(['/modificar/info-miembro'], { state: this.miembro }) //navegar a la pagina de modificar miembro
   }
 
   ngOnInit(): void {

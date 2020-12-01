@@ -58,6 +58,8 @@ export class CrearMiembroComponent implements OnInit {
 
   get form() { return this.miembroForm.controls }
 
+
+  //=============Get all zonas del movimiento==============
   public getZonas() {
     this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
@@ -76,6 +78,7 @@ export class CrearMiembroComponent implements OnInit {
     );
   }
 
+  //=============Get all ramas de la zona seleccionada==============
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
@@ -83,7 +86,7 @@ export class CrearMiembroComponent implements OnInit {
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
-          this.toastr.error(ramasTemp.error.message, 'Error', {timeOut: 5000});
+          this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
 
@@ -96,6 +99,7 @@ export class CrearMiembroComponent implements OnInit {
     )
   }
 
+  //============Get all grupos de la zona y rama seleccionada==============
   getGrupos(newRama) {
     this.grupos = [];
     this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
@@ -115,7 +119,9 @@ export class CrearMiembroComponent implements OnInit {
     )
   }
 
-  crearMiembro(){
+ 
+  //=============Crear el miembro==============
+  crearMiembro() {
     let miembroInfo = this.miembroForm.getRawValue();
 
     this.submitted = true;
@@ -123,24 +129,25 @@ export class CrearMiembroComponent implements OnInit {
 
     if (this.miembroForm.invalid) return;
 
-    miembroInfo.posible_monitor == 'No' ? miembroInfo.posible_monitor = false : miembroInfo.posible_monitor = true; 
-    
+    //Transformar posible monitor a booleano
+    miembroInfo.posible_monitor == 'No' ? miembroInfo.posible_monitor = false : miembroInfo.posible_monitor = true;
+
     console.log(miembroInfo);
     this.miembroService.crearMiembro(miembroInfo).subscribe(res => {
       console.log(res.body);
       this.responseController(res);
     }, error => console.log(error))
-    
+
     this.submitted = false;
   }
 
   responseController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{
-      this.toastr.success("La solicitud se realizó con éxito", 'Miembro Creado', {timeOut: 2000});
+    } else {
+      this.toastr.success("La solicitud se realizó con éxito", 'Miembro Creado', { timeOut: 2000 });
       console.log("Éxito");
       this.miembroForm.reset();
       this.miembroForm.controls['posible_monitor'].setValue('No');

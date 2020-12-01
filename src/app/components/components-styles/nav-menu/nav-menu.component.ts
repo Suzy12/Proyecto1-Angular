@@ -21,7 +21,7 @@ export class NavMenuComponent implements OnInit {
     this.sidebarservice.setSidebarState(true);
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
   }
 

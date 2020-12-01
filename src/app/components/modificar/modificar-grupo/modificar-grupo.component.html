@@ -14,8 +14,10 @@
             <hr>
             <div class="row">
                 <div class="col-sm">
+                    <!--Form Consultar Grupo-->
                     <form [formGroup]="grupoForm">
                         <div class="form-group">
+                            <!--Zona-->
                             <label for="">Escoja una zona</label>
                             <select required class="form-control" [(ngModel)]="selectedOptionZona"
                                 formControlName="idZona" (change)="getRamas($event.target.value)">
@@ -23,37 +25,46 @@
                                     {{zonas[i].nombre}}
                                 </option>
                             </select>
+                            <!--Rama-->
                             <div class="my-2"></div>
                             <label for="">Escoja una rama</label>
-                            <select required class="form-control" [(ngModel)]="selectedOptionRama" formControlName="idRama"
-                                (change)="getGrupos($event.target.value)">
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama"
+                                formControlName="idRama" (change)="getGrupos($event.target.value)">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
                                     {{ramas[i].nombre}}
                                 </option>
                             </select>
+                            <!--Grupo-->
                             <div class="my-2"></div>
                             <label for="">Escoja un grupo</label>
-                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo" formControlName="idGrupo">
+                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo"
+                                formControlName="idGrupo">
                                 <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
                                     {{grupos[i].nombre}}
                                 </option>
                             </select>
                         </div>
                     </form>
+                    <!--End of Form-->
                 </div>
             </div>
             <div class="center">
                 <button type="button" class="btn btn-secondary center" (click)="consultarGrupo()">Consultar</button>
             </div>
             <hr>
-            <form [formGroup]="grupoModificadoForm" (ngSubmit)="modificar()" novalidate  *ngIf="show">
+
+            <!--Form Modificar Grupo-->
+            <form [formGroup]="grupoModificadoForm" (ngSubmit)="modificar()" novalidate *ngIf="show">
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group">
+                            <!--Cambiar Fase-->
                             <div class="form-check" *ngIf="isMonitor">
-                                <input class="form-check-input" type="checkbox" value="check" (change)="cambiarFase($event)">
+                                <input class="form-check-input" type="checkbox" value="check"
+                                    (change)="cambiarFase($event)">
                                 <label class="form-check-label">Quitar de la Fase de Evaluación</label>
                             </div>
+                            <!--Modificar Nombre del Grupo-->
                             <div class="my-4"></div>
                             <label for="">Nombre del Grupo</label>
                             <div class="input-group col-name">
@@ -62,8 +73,9 @@
                                         <span class="fa fa-edit"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" value="{{grupo.nombre}}" formControlName="nombre" required="required"
-                                [ngClass]="{ 'is-invalid': submitted && formGrupo.nombre.errors }">
+                                <input type="text" class="form-control" value="{{grupo.nombre}}"
+                                    formControlName="nombre" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && formGrupo.nombre.errors }">
                                 <div *ngIf="submitted && formGrupo.nombre.errors" class="invalid-feedback">
                                     <div *ngIf="formGrupo.nombre.errors.required">
                                         <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
@@ -71,24 +83,26 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!--Modificar Encargado 1-->
                             <div class="my-4"></div>
                             <label for="">Primer {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }} del grupo
                                 (Obligatorio)</label>
-                                <select required class="form-control" formControlName="idJefeNuevo1" required="required"
-                                    [ngClass]="{ 'is-invalid': submitted && formGrupo.idJefeNuevo1.errors }"
-                                    (change)="changeEncargado1($event.target.value)">
-                                    <option *ngFor="let encargado of encargados; let i = index" [value]="encargados[i].id">
-                                        {{encargados[i].id}} - {{encargados[i].nombre}}
-                                    </option>
-                                </select>
-                                <div *ngIf="submitted && formGrupo.idJefeNuevo1.errors" class="invalid-feedback">
-                                    <div *ngIf="formGrupo.idJefeNuevo1.errors.required">
-                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
-                                            El primer encargado es obligatorio</label>
-                                    </div>
+                            <select required class="form-control" formControlName="idJefeNuevo1" required="required"
+                                [ngClass]="{ 'is-invalid': submitted && formGrupo.idJefeNuevo1.errors }"
+                                (change)="changeEncargado1($event.target.value)">
+                                <option *ngFor="let encargado of encargados; let i = index" [value]="encargados[i].id">
+                                    {{encargados[i].id}} - {{encargados[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && formGrupo.idJefeNuevo1.errors" class="invalid-feedback">
+                                <div *ngIf="formGrupo.idJefeNuevo1.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                        El primer encargado es obligatorio</label>
                                 </div>
-
+                            </div>
                             <div class="my-2"></div>
+                            <!--Container del Encargado 1-->
                             <div class="container-jefes">
                                 <div class="card-profile-image center">
                                     <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
@@ -127,20 +141,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--End of Container-->
 
+                            <!--Modificar Encargado 2-->
                             <div class="my-4"></div>
                             <label for="">Segundo {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }} del grupo
                                 (Opcional) </label>
                             <select class="form-control" formControlName="idJefeNuevo2"
                                 (change)="changeEncargado2($event.target.value)">
-                                <option >Ninguno</option>
+                                <option>Ninguno</option>
                                 <option *ngFor="let encargado of encargados; let i = index" [value]="encargados[i].id">
                                     {{encargados[i].id}} - {{encargados[i].nombre}}
                                 </option>
                             </select>
 
                             <div class="my-2"></div>
-                            <div class="container-jefes" *ngIf = "encargado2">
+                            <!--Container del Encargado 2-->
+                            <div class="container-jefes" *ngIf="encargado2">
                                 <div class="card-profile-image center">
                                     <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
                                         class="rounded-circle">
@@ -178,6 +195,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--End of Container-->
                         </div>
                     </div>
                 </div>
@@ -186,6 +204,7 @@
                     <button type="submit" class="btn btn-secondary center">Modificar Grupo</button>
                 </div>
             </form>
+            <!--End of Form-->
         </div>
     </div>
 </div>

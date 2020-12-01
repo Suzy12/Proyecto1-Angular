@@ -23,7 +23,7 @@ export class VerMiembrosComponent implements OnInit {
   selectedOptionGrupo: any;
   public show: boolean = false;
   consultarForm: FormGroup;
-  nodo:any = {};
+  nodo: any = {};
   miembros: any = [];
   movimiento = this.storage.get('current-user-movimiento');
 
@@ -52,6 +52,7 @@ export class VerMiembrosComponent implements OnInit {
 
   get form() { return this.consultarForm.controls }
 
+  //=============Get all zonas del movimiento==============
   public getZonas() {
     this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
@@ -70,6 +71,7 @@ export class VerMiembrosComponent implements OnInit {
     );
   }
 
+  //=============Get all ramas de zona seleccionada===============
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
@@ -88,10 +90,12 @@ export class VerMiembrosComponent implements OnInit {
       },
       err => console.log(err)
     )
-    if(this.selectedOptionRama != undefined)
+    if (this.selectedOptionRama != undefined)
       this.getGrupos(this.selectedOptionRama);
   }
 
+
+  //=============Get all grupos de zona y rama seleccionada===============
   getGrupos(newRama) {
     this.grupos = [];
     this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
@@ -111,21 +115,23 @@ export class VerMiembrosComponent implements OnInit {
     )
   }
 
-  consultar(){
+  //=============Consultar miembros===============
+  consultar() {
     this.miembros = [];
     let nodoTemp = this.consultarForm.get('nodo').value;
     console.log(nodoTemp);
-    if(nodoTemp == "checkZona"){
+    if (nodoTemp == "checkZona") {  //consultar miembros de la zona
       this.consultarMiembrosZona();
-    }else if(nodoTemp == "checkRama"){
+    } else if (nodoTemp == "checkRama") { //consultar miembros de la rama
       this.consultarMiembrosRama();
-    }else{
-      this.consultarMiembrosGrupo();
+    } else {
+      this.consultarMiembrosGrupo(); //consultar miembros del grupo
     }
     this.show = true;
   }
 
-  consultarMiembrosZona(){
+  //=============Consultar miembros de la zona seleccionada===============
+  consultarMiembrosZona() {
     this.miembros = [];
     this.zonaService.consultarMiembrosZona(this.movimiento, this.selectedOptionZona).subscribe(
       res => {
@@ -135,7 +141,7 @@ export class VerMiembrosComponent implements OnInit {
           console.log("Error");
         } else {
           console.log(zonasTemp);
-          
+
           Object.values(zonasTemp.miembros).forEach(element => {
             this.miembros.push(element);
           });
@@ -145,7 +151,8 @@ export class VerMiembrosComponent implements OnInit {
     );
   }
 
-  consultarMiembrosRama(){
+  //=============Consultar miembros de la rama seleccionada===============
+  consultarMiembrosRama() {
     this.miembros = [];
     this.ramaService.consultarMiembrosRama(this.movimiento, this.selectedOptionZona, this.selectedOptionRama).subscribe(
       res => {
@@ -164,7 +171,9 @@ export class VerMiembrosComponent implements OnInit {
       err => console.log(err)
     )
   }
-  consultarMiembrosGrupo(){
+
+  //=============Consultar miembros del grupo seleccionado===============
+  consultarMiembrosGrupo() {
     this.miembros = [];
     this.grupoService.consultarMiembrosGrupo(this.movimiento, this.selectedOptionZona, this.selectedOptionRama, this.selectedOptionGrupo).subscribe(
       res => {

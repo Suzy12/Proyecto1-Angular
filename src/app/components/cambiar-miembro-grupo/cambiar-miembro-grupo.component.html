@@ -1,4 +1,5 @@
 <app-nav-menu></app-nav-menu>
+<!--Card-->
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
         <div class="container">
@@ -13,6 +14,7 @@
 
             </p>
             <hr>
+            <!--Form Consultar por Cedula-->
             <form [formGroup]="miembroForm" (ngSubmit)="consultar()" novalidate>
                 <div class="row">
                     <div class="col-sm">
@@ -24,24 +26,29 @@
                                         <span class="fa fa-id-card"></span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Cédula"
-                                formControlName="idMiembro" required="required">
+                                <input type="text" class="form-control" placeholder="Cédula" formControlName="idMiembro"
+                                    required="required">
                             </div>
                         </div>
                     </div>
                 </div>
-            <div>
-                <button type="submit" class="btn btn-secondary center">Consultar</button>
-            </div>
-        </form>
+                <div>
+                    <button type="submit" class="btn btn-secondary center">Consultar</button>
+                </div>
+            </form>
+            <!--End of Form-->
             <hr>
-            <form [formGroup]="miembroGrupoForm" (ngSubmit)="cambiar()" novalidate *ngIf = "show">
+
+            <!--Form Cambiar de Grupo-->
+            <form [formGroup]="miembroGrupoForm" (ngSubmit)="cambiar()" novalidate *ngIf="show">
                 <div class="row">
                     <div class="col-sm">
+                        <!--Ramas en las que esta como miembro-->
                         <div class="form-group">
                             <label for="">Ramas en las que está</label>
-                            <select required class="form-control" [(ngModel)]="selectedOptionRama" formControlName="idRama"
-                                (change)="getGrupoViejo($event.target.value)" required="required"
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama"
+                                formControlName="idRama" (change)="getGrupoViejo($event.target.value)"
+                                required="required"
                                 [ngClass]="{ 'is-invalid': submittedCambiar && formMiembroGrupo.idRama.errors }">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">
                                     {{ramas[i].nombre}}
@@ -55,6 +62,7 @@
                             </div>
                             <div class="my-4"></div>
                             <div class="row">
+                                <!--Grupo en el que esta como miembro en la rama seleccionada -->
                                 <div class="col-sm">
                                     <label for="">Se elimina de grupo: </label>
                                     <p>
@@ -63,9 +71,12 @@
                                         </b>
                                     </p>
                                 </div>
+
+                                <!--Otros grupos de la rama seleccionada-->
                                 <div class="col-sm">
                                     <label for="">Agregar a grupo:</label>
-                                    <select required class="form-control" formControlName="idGrupoNuevo" required="required"
+                                    <select required class="form-control" formControlName="idGrupoNuevo"
+                                        required="required"
                                         [ngClass]="{ 'is-invalid': submittedCambiar && formMiembroGrupo.idGrupoNuevo.errors }">
                                         <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
                                             {{grupos[i].nombre}}
@@ -88,6 +99,8 @@
                     <button type="submit" class="btn btn-secondary center">Confirmar Cambio</button>
                 </div>
             </form>
+            <!--End of Form-->
         </div>
     </div>
 </div>
+<!--End of Card-->

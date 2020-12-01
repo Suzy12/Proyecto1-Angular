@@ -60,9 +60,10 @@ export class ModificarZonaComponent implements OnInit {
     });
   }
 
-  get form() { return this.zonaForm.controls }
-  get formZona() { return this.zonaModificadaForm.controls }
+  get form() { return this.zonaForm.controls } //form consultar zona
+  get formZona() { return this.zonaModificadaForm.controls } //form modificar zona
 
+  //=============Get all zonas del movimiento===============
   public getZonas() {
     this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
@@ -80,6 +81,7 @@ export class ModificarZonaComponent implements OnInit {
     );
   }
 
+  //=============Consultar zona seleccionada===============
   consultar() {
     this.zonaModificadaForm.reset();
     this.zonaModificadaForm.controls['idJefeNuevo2'].setValue('Ninguno');
@@ -113,6 +115,7 @@ export class ModificarZonaComponent implements OnInit {
     }
   }
 
+  //=============Consultar informacion del encargado 1===============
   consultarEncargado1() {
     this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
       res => {
@@ -123,6 +126,7 @@ export class ModificarZonaComponent implements OnInit {
     );
   }
 
+  //=============consultar informacion del encargado 2===============
   consultarEncargado2() {
     this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
       res => {
@@ -133,35 +137,37 @@ export class ModificarZonaComponent implements OnInit {
     );
   }
 
+  //=============get los posibles encargados de la zona (jefes de rama)===============
   getPosiblesEncargados() {
     this.toastr.clear();
-    this.zonaService.consultarMiembrosZona(this.movimiento,this.selectedOptionZona).subscribe(res => {
-        console.log(res);
-        let enviar: any = res.body;
-        if (enviar.success == false) {
-          this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
-          setTimeout(() => {
-            this.agregarEncargados(enviar.miembros);
-            this.zonaModificadaForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
-            if (this.encargado2) {
-              this.zonaModificadaForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
-            }
-          }, 400)
-        }
+    this.zonaService.consultarMiembrosZona(this.movimiento, this.selectedOptionZona).subscribe(res => {
+      console.log(res);
+      let enviar: any = res.body;
+      if (enviar.success == false) {
+        this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
+        console.log("Error");
+      } else {
+        setTimeout(() => {
+          this.agregarEncargados(enviar.miembros);
+          this.zonaModificadaForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
+          if (this.encargado2) {
+            this.zonaModificadaForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
+          }
+        }, 500) //timeout de 500 ms para el set de los encargados viejos (porque son funciones asincronicas)
+      }
     }, error => console.log(error))
   }
 
-  agregarEncargados(res){
+  //=============Agregar posibles encargados a la lista de encargados===============
+  agregarEncargados(res) {
     this.encargados = [];
     Object.values(res).forEach(element => {
       let encargado: any = element;
-      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe(
+      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe( //get la info de cada encargado
         res => {
           let encargadoTemp: any = res.body;
 
-          if (encargadoTemp.success == true){
+          if (encargadoTemp.success == true) {
             this.encargados.push(encargadoTemp.miembro);
           }
         }
@@ -169,21 +175,23 @@ export class ModificarZonaComponent implements OnInit {
     });
   }
 
+  //=============Listener Encargado 1===============
   changeEncargado1(id) {
     if (this.encargado2.id == id) {
       this.toastr.clear();
       this.toastr.warning("Por favor utilice un Encargado 2 diferente al Encargado 1", 'Advertencia', { timeOut: 10000 });
-      
+
       this.encargado2 = false;
       this.zonaModificadaForm.controls['idJefeNuevo2'].setValue('Ninguno');
     }
-      for (let encargado of this.encargados) {
-        if (encargado.id == id) {
-          this.encargado1 = encargado;
-        }
+    for (let encargado of this.encargados) { //buscar la info del encargado en la lista
+      if (encargado.id == id) {
+        this.encargado1 = encargado;
       }
+    }
   }
 
+  //=============Listener Encargado 2===============
   changeEncargado2(id) {
     if (this.encargado1.id == id) {
       this.toastr.clear();
@@ -191,7 +199,7 @@ export class ModificarZonaComponent implements OnInit {
       this.encargado2 = false;
       this.zonaModificadaForm.controls['idJefeNuevo2'].setValue('Ninguno');
     } else {
-      for (let encargado of this.encargados) {
+      for (let encargado of this.encargados) { //buscar la info del encargado en la lista
         if (encargado.id == id) {
           this.encargado2 = encargado;
           return;
@@ -201,6 +209,7 @@ export class ModificarZonaComponent implements OnInit {
     }
   }
 
+  //=============Modificar Zona===============
   modificar() {
     this.zonaModificadaForm.controls['idJefeViejo1'].setValue(this.encargadoViejo1.id);
     this.zonaModificadaForm.controls['idJefeViejo2'].setValue(this.encargadoViejo2.id);
@@ -209,16 +218,16 @@ export class ModificarZonaComponent implements OnInit {
     this.zonaModificadaForm.controls['idMovimiento'].setValue(this.movimiento);
     let zonaInfo = this.zonaModificadaForm.getRawValue();
 
-    if(zonaInfo.idJefeNuevo2 == "Ninguno"){
+    if (zonaInfo.idJefeNuevo2 == "Ninguno") { //no hay encargado 2
       delete zonaInfo['idJefeNuevo2'];
     }
-    if(this.encargadoViejo2.id == undefined){
+    if (this.encargadoViejo2.id == undefined) { //no hay encargado viejo 2
       delete zonaInfo['idJefeViejo2'];
     }
-    if(this.encargadoViejo1.id == undefined){
+    if (this.encargadoViejo1.id == undefined) { //no hay encargado viejo 1
       delete zonaInfo['idJefeViejo1'];
     }
-    
+
     console.log(zonaInfo);
 
 
@@ -237,11 +246,11 @@ export class ModificarZonaComponent implements OnInit {
 
   responseController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{
-      this.toastr.success("La solicitud se realizó con éxito", 'Zona Modificada', {timeOut: 2000});
+    } else {
+      this.toastr.success("La solicitud se realizó con éxito", 'Zona Modificada', { timeOut: 2000 });
       console.log("Éxito");
     }
   }

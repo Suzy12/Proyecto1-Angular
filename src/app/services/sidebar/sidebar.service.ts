@@ -93,12 +93,12 @@ export class SidebarService {
       icon: 'fa fa-exchange',
       active: false,
       type: 'simple',
-      ruta: 'cambiar-miembro-grupo'      
+      ruta: 'cambiar-miembro-grupo'
     },
   ];
   constructor() { }
   toggle() {
-    this.toggled = ! this.toggled;
+    this.toggled = !this.toggled;
   }
 
   getSidebarState() {

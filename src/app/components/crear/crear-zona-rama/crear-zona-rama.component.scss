@@ -1,33 +1,30 @@
-.container h2{
-	padding-top: 20px;
+.container h2 {
+    padding-top: 20px;
 }
 
 .btn-default {
-	background:transparent;
-	border-style: solid;
-	border-color: lightgray;
+    background: transparent;
+    border-style: solid;
+    border-color: lightgray;
 }
 
-
-.center{
-    display: flex; 
+.center {
+    display: flex;
     justify-content: center;
 }
 
-.card__container{
+.card__container {
     min-height: 60vh;
     width: 500px;
 }
 
-
-.page-content{
+.page-content {
     display: inline-block;
     width: 100%;
     padding-top: 20px;
-    transition: padding-left .3s ease;
-
+    transition: padding-left 0.3s ease;
 }
 
-hr.separacion{
+hr.separacion {
     margin-top: 93px;
 }

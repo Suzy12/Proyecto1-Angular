@@ -1,6 +1,7 @@
 <app-nav-menu></app-nav-menu>
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <!--Informacion del Movimiento-->
         <div class="container">
             <div class="card-profile-image center">
                 <img src="{{movimiento.logo}}" class="rounded-circle">
@@ -31,6 +32,7 @@
                         <hr />
                     </div>
 
+                    <!--Tabla de Telefonos-->
                     <div class="col-sm">
                         <p>Teléfonos</p>
                         <table class="fixed_headers">
@@ -48,7 +50,7 @@
                             </tbody>
                         </table>
                     </div>
-
+                    <!--End of Tabla de Telefonos-->
                 </div>
                 <div class="col-sm">
                     <div>
@@ -81,8 +83,9 @@
             </div>
             <hr>
             <div class="center">
-                <button (click) = "modificarMovimiento()" class="btn btn-secondary center">Modificar Movimiento</button>
+                <button (click)="modificarMovimiento()" class="btn btn-secondary center">Modificar Movimiento</button>
             </div>
         </div>
+        <!--End of Informacion del Movimiento-->
     </div>
 </div>

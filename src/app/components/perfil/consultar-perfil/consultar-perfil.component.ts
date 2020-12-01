@@ -12,7 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ConsultarPerfilComponent implements OnInit {
 
-  miembro: any = {};
+  miembro: any;
+  gruposMiembro: any = [];
   movimiento = this.storage.get('current-user-movimiento');
 
   constructor(private formBuilder: FormBuilder,
@@ -20,13 +21,14 @@ export class ConsultarPerfilComponent implements OnInit {
     private miembroService: MiembroService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private toastr: ToastrService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getUsuario();
   }
 
-  getUsuario(){
+  //=============Get Info del Usuario Loggeado===============
+  getUsuario() {
     let id = this.storage.get('current-user');
     this.miembroService.getUnMiembroxID(this.movimiento, id).subscribe(res => {
       this.resController(res);
@@ -35,17 +37,17 @@ export class ConsultarPerfilComponent implements OnInit {
 
   resController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{  
-      console.log(res); 
-      this.miembro = res.body.miembro;    
+    } else {
+      console.log(res);
+      this.miembro = res.body.miembro;
     }
   }
 
   modificarMiembro() {
-    this.router.navigate(['/editar-perfil'], { state: this.miembro })
+    this.router.navigate(['/editar-perfil'], { state: this.miembro }) //navegar a modificar perfil
   }
 
 }

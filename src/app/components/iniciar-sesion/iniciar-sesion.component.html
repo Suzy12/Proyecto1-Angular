@@ -8,29 +8,32 @@
     <div class="col-sm d-flex">
       <div class="align-self-center">
         <div class="card-body card-size">
+          <!--Form Iniciar Sesion-->
           <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
             <h2 class="text-muted text-center">Iniciar Sesión</h2>
             <div class="my-5">
               <div class="dropdown-divider my-4"></div>
             </div>
+
+            <!--Rol del Usuario-->
             <label> Ingresar como</label>
             <div class="form-group">
               <div class="row">
                 <div class="col-sm">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio"  value="1" name="gridRadios" 
-                      checked>
-                    <label class="form-check-label" >Asesor General</label>
+                    <input class="form-check-input" type="radio" value="1" name="gridRadios" checked>
+                    <label class="form-check-label">Asesor General</label>
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio"  value="2"name="gridRadios">
-                    <label class="form-check-label" >Miembro</label>
+                    <input class="form-check-input" type="radio" value="2" name="gridRadios">
+                    <label class="form-check-label">Miembro</label>
                   </div>
                 </div>
               </div>
             </div>
+            <!--End of Rol-->
             <div class="">
               <div class="form-group">
                 <label for="">Número de Cédula </label>
@@ -40,8 +43,8 @@
                       <span class="fa fa-id-card"></span>
                     </span>
                   </div>
-                  <input class="form-control" placeholder="Cédula"
-                    formControlName="id" [ngClass]="{ 'is-invalid': submitted && form.id.errors }">
+                  <input class="form-control" placeholder="Cédula" formControlName="id"
+                    [ngClass]="{ 'is-invalid': submitted && form.id.errors }">
                   <div *ngIf="submitted && form.id.errors" class="invalid-feedback">
                     <div *ngIf="form.id.errors.required">
                       <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El campo
@@ -81,6 +84,7 @@
               </div>
             </div>
           </form>
+          <!--End of Form-->
         </div>
       </div>
     </div>

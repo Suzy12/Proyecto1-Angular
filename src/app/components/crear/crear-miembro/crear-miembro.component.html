@@ -8,8 +8,10 @@
                     información personal, de contacto y añadirlo a un grupo. </small>
             </p>
             <hr>
+            <!--Form Crear Miembro-->
             <form [formGroup]="miembroForm" (ngSubmit)="crearMiembro()" novalidate>
                 <div class="row">
+                    <!--Informacion Personal-->
                     <div class="col-sm">
                         <p class="pull-center"><b> Información Personal</b></p>
                         <div class="form-group">
@@ -50,6 +52,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--Contacto del Miembro-->
                         <p class="pull-center"><b> Contacto </b></p>
                         <div class="form-group">
                             <label for="">Ingrese el número de celular</label>
@@ -59,8 +62,9 @@
                                         <span class="fa fa-phone"></span>
                                     </span>
                                 </div>
-                                <input type="tel" pattern="[0-9]{8}" class="form-control" formControlName="celular" placeholder="Celular"
-                                    required="required" [ngClass]="{ 'is-invalid': submitted && form.celular.errors }">
+                                <input type="tel" pattern="[0-9]{8}" class="form-control" formControlName="celular"
+                                    placeholder="Celular" required="required"
+                                    [ngClass]="{ 'is-invalid': submitted && form.celular.errors }">
                                 <div *ngIf="submitted && form.celular.errors" class="invalid-feedback">
                                     <div *ngIf="form.celular.errors.required">
                                         <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
@@ -86,11 +90,13 @@
                                 </div>
                             </div>
                         </div>
+                        <!--End of Contacto-->
+                        
                         <p class="pull-center"><b> Monitor</b></p>
                         <div class="form-group">
                             <label for="">¿Es candidato a monitor?</label>
-                            <select class="form-control" formControlName="posible_monitor"  required="required"
-                            [ngClass]="{ 'is-invalid': submitted && form.posible_monitor.errors }">
+                            <select class="form-control" formControlName="posible_monitor" required="required"
+                                [ngClass]="{ 'is-invalid': submitted && form.posible_monitor.errors }">
                                 <option>Sí</option>
                                 <option selected>No</option>
                             </select>
@@ -102,6 +108,9 @@
                             </div>
                         </div>
                     </div>
+                    <!--End of Informacion Personal-->
+
+                    <!--Direccion Fisica-->
                     <div class="col-sm">
                         <p class="pull-center"><b> Dirección Física</b></p>
                         <div class="form-group">
@@ -173,7 +182,9 @@
                             </div>
                         </div>
                     </div>
+                    <!--End of Direccion-->
 
+                    <!--Agregar miembro a un grupo-->
                     <div class="col-sm">
                         <p class="pull-center"><b> Agregar a un grupo</b></p>
                         <div class="form-group">
@@ -205,7 +216,7 @@
                                     <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
                                         Debe indicar una rama para el miembro</label>
                                 </div>
-                            </div>               
+                            </div>
                             <div class="my-2"></div>
                             <label for="">Escoja un grupo</label>
                             <select required class="form-control" formControlName="idGrupo" required="required"
@@ -222,12 +233,14 @@
                             </div>
                         </div>
                     </div>
+                    <!--End of Agregar a Grupo-->
                 </div>
                 <hr>
                 <div class="center">
                     <button type="submit" class="btn btn-secondary center">Crear Miembro</button>
                 </div>
             </form>
+            <!--End of Form-->
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 <app-nav-menu></app-nav-menu>
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <!--Informacion del miembro-->
         <div class="container">
             <div class="card-profile-image center">
                 <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
@@ -67,6 +68,7 @@
                     </div>
                 </div>
 
+                <!--Grupos a los que pertenece el miembro-->
                 <div class="col-sm">
                     <p>Grupos</p>
                     <table class="fixed_headers">
@@ -88,11 +90,14 @@
                         </tbody>
                     </table>
                 </div>
+                <!--End of Grupos-->
             </div>
             <hr>
-            <div class="center" *ngIf = "disable">
-                <button type="button" class="btn btn-secondary center" (click) = "modificarMiembro()">Modificar Miembro</button>
+            <div class="center" *ngIf="disable">
+                <button type="button" class="btn btn-secondary center" (click)="modificarMiembro()">Modificar
+                    Miembro</button>
             </div>
         </div>
+        <!--End of Informacion del miembro-->
     </div>
 </div>

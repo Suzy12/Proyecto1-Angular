@@ -1,5 +1,6 @@
 <nav id="sidebar" class="sidebar">
   <div class="sidebar-content">
+    <!--Perfect Scrollbar-->
     <perfect-scrollbar>
       <div class="sidebar-header">
         <a href="perfil">The Social Seekers</a>
@@ -9,8 +10,8 @@
           <img class="img-responsive img-rounded" src="assets/img/user.jpg" alt="User picture">
         </div>
         <div class="user-info">
-          <span class="user-name">Diego
-            <strong>Cheng</strong>
+          <span class="user-name">
+            {{usuario.nombre}}
           </span>
           <span>
             <a href="/consultar-perfil">Editar Perfil</a>
@@ -45,5 +46,6 @@
         </ul>
       </div>
     </perfect-scrollbar>
+    <!--End of Perfect Scrollbar-->
   </div>
 </nav>

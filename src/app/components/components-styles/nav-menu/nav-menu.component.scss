@@ -1,10 +1,8 @@
 .page-wrapper {
-
-
   .page-content {
     display: inline-block;
     width: 100%;
-    transition: padding-left .3s ease;
+    transition: padding-left 0.3s ease;
 
     @media screen and (min-width: 768px) {
       padding-left: 250px;
@@ -18,11 +16,10 @@
       left: 0;
       z-index: 998;
       background: #000;
-      opacity: .5;
+      opacity: 0.5;
       display: none;
 
       &.show {
-
         @media screen and (max-width: 768px) {
           display: block;
         }
@@ -35,13 +32,12 @@
   }
 
   &.toggled {
-
     .page-content {
       padding-left: 0;
     }
   }
 
-  .attribution{
+  .attribution {
     position: fixed;
     bottom: 0;
     right: 0;
@@ -59,14 +55,11 @@
   background-color: #f97a77;
 }
 
-
 .collapse ul li a,
 .form-inline a {
   color: white;
 }
 
-.collapse ul a:hover{
+.collapse ul a:hover {
   color: gainsboro;
 }
-
-

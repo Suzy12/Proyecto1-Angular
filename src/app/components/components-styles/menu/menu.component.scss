@@ -38,7 +38,7 @@
 
 @keyframes sonar {
   0% {
-    transform: scale(.9);
+    transform: scale(0.9);
     opacity: 1;
   }
 
@@ -56,13 +56,13 @@
   top: 0;
   left: 0px;
   z-index: 999;
-  transition: left .3s ease;
+  transition: left 0.3s ease;
   border-width: thin;
   border-style: solid;
 
   a {
     text-decoration: none;
-    transition: color .3s ease;
+    transition: color 0.3s ease;
   }
 
   .sidebar-content {
@@ -76,7 +76,7 @@
       display: flex;
       align-items: center;
 
-      >a {
+      > a {
         text-transform: uppercase;
         font-weight: bold;
         flex-grow: 1;
@@ -86,7 +86,7 @@
       #close-sidebar {
         cursor: pointer;
         font-size: 20px;
-        transition: color .3s ease;
+        transition: color 0.3s ease;
       }
     }
 
@@ -112,7 +112,7 @@
       .user-info {
         float: left;
 
-        >span {
+        > span {
           display: block;
         }
 
@@ -131,12 +131,10 @@
           }
         }
       }
-
     }
 
     .sidebar-search {
-
-      >div {
+      > div {
         padding: 10px 20px;
       }
 
@@ -154,7 +152,6 @@
         padding: 15px 20px 5px 20px;
         display: inline-block;
       }
-
 
       ul {
         list-style-type: none;
@@ -178,9 +175,9 @@
             border-radius: 4px;
           }
 
-          &:hover>i::before {
+          &:hover > i::before {
             display: inline-block;
-            animation: swing ease-in-out .5s 1 alternate;
+            animation: swing ease-in-out 0.5s 1 alternate;
           }
 
           span.label,
@@ -193,7 +190,7 @@
       }
 
       .sidebar-dropdown {
-        >a:after {
+        > a:after {
           font-family: FontAwesome;
           font-weight: 900;
           content: "\f0d7";
@@ -208,8 +205,7 @@
           position: absolute;
           right: 15px;
           top: 14px;
-          transition: transform .3s ease;
-
+          transition: transform 0.3s ease;
         }
 
         .sidebar-submenu {
@@ -248,25 +244,21 @@
           }
         }
 
-        &.active>a:after {
+        &.active > a:after {
           transform: rotate(90deg);
           right: 15px;
         }
       }
-
     }
-
-
   }
 
   .sidebar-footer {
-
     position: absolute;
     width: 100%;
     bottom: 0;
     display: flex;
 
-    >div {
+    > div {
       flex-grow: 1;
       text-align: center;
       height: 30px;
@@ -274,7 +266,7 @@
       position: static;
       display: flex;
 
-      >a {
+      > a {
         flex-grow: 1;
       }
 
@@ -292,12 +284,12 @@
       transform: none !important;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      font-size: .9rem;
+      font-size: 0.9rem;
     }
 
     .messages {
       .dropdown-item {
-        padding: .25rem 1rem;
+        padding: 0.25rem 1rem;
       }
 
       .messages-header {
@@ -334,15 +326,13 @@
             overflow: hidden;
             text-overflow: ellipsis;
           }
-
         }
       }
-
     }
 
     .notifications {
       .dropdown-item {
-        padding: .25rem 1rem;
+        padding: 0.25rem 1rem;
       }
 
       .notifications-header {
@@ -371,7 +361,7 @@
           width: calc(100% - 40px);
 
           .notification-time {
-            font-size: .7rem;
+            font-size: 0.7rem;
             color: #828282;
           }
 
@@ -385,7 +375,6 @@
       }
     }
 
-
     .badge-sonar {
       display: inline-block;
       background: #980303;
@@ -396,7 +385,7 @@
       top: 0;
 
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -408,11 +397,8 @@
         animation: sonar 1.5s infinite;
       }
     }
-
-
   }
 }
-
 
 /*------------------------------default theme---------------------------------*/
 $bg-sidebar-wrapper: white;
@@ -425,15 +411,12 @@ $shadow-color: #131212;
 $bg-scrollbar: #636363;
 
 // colors with backgound image
-$img-bg-sidebar-wrapper : rgba(29, 29, 29, 0.8);
-$img-border-color : rgba(255, 255, 255, 0.1);
-$img-bg-footer :rgba(43, 43, 43, 0.5);
-$img-shadow-color:rgba(0, 0, 0, 0.5);
-
-
+$img-bg-sidebar-wrapper: rgba(29, 29, 29, 0.8);
+$img-border-color: rgba(255, 255, 255, 0.1);
+$img-bg-footer: rgba(43, 43, 43, 0.5);
+$img-shadow-color: rgba(0, 0, 0, 0.5);
 
 .sidebar {
-
   background-color: $bg-sidebar-wrapper;
   border-color: lightgray;
 
@@ -454,25 +437,25 @@ $img-shadow-color:rgba(0, 0, 0, 0.5);
   .sidebar-profile .user-info .user-status,
   .sidebar-search input.search-menu,
   .sidebar-search .input-group-text,
-  .sidebar-header>a,
+  .sidebar-header > a,
   .sidebar-menu ul li a,
-  .sidebar-footer>div>a,
+  .sidebar-footer > div > a,
   #close-sidebar {
     color: $color;
   }
 
-  .sidebar-menu ul li:hover>a,
-  .sidebar-menu .sidebar-dropdown.active>a,
+  .sidebar-menu ul li:hover > a,
+  .sidebar-menu .sidebar-dropdown.active > a,
   .sidebar-profile .user-info,
-  .sidebar-header>a:hover,
-  .sidebar-footer>div>a:hover i,
+  .sidebar-header > a:hover,
+  .sidebar-footer > div > a:hover i,
   #close-sidebar:hover {
     color: $hover-color;
   }
 
   ul li:hover a i,
   .sidebar-dropdown .sidebar-submenu li a:hover:before,
-  .sidebar-search input.search-menu:focus+span,
+  .sidebar-search input.search-menu:focus + span,
   .sidebar-menu .sidebar-dropdown.active a i {
     color: $hover-color;
   }
@@ -496,24 +479,23 @@ $img-shadow-color:rgba(0, 0, 0, 0.5);
     border-top: 1px solid $footer-top-border-color;
   }
 
-  .sidebar-footer>div:first-child {
+  .sidebar-footer > div:first-child {
     border-left: none;
   }
 
-  .sidebar-footer>div:last-child {
+  .sidebar-footer > div:last-child {
     border-right: none;
   }
 
   // styles with background image
   &.sidebar-bg {
-
     background-image: url(/assets/img/bg1.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       right: 0;
@@ -539,7 +521,6 @@ $img-shadow-color:rgba(0, 0, 0, 0.5);
     .sidebar-search input.search-menu,
     .sidebar-search .input-group-text {
       background-color: $img-border-color;
-
     }
 
     .sidebar-footer {
@@ -547,11 +528,5 @@ $img-shadow-color:rgba(0, 0, 0, 0.5);
       box-shadow: 0px -1px 5px $img-bg-footer;
       border-top: 1px solid $img-border-color;
     }
-
   }
-
 }
-
-
-
-  

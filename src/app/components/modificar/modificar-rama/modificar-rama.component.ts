@@ -64,9 +64,10 @@ export class ModificarRamaComponent implements OnInit {
     });
   }
 
-  get form() { return this.ramaForm.controls }
-  get formRama() { return this.ramaModificadaForm.controls }
+  get form() { return this.ramaForm.controls } //form consultar rama
+  get formRama() { return this.ramaModificadaForm.controls } //form modificar rama
 
+  //=============Get all zonas del movimiento===============
   public getZonas() {
     this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
@@ -85,6 +86,7 @@ export class ModificarRamaComponent implements OnInit {
     );
   }
 
+  //=============get all ramas de la zona seleccionada===============
   getRamas(newZona) {
     this.ramas = [];
     this.ramaService.getRamas(this.movimiento, newZona).subscribe(
@@ -104,6 +106,7 @@ export class ModificarRamaComponent implements OnInit {
     )
   }
 
+  //=============Consultar rama seleccionada===============
   consultar() {
     this.ramaModificadaForm.reset();
     this.ramaModificadaForm.controls['idJefeNuevo2'].setValue('Ninguno');
@@ -137,6 +140,7 @@ export class ModificarRamaComponent implements OnInit {
     }
   }
 
+  //=============Get informacion del encargado 1===============
   consultarEncargado1() {
     this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
       res => {
@@ -147,6 +151,7 @@ export class ModificarRamaComponent implements OnInit {
     );
   }
 
+  //=============Get Informacion del encargado 2===============
   consultarEncargado2() {
     this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
       res => {
@@ -157,35 +162,37 @@ export class ModificarRamaComponent implements OnInit {
     );
   }
 
+  //=============Get Posibles Encargados de la Rama (jefes de grupo y monitores)===============
   getPosiblesEncargados() {
     this.toastr.clear();
     this.ramaService.consultarMiembrosRama(this.movimiento, this.selectedOptionZona, this.selectedOptionRama).subscribe(res => {
-        console.log(res);
-        let enviar: any = res.body;
-        if (enviar.success == false) {
-          this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
-          setTimeout(() => {
-            this.agregarEncargados(enviar.miembros);
-            this.ramaModificadaForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
-            if (this.encargado2) {
-              this.ramaModificadaForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
-            }
-          }, 400)
-        }
+      console.log(res);
+      let enviar: any = res.body;
+      if (enviar.success == false) {
+        this.toastr.error(enviar.error.message, 'Error', { timeOut: 5000 });
+        console.log("Error");
+      } else {
+        setTimeout(() => {
+          this.agregarEncargados(enviar.miembros);
+          this.ramaModificadaForm.controls['idJefeNuevo1'].setValue(this.encargadoViejo1.id);
+          if (this.encargado2) {
+            this.ramaModificadaForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
+          }
+        }, 500) //timeout de 500 ms para el set de los encargados viejos (porque las funciones son asincronicas)
+      }
     }, error => console.log(error))
   }
 
-  agregarEncargados(res){
+  //=============Agregar los posibles encargados a la lista de encargados===============
+  agregarEncargados(res) {
     this.encargados = [];
     Object.values(res).forEach(element => {
       let encargado: any = element;
-      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe(
+      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe( //get info de cada posible encargado
         res => {
           let encargadoTemp: any = res.body;
 
-          if (encargadoTemp.success == true){
+          if (encargadoTemp.success == true) {
             this.encargados.push(encargadoTemp.miembro);
           }
         }
@@ -193,21 +200,23 @@ export class ModificarRamaComponent implements OnInit {
     });
   }
 
+  //=============Listener Encargado 1===============
   changeEncargado1(id) {
     if (this.encargado2.id == id) {
       this.toastr.clear();
       this.toastr.warning("Por favor utilice un Encargado 2 diferente al Encargado 1", 'Advertencia', { timeOut: 10000 });
-      
+
       this.encargado2 = false;
       this.ramaModificadaForm.controls['idJefeNuevo2'].setValue('Ninguno');
     }
-      for (let encargado of this.encargados) {
-        if (encargado.id == id) {
-          this.encargado1 = encargado;
-        }
+    for (let encargado of this.encargados) { //get info del encargado en la lista de encargados
+      if (encargado.id == id) {
+        this.encargado1 = encargado;
       }
+    }
   }
 
+  //=============Listener Encargado 2===============
   changeEncargado2(id) {
     if (this.encargado1.id == id) {
       this.toastr.clear();
@@ -215,7 +224,7 @@ export class ModificarRamaComponent implements OnInit {
       this.encargado2 = false;
       this.ramaModificadaForm.controls['idJefeNuevo2'].setValue('Ninguno');
     } else {
-      for (let encargado of this.encargados) {
+      for (let encargado of this.encargados) { //get info del encargado en la lista de encargados
         if (encargado.id == id) {
           this.encargado2 = encargado;
           return;
@@ -225,6 +234,7 @@ export class ModificarRamaComponent implements OnInit {
     }
   }
 
+  //=============Modificar Rama===============
   modificar() {
     this.ramaModificadaForm.controls['idJefeViejo1'].setValue(this.encargadoViejo1.id);
     this.ramaModificadaForm.controls['idJefeViejo2'].setValue(this.encargadoViejo2.id);
@@ -234,13 +244,13 @@ export class ModificarRamaComponent implements OnInit {
     this.ramaModificadaForm.controls['idMovimiento'].setValue(this.movimiento);
     let ramaInfo = this.ramaModificadaForm.getRawValue();
 
-    if(ramaInfo.idJefeNuevo2 == "Ninguno"){
+    if (ramaInfo.idJefeNuevo2 == "Ninguno") { //no hay encargado 2
       delete ramaInfo['idJefeNuevo2'];
     }
-    if(this.encargadoViejo2.id == undefined){
+    if (this.encargadoViejo2.id == undefined) { //no hay encargado viejo 2
       delete ramaInfo['idJefeViejo2'];
     }
-    if(this.encargadoViejo1.id == undefined){
+    if (this.encargadoViejo1.id == undefined) { //no hay encargado viejo 1
       delete ramaInfo['idJefeViejo1'];
     }
 
@@ -263,11 +273,11 @@ export class ModificarRamaComponent implements OnInit {
 
   responseController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{
-      this.toastr.success("La solicitud se realizó con éxito", 'Rama Modificada', {timeOut: 2000});
+    } else {
+      this.toastr.success("La solicitud se realizó con éxito", 'Rama Modificada', { timeOut: 2000 });
       console.log("Éxito");
     }
   }

@@ -78,9 +78,10 @@ export class RegistrarMovimientoComponent implements OnInit {
     });
   }
 
-  get form() { return this.movimientoForm.controls }
-  get formEstructura() { return this.estructuraForm.controls }
+  get form() { return this.movimientoForm.controls } //form de crear movimiento
+  get formEstructura() { return this.estructuraForm.controls } //form de crear estructura base del movimiento
 
+  //============MultiStep Form: Next Step===============
   nextSlide() {
     if (this.firstSlide == true) {
       this.firstSlide = false;
@@ -94,6 +95,7 @@ export class RegistrarMovimientoComponent implements OnInit {
   }
 
 
+  //=============MultiStep Form: Previous Step===============
   previousSlide() {
     if (this.secondSlide == true) {
       this.firstSlide = true;
@@ -106,7 +108,7 @@ export class RegistrarMovimientoComponent implements OnInit {
     }
   }
 
-  //============Telefonos Processor=================
+  //============Tabla de Telefonos=================
   addTelefono() {
     this.telefonos.push('');
   }
@@ -119,6 +121,7 @@ export class RegistrarMovimientoComponent implements OnInit {
     this.telefonos[i] = telefono;
   }
 
+  //=============Procesar Imagen Seleccionada===============
   processImage = (imageFile) => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -129,9 +132,7 @@ export class RegistrarMovimientoComponent implements OnInit {
       reader.readAsDataURL(imageFile);
     }
   });
-  //============End Telefonos Processor=================
 
-  //============Logo Processor=================
   readLogo = (event) => {
     this.processImage(event.target.files[0]).then((encodedImage: string) => {
       this.encodedLogo = encodedImage;
@@ -139,6 +140,7 @@ export class RegistrarMovimientoComponent implements OnInit {
     this.preview(event);
   }
 
+  //Preview del Logo
   preview(fileInput: any) {
     // Show preview image
     this.fileData = <File>fileInput.target.files[0];
@@ -153,14 +155,15 @@ export class RegistrarMovimientoComponent implements OnInit {
       this.previewUrl = reader.result;
     }
   }
-  //============End Logo Processor=================
 
+
+  //=============Crear Movimiento===============
   crearMovimiento() {
     let movimientoInfo = this.movimientoForm.getRawValue();
     let estructuraInfo = this.estructuraForm.getRawValue();
-    if(movimientoInfo.idAsesor == estructuraInfo.idMiembro){
+    if (movimientoInfo.idAsesor == estructuraInfo.idMiembro) {
       this.toastr.error("No puede indicar el mismo miembro como asesor y como monitor del grupo", 'Advertencia', { timeOut: 10000 });
-      return;    
+      return;
     }
 
     if (this.encodedLogo == '') {
@@ -179,7 +182,7 @@ export class RegistrarMovimientoComponent implements OnInit {
     this.movimientoForm.controls['logo'].setValue(this.encodedLogo);
     this.estructuraForm.controls['idMovimiento'].setValue(movimientoInfo.cedulaJuridica);
 
-  
+
     this.submitted = true;
     if (this.movimientoForm.invalid) {
       this.toastr.error("Por favor llene todos los campos solicitados", 'Advertencia', { timeOut: 10000 });
@@ -193,7 +196,7 @@ export class RegistrarMovimientoComponent implements OnInit {
     console.log(movimientoInfo);
     console.log(estructuraInfo);
 
-    this.movimientoService.crearMovimiento(movimientoInfo).subscribe(res => {
+    this.movimientoService.crearMovimiento(movimientoInfo).subscribe(res => { //Step 1: se crea el movimiento
       console.log(res);
       this.toastr.clear();
       let response: any = res.body
@@ -201,8 +204,8 @@ export class RegistrarMovimientoComponent implements OnInit {
         this.toastr.error(response.error.message, 'Error', { timeOut: 5000 });
         console.log("Error");
         return;
-      }else{
-        this.movimientoService.crearEstructuraMovimiento(estructuraInfo).subscribe(res => {
+      } else {
+        this.movimientoService.crearEstructuraMovimiento(estructuraInfo).subscribe(res => { //Step 2: Crear Estructura Base
           console.log(res);
           this.toastr.clear();
           let response: any = res.body
@@ -218,6 +221,7 @@ export class RegistrarMovimientoComponent implements OnInit {
       }
     }, error => console.log(error));
 
+    //Resetear Forms
     this.movimientoForm.reset();
     this.estructuraForm.reset();
     this.encodedLogo = '';

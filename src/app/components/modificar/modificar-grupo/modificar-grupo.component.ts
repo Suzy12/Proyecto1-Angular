@@ -70,9 +70,10 @@ export class ModificarGrupoComponent implements OnInit {
     });
   }
 
-  get form() { return this.grupoForm.controls }
-  get formGrupo() { return this.grupoModificadoForm.controls }
+  get form() { return this.grupoForm.controls } //form consultar grupo
+  get formGrupo() { return this.grupoModificadoForm.controls } //form modificar grupo
 
+  //=============Get all zonas del movimiento===============
   public getZonas() {
     this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
@@ -91,6 +92,7 @@ export class ModificarGrupoComponent implements OnInit {
     );
   }
 
+  //=============Get all ramas de la zona seleccionada===============
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
@@ -113,6 +115,7 @@ export class ModificarGrupoComponent implements OnInit {
       this.getGrupos(this.selectedOptionRama);
   }
 
+  //=============Get all grupos de la zona y rama seleccionada===============
   getGrupos(newRama) {
     this.grupos = [];
     this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
@@ -132,6 +135,7 @@ export class ModificarGrupoComponent implements OnInit {
     )
   }
 
+  //=============Get informacion del grupo seleccionado===============
   consultarGrupo() {
     this.grupoModificadoForm.reset();
     this.grupoModificadoForm.controls['idJefeNuevo2'].setValue('Ninguno');
@@ -168,6 +172,7 @@ export class ModificarGrupoComponent implements OnInit {
     }
   }
 
+  //=============Consultar Info del Encargado 1===============
   consultarEncargado1() {
     this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
       res => {
@@ -179,6 +184,7 @@ export class ModificarGrupoComponent implements OnInit {
     );
   }
 
+  //=============Consultar Info del Encargado 2===============
   consultarEncargado2() {
     this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
       res => {
@@ -189,6 +195,7 @@ export class ModificarGrupoComponent implements OnInit {
     );
   }
 
+  //=============Get los posibles encargados del grupo==============
   getPosiblesEncargados(isMonitor) {
     let grupoInfo = this.grupoForm.getRawValue();
     this.toastr.clear();
@@ -209,7 +216,7 @@ export class ModificarGrupoComponent implements OnInit {
               this.encargados.push(this.encargadoViejo2);
               this.grupoModificadoForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
             }
-          }, 500)
+          }, 500) //timeout 500 ms para colocar los encargados viejos (porque son funciones asincronicas)
         }
       }, error => console.log(error))
 
@@ -228,14 +235,14 @@ export class ModificarGrupoComponent implements OnInit {
               if (this.encargado2) {
                 this.grupoModificadoForm.controls['idJefeNuevo2'].setValue(this.encargadoViejo2.id);
               }
-            }, 500)
+            }, 500) //timeout 500 ms para colocar los encargados viejos (porque son funciones asincronicas)
           }
         }
       }, error => console.log(error))
     }
   }
 
-
+  //=============Agregar posibles encargados a la lista de encargados===============
   agregarEncargados(res) {
     this.encargados = [];
     Object.values(res).forEach(element => {
@@ -246,7 +253,7 @@ export class ModificarGrupoComponent implements OnInit {
         if (encargado.id == this.encargadoViejo2.id && this.cambiarFaseMonitor)
           return;
       }
-      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe(
+      this.miembroService.getUnMiembroxID(this.movimiento, encargado.id).subscribe( //get info de los posibles encargados
         res => {
           let encargadoTemp: any = res.body;
 
@@ -258,6 +265,7 @@ export class ModificarGrupoComponent implements OnInit {
     });
   }
 
+  //=============Cambiar de Fase de Evaluacion(monitores) a Jefes===============
   cambiarFase(values: any) {
     let cambiar = values.currentTarget.checked;
     this.cambiarFaseMonitor = cambiar;
@@ -268,21 +276,23 @@ export class ModificarGrupoComponent implements OnInit {
   }
 
 
+  //=============Listener Encargado 1===============
   changeEncargado1(id) {
     if (this.encargado2.id == id) {
       this.toastr.clear();
       this.toastr.warning("Por favor utilice un Encargado 2 diferente al Encargado 1", 'Advertencia', { timeOut: 10000 });
-      
+
       this.encargado2 = false;
       this.grupoModificadoForm.controls['idJefeNuevo2'].setValue('Ninguno');
     }
-      for (let encargado of this.encargados) {
-        if (encargado.id == id) {
-          this.encargado1 = encargado;
-        }
+    for (let encargado of this.encargados) { //get info del encargado de la lista de encargados
+      if (encargado.id == id) {
+        this.encargado1 = encargado;
       }
+    }
   }
 
+  //=============Listener Encargado 2===============
   changeEncargado2(id) {
     if (this.encargado1.id == id) {
       this.toastr.clear();
@@ -290,7 +300,7 @@ export class ModificarGrupoComponent implements OnInit {
       this.encargado2 = false;
       this.grupoModificadoForm.controls['idJefeNuevo2'].setValue('Ninguno');
     } else {
-      for (let encargado of this.encargados) {
+      for (let encargado of this.encargados) { //get info del encargado de la lista de encargados
         if (encargado.id == id) {
           this.encargado2 = encargado;
           return;
@@ -300,6 +310,7 @@ export class ModificarGrupoComponent implements OnInit {
     }
   }
 
+  //=============Modificar Grupo===============
   modificar() {
     this.grupoModificadoForm.controls['idJefeViejo1'].setValue(this.encargadoViejo1.id);
     this.grupoModificadoForm.controls['idJefeViejo2'].setValue(this.encargadoViejo2.id);
@@ -308,13 +319,13 @@ export class ModificarGrupoComponent implements OnInit {
     this.grupoModificadoForm.controls['idGrupo'].setValue(this.selectedOptionGrupo);
     this.grupoModificadoForm.controls['idMovimiento'].setValue(this.movimiento);
     let grupoInfo = this.grupoModificadoForm.getRawValue();
-    if (grupoInfo.idJefeNuevo2 == "Ninguno" || grupoInfo.idJefeNuevo2 == '') {
+    if (grupoInfo.idJefeNuevo2 == "Ninguno" || grupoInfo.idJefeNuevo2 == '') { //no hay encargado 2
       delete grupoInfo['idJefeNuevo2'];
     }
-    if (this.encargadoViejo2.id == undefined) {
+    if (this.encargadoViejo2.id == undefined) { //no hay encargado viejo 2
       delete grupoInfo['idJefeViejo2'];
     }
-    if (this.cambiarFaseMonitor) {
+    if (this.cambiarFaseMonitor) { //cambio de fase
       grupoInfo.isMonitor = false;
     } else {
       grupoInfo.isMonitor = this.grupo.isMonitor;

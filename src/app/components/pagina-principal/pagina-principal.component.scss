@@ -1,13 +1,13 @@
-@media ( min-width: 768px ) {
+@media (min-width: 768px) {
     .grid-divider {
         position: relative;
         padding: 0;
         margin-bottom: 10%;
     }
-    .grid-divider>[class*='col-'] {
+    .grid-divider > [class*="col-"] {
         position: static;
     }
-    .grid-divider>[class*='col-']:nth-child(n+2):before {
+    .grid-divider > [class*="col-"]:nth-child(n + 2):before {
         content: "";
         position: absolute;
         top: 0;
@@ -18,11 +18,11 @@
     }
 }
 
-.card{
+.card {
     border: none;
 }
 
-.desc-container{
+.desc-container {
     min-height: 35vh;
     max-width: 70vh;
     border: 1px dotted silver;
@@ -30,15 +30,14 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-
 }
 
 .column {
     float: left;
     width: 33.33%;
     padding: 5px;
-  }
+}
 
-.img-container{
+.img-container {
     padding-top: 100px;
 }

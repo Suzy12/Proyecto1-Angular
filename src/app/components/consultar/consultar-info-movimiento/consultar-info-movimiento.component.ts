@@ -24,7 +24,7 @@ export class ConsultarInfoMovimientoComponent implements OnInit {
   }
 
   getMovimiento() {
-    let mov = this.storage.get('current-user-movimiento');
+    let mov = this.storage.get('current-user-movimiento'); //movimiento de la sesion actual
     this.movimientoService.getMovimiento(mov).subscribe(
       res => {
         let movimientoTemp: any = res.body;
@@ -44,8 +44,8 @@ export class ConsultarInfoMovimientoComponent implements OnInit {
     );
   }
 
-  modificarMovimiento(){
-    this.router.navigate(['/modificar/movimiento'],  { state: this.movimiento  }) 
+  modificarMovimiento() {
+    this.router.navigate(['/modificar/movimiento'], { state: this.movimiento }) //navegar a modificar movimiento
   }
 
 }

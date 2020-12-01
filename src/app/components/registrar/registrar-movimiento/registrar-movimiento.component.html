@@ -11,8 +11,9 @@
             </ul>
             <!-- fieldsets -->
             <hr>
-            <!--Step 1: Informacion Basica del Movimiento-->
+            <!--Form 1: Crear Movimiento-->
             <form [formGroup]="movimientoForm">
+                <!--Step 1: Informacion Basica del Movimiento-->
                 <fieldset *ngIf="firstSlide">
                     <h2 class="fs-title">Información Básica del Movimiento</h2>
                     <h3 class="fs-subtitle">En este paso, indique la información general del movimiento</h3>
@@ -20,6 +21,7 @@
                     <div class="row">
                         <div class="col-sm">
                             <div class="form-group">
+                                <!--Cedula-->
                                 <label for="">Cédula Juridica</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -37,6 +39,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Nombre-->
                                 <div class="my-2"></div>
                                 <label for="">Nombre</label>
                                 <div class="input-group">
@@ -55,6 +58,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Pagina Web-->
                                 <div class="my-2"></div>
                                 <label for="">Dirección Web</label>
                                 <div class="input-group">
@@ -73,6 +77,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Tabla de Telefonos-->
                                 <div class="my-2"></div>
                                 <p>Teléfonos</p>
                                 <table class="fixed_headers" id="table">
@@ -101,6 +106,7 @@
                                         Agregar Teléfono
                                     </button>
                                 </div>
+                                <!--Logo-->
                                 <label for="">Logo</label>
                                 <div class="my-2"></div>
                                 <div class="container">
@@ -118,6 +124,7 @@
                         </div>
                         <div class="col-sm">
                             <div class="form-group">
+                                <!--Pais-->
                                 <label for="">País</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -134,6 +141,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Provincia-->
                                 <div class="my-2"></div>
                                 <label for="">Provincia</label>
                                 <div class="input-group">
@@ -152,6 +160,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Canton-->
                                 <div class="my-2"></div>
                                 <label for="">Cantón</label>
                                 <div class="input-group">
@@ -170,6 +179,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Distrito-->
                                 <div class="my-2"></div>
                                 <label for="">Distrito</label>
                                 <div class="input-group">
@@ -188,6 +198,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Senas-->
                                 <div class="my-2"></div>
                                 <label for="">Señas</label>
                                 <div class="input-group">
@@ -207,7 +218,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <hr>
@@ -216,6 +226,7 @@
                             (click)="nextSlide()" />
                     </div>
                 </fieldset>
+                <!--End of Step 1-->
 
                 <!--Step 2: Crear Asesor General-->
                 <fieldset *ngIf="secondSlide">
@@ -225,6 +236,7 @@
                         información personal, de contacto y una contraseña para ingresar a la plataforma. </h3>
                     <hr>
                     <div class="row">
+                        <!--Informacion Personal del Asesor-->
                         <div class="col-sm">
                             <p class="pull-center"><b> Información Personal</b></p>
                             <div class="form-group">
@@ -284,6 +296,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--Contacto-->
                             <p class="pull-center"><b> Contacto </b></p>
                             <div class="form-group">
                                 <label for="">Ingrese el número de celular</label>
@@ -322,7 +335,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--End of Contacto-->
                         </div>
+                        <!--End of Informacion Personal-->
+
+                        <!--Direccion Fisica del Asesor-->
                         <div class="col-sm">
                             <p class="pull-center"><b> Dirección Física</b></p>
                             <div class="form-group">
@@ -396,6 +413,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--End of Direccion Fisica-->
                     </div>
                     <hr>
                     <div class="center">
@@ -405,10 +423,13 @@
                             (click)="nextSlide()" />
                     </div>
                 </fieldset>
+                <!--End of Step 2-->
             </form>
+            <!--End of Form 1-->
 
-            <!--Step 3: Crear Estructura Base-->
+            <!--Form 2: Crear Estructura Base del Movimiento-->
             <form [formGroup]="estructuraForm">
+                <!--Step 3: Crear Estructura Base-->
                 <fieldset *ngIf="thirdSlide">
                     <h2 class="fs-title">Crear la Estructura Base</h2>
                     <h3 class="fs-subtitle">
@@ -489,6 +510,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--End of Step 3.1-->
                     <hr>
 
                     <!--Step 3.2: Crear Miembro Monitor-->
@@ -530,7 +552,8 @@
                                     <input type="text" class="form-control" formControlName="nombreMiembro"
                                         placeholder="Nombre" required="required"
                                         [ngClass]="{ 'is-invalid': submitted && formEstructura.nombreMiembro.errors }">
-                                    <div *ngIf="submitted && formEstructura.nombreMiembro.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && formEstructura.nombreMiembro.errors"
+                                        class="invalid-feedback">
                                         <div *ngIf="formEstructura.nombreMiembro.errors.required">
                                             <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
                                                 campo del
@@ -652,6 +675,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--End of Step 3.2-->
                     <hr>
                     <div class="center">
                         <input type="button" name="previous" class="previous action-button-previous" value="Anterior"
@@ -660,7 +684,9 @@
                             value="Crear Movimiento" />
                     </div>
                 </fieldset>
+                <!--End of Step 3-->
             </form>
+            <!--End of Form-->
         </form>
     </div>
 </div>

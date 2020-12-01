@@ -23,9 +23,9 @@ export class ConsultarGrupoComponent implements OnInit {
   selectedOptionGrupo: any;
   public show: boolean = false;
   grupoForm: FormGroup;
-  grupo:any = {};
-  encargado1:any = false;
-  encargado2:any = false;
+  grupo: any = {};
+  encargado1: any = false;
+  encargado2: any = false;
   miembros: any = [];
   movimiento = this.storage.get('current-user-movimiento');
 
@@ -51,6 +51,8 @@ export class ConsultarGrupoComponent implements OnInit {
   }
   get form() { return this.grupoForm.controls }
 
+
+  //=============Get all zonas del movimiento===============
   public getZonas() {
     this.zonaService.getAllZonas(this.movimiento).subscribe(
       res => {
@@ -69,6 +71,7 @@ export class ConsultarGrupoComponent implements OnInit {
     );
   }
 
+  //=============Get all ramas de la zona seleccionada===============
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
@@ -87,13 +90,14 @@ export class ConsultarGrupoComponent implements OnInit {
       },
       err => console.log(err)
     )
-    if(this.selectedOptionRama != undefined)
+    if (this.selectedOptionRama != undefined)
       this.getGrupos(this.selectedOptionRama);
   }
 
+  //=============get all grupo de la zona y rama seleccionada===============
   getGrupos(newRama) {
     this.grupos = [];
-    this.grupoService.getGrupos(this.movimiento,this.selectedOptionZona, newRama).subscribe(
+    this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
@@ -110,6 +114,8 @@ export class ConsultarGrupoComponent implements OnInit {
     )
   }
 
+  
+  //=============Consultar grupo seleccionado===============
   consultarGrupo() {
     let grupoInfo = this.grupoForm.getRawValue();
     this.grupoService.getUnGrupo(grupoInfo).subscribe(res => {
@@ -129,17 +135,18 @@ export class ConsultarGrupoComponent implements OnInit {
 
       let grupoTemp: any = res.body.grupo;
       this.grupo = grupoTemp;
-      if(this.grupo.encargado1 != undefined){
-        this.encargado1 = this.grupo.encargado1;
+      if (this.grupo.encargado1 != undefined) {
+        this.encargado1 = this.grupo.encargado1; 
         this.consultarEncargado1();
-      }if(this.grupo.encargado2 != undefined){
+      } if (this.grupo.encargado2 != undefined) {
         this.encargado2 = this.grupo.encargado2;
         this.consultarEncargado2();
       }
     }
   }
 
-  listaMiembros(res){
+  //=============Consultar lista de miembros del grupo seleccionado===============
+  listaMiembros(res) {
     this.miembros = [];
     Object.values(res.miembros).forEach(element => {
       this.miembros.push(element);
@@ -147,18 +154,21 @@ export class ConsultarGrupoComponent implements OnInit {
     this.show = true;
   }
 
-  consultarEncargado1(){
+  //=============Consultar informacion del encargado 1 del grupo seleccionado===============
+  consultarEncargado1() {
     this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
-      res =>{
-        let encargadoTemp:any = res.body;
+      res => {
+        let encargadoTemp: any = res.body;
         this.encargado1 = encargadoTemp.miembro;
       }
     );
   }
-  consultarEncargado2(){
+
+  //=============Consultar informacion del encargado 2 del grupo seleccionado===============
+  consultarEncargado2() {
     this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
-      res =>{
-        let encargadoTemp:any = res.body;
+      res => {
+        let encargadoTemp: any = res.body;
         this.encargado2 = encargadoTemp.miembro;
       }
     );

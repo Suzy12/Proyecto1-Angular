@@ -27,28 +27,29 @@ export class PaginaPerfilComponent implements OnInit {
     this.getMovimiento();
   }
 
-  getMovimiento(){
+  //=============Get Info del Movimiento Actual===============
+  getMovimiento() {
     let movimiento = this.storage.get('current-user-movimiento');
     this.movimientoService.getMovimiento(movimiento).subscribe(
       res => {
-        let movimientoTemp:any = res.body;
-        if(movimientoTemp.success == false){
-          this.toastr.error(movimientoTemp.error.message, 'Error', {timeOut: 5000});
+        let movimientoTemp: any = res.body;
+        if (movimientoTemp.success == false) {
+          this.toastr.error(movimientoTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
-        }else{
+        } else {
           this.movimiento = movimientoTemp.movimiento;
           console.log(this.movimiento.idAsesor);
           this.miembroService.getUnMiembroxID(movimiento, this.movimiento.idAsesor).subscribe(
-            res =>{
-              let asesorTemp:any = res.body;
+            res => {
+              let asesorTemp: any = res.body;
 
-              if(asesorTemp.success == true)
+              if (asesorTemp.success == true)
                 this.asesor = asesorTemp.miembro;
 
             }
           );
 
-        } 
+        }
       },
       err => console.log(err)
     );

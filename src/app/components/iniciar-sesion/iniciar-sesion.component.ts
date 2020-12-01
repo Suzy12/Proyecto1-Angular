@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
 import { LoginService } from '../../services/login/login.service'
-import {  LoginGuard } from '../../services/login/login.guard';
+import { LoginGuard } from '../../services/login/login.guard';
 import { MovimientoService } from '../../services/movimientos/movimiento.service'
 import { ToastrService } from 'ngx-toastr';
 
@@ -25,20 +25,21 @@ export class IniciarSesionComponent implements OnInit {
     private movimientoService: MovimientoService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private toastr: ToastrService
-    ) {
-    
-   }
-   
-   ngOnInit(): void {
-     this.loginForm = this.formBuilder.group({
-       id: ['', [Validators.required]],
-       pass: ['', [Validators.required]]
-       //tipo: ['1', [Validators.required]]
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      id: ['', [Validators.required]],
+      pass: ['', [Validators.required]]
+      //tipo: ['1', [Validators.required]]
     });
   }
 
   get form() { return this.loginForm.controls }
 
+  //=============Iniciar Sesion===============
   login = () => {
     let loginInfo = this.loginForm.getRawValue();
 
@@ -48,39 +49,33 @@ export class IniciarSesionComponent implements OnInit {
 
     this.authService.login(loginInfo).subscribe(res => {
       this.authSuccess(res)
-    }, error => this.authError(error))
+    }, error => console.log(error))
 
     this.submitted = false;
   }
 
+  //=============Procesar respuesta===============
   authSuccess = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error("La combinación no es correcta", 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error("La combinación no es correcta", 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{
-      this.toastr.success(`Bienvenido`, 'Usuario autenticado', {timeOut: 2000});
+    } else {
+      this.toastr.success(`Bienvenido`, 'Usuario autenticado', { timeOut: 2000 });
       console.log("Bienvenido");
       console.log(res.body);
-      
+
       let loginInfo = this.loginForm.getRawValue();
       //this.guard.setSession(res.body.token);
-      this.storage.set('current-user', loginInfo.id);
-      this.storage.set('current-user-role', "1");
-      this.storage.set('current-user-movimiento', res.body.movimiento);
+      this.storage.set('current-user', loginInfo.id); //guardar cedula del usuario actual
+      this.storage.set('current-user-role', "1"); //guardar rol de asesor
+      this.storage.set('current-user-movimiento', res.body.movimiento); //guardar id del movimiento
       this.loading = false;
       this.loginForm.reset();
-      
-      if (this.storage.get('current-user-role') == 1)
-        this.router.navigate(['/perfil']);
-      }
-  }
 
-  authError = (err) => {
-    this.toastr.clear()
-    this.toastr.error(err.error.msg, 'Error');
-    console.log(err.error.msg);
-    this.loading = false;
+      if (this.storage.get('current-user-role') == 1)
+        this.router.navigate(['/perfil']); //navegar a la pagina de perfil 
+    }
   }
 
 }

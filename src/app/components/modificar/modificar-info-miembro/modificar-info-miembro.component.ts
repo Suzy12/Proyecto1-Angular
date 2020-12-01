@@ -24,8 +24,9 @@ export class ModificarInfoMiembroComponent implements OnInit {
     private miembroService: MiembroService,
     private toastr: ToastrService,
     @Inject(SESSION_STORAGE) private storage: StorageService
-    ) {
+  ) {
     if (this.router.getCurrentNavigation().extras.state) {
+      //get info pasada por parametro de la ventana anterior
       this.routeState = this.router.getCurrentNavigation().extras.state;
       if (this.routeState) {
         console.log(this.routeState);
@@ -46,12 +47,13 @@ export class ModificarInfoMiembroComponent implements OnInit {
       distrito: [this.miembro.distrito, [Validators.required]],
       senas: [this.miembro.senas, [Validators.required]],
       posible_monitor: '',
-   });
+    });
 
   }
 
   get form() { return this.miembroForm.controls }
 
+  //=============Modificar Miembro===============
   modificar = () => {
     let miembroInfo = this.miembroForm.getRawValue();
 
@@ -59,14 +61,14 @@ export class ModificarInfoMiembroComponent implements OnInit {
 
     if (this.miembroForm.invalid) return;
 
-    if(miembroInfo.posible_monitor == ''){
+    if (miembroInfo.posible_monitor == '') {
       miembroInfo.posible_monitor = this.miembro.posible_monitor;
-    }else{
-      miembroInfo.posible_monitor == 'No' ? miembroInfo.posible_monitor = false : miembroInfo.posible_monitor = true; 
+    } else {
+      miembroInfo.posible_monitor == 'No' ? miembroInfo.posible_monitor = false : miembroInfo.posible_monitor = true;
     }
     console.log(miembroInfo);
 
-   this.miembroService.modificarInfoMiembro(miembroInfo).subscribe(res => {
+    this.miembroService.modificarInfoMiembro(miembroInfo).subscribe(res => {
       console.log(res.body);
       this.consultarController(res);
     }, error => console.log(error))
@@ -76,11 +78,11 @@ export class ModificarInfoMiembroComponent implements OnInit {
 
   consultarController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{
-      this.toastr.success("La solicitud se realizó con éxito", 'Miembro modificado', {timeOut: 2000});
+    } else {
+      this.toastr.success("La solicitud se realizó con éxito", 'Miembro modificado', { timeOut: 2000 });
       console.log("Éxito");
     }
   }

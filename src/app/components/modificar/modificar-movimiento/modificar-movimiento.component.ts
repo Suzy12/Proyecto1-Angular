@@ -14,7 +14,7 @@ export class ModificarMovimientoComponent implements OnInit {
 
   fileData: File = null;
   previewUrl: any = null;
-  movimientoForm:  FormGroup;
+  movimientoForm: FormGroup;
   movimiento: any = {};
   submitted: Boolean = false;
   routeState: any;
@@ -26,18 +26,18 @@ export class ModificarMovimientoComponent implements OnInit {
     private movimientoService: MovimientoService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private toastr: ToastrService) {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.routeState = this.router.getCurrentNavigation().extras.state;
-        if (this.routeState) {
-          console.log(this.routeState);
-          this.movimiento = this.routeState;
-          this.telefonos = this.movimiento.telefonos;
-        }
+    if (this.router.getCurrentNavigation().extras.state) {
+      this.routeState = this.router.getCurrentNavigation().extras.state;
+      if (this.routeState) {
+        console.log(this.routeState);
+        this.movimiento = this.routeState;
+        this.telefonos = this.movimiento.telefonos;
       }
     }
+  }
 
   ngOnInit(): void {
-  
+
     this.movimientoForm = this.formBuilder.group({
       idMovimiento: this.movimiento.cedula_juridica,
       idAsesor: this.movimiento.idAsesor,
@@ -53,58 +53,20 @@ export class ModificarMovimientoComponent implements OnInit {
     });
   }
 
-  initiateForm(): FormGroup {
-    return this.formBuilder.group({
-      telefono: ['', Validators.required]
-    });
-  }
-
-  addTelefono(){
+  //=============Tabla de Telefonos===============
+  addTelefono() {
     this.telefonos.push('');
   }
 
-  removeTelefono(i){
+  removeTelefono(i) {
     this.telefonos.splice(i, 1);
   }
 
-  updateTelefonos(i, telefono){
+  updateTelefonos(i, telefono) {
     this.telefonos[i] = telefono;
   }
-  
 
-  get form() { return this.movimientoForm.controls }
-
-  modificar = () => {
-
-    let movimientoInfo = this.movimientoForm.getRawValue();
-    if(this.encodedLogo == ''){
-      movimientoInfo.logo = this.movimiento.logo;
-    }else{
-      movimientoInfo.logo = this.encodedLogo;
-    }
-
-    this.submitted = true;
-
-    if (this.movimientoForm.invalid) return;
-
-    for(let tel of this.telefonos) {
-      if(tel == ""){
-        this.toastr.warning("Por favor complete todos lo campos de teléfonos del movimiento", 'Advertencia', {timeOut: 10000});
-        return;
-      }
-    }
-
-    console.log(movimientoInfo);
-
-
-   this.movimientoService.modificarMovimiento(movimientoInfo).subscribe(res => {
-      console.log(res.body);
-      this.responseController(res);
-    }, error => console.log(error))
-
-    this.submitted = false;
-  }
-
+  //=============Procesar imagen seleccionada===============
   processImage = (imageFile) => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -123,6 +85,7 @@ export class ModificarMovimientoComponent implements OnInit {
     this.preview(event);
   }
 
+  //Mostrar Preview del Logo
   preview(fileInput: any) {
     // Show preview image
     this.fileData = <File>fileInput.target.files[0];
@@ -138,17 +101,50 @@ export class ModificarMovimientoComponent implements OnInit {
     }
   }
 
+
+  get form() { return this.movimientoForm.controls }
+
+  //=============Modificar Movimiento===============
+  modificar = () => {
+
+    let movimientoInfo = this.movimientoForm.getRawValue();
+    if (this.encodedLogo == '') {
+      movimientoInfo.logo = this.movimiento.logo;
+    } else {
+      movimientoInfo.logo = this.encodedLogo;
+    }
+
+    this.submitted = true;
+
+    if (this.movimientoForm.invalid) return;
+
+    for (let tel of this.telefonos) {
+      if (tel == "") {
+        this.toastr.warning("Por favor complete todos lo campos de teléfonos del movimiento", 'Advertencia', { timeOut: 10000 });
+        return;
+      }
+    }
+
+    console.log(movimientoInfo);
+
+
+    this.movimientoService.modificarMovimiento(movimientoInfo).subscribe(res => {
+      console.log(res.body);
+      this.responseController(res);
+    }, error => console.log(error))
+
+    this.submitted = false;
+  }
+
   responseController = (res) => {
     this.toastr.clear();
-    if(res.body.success == false){
-      this.toastr.error(res.body.error.message, 'Error', {timeOut: 5000});
+    if (res.body.success == false) {
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
-    }else{
-      this.toastr.success("La solicitud se realizó con éxito", 'Movimiento modificado', {timeOut: 2000});
+    } else {
+      this.toastr.success("La solicitud se realizó con éxito", 'Movimiento modificado', { timeOut: 2000 });
       console.log("Éxito");
     }
   }
-
-
 
 }

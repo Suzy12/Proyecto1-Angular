@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
+import { MiembroService } from '../../../services/miembros/miembro.service'
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SidebarService } from '../../../services/sidebar/sidebar.service';
 
@@ -17,17 +20,34 @@ import { SidebarService } from '../../../services/sidebar/sidebar.service';
 export class MenuComponent implements OnInit {
 
   menus = [];
-  constructor(public sidebarservice: SidebarService) {
+  usuario: any = {};
+
+  constructor(public sidebarservice: SidebarService,
+    private miembroService: MiembroService,
+    @Inject(SESSION_STORAGE) private storage: StorageService,
+    private router: Router,) {
     this.menus = sidebarservice.getMenuList();
-   }
+  }
 
   ngOnInit() {
+    //Get nombre del usuario loggeado
+    let movimiento = this.storage.get('current-user-movimiento');
+    let id = this.storage.get('current-user');
+    this.miembroService.getUnMiembroxID(movimiento, id).subscribe(
+      res => {
+        let usuarioTemp: any = res.body;
+
+        if (usuarioTemp.success == true)
+          this.usuario = usuarioTemp.miembro;
+
+      }
+    );
   }
 
   getSideBarState() {
-    return this.sidebarservice.getSidebarState();
+    return this.sidebarservice.getSidebarState(); //get estado: si es seleccionado
   }
-  
+
 
   toggle(currentMenu) {
     if (currentMenu.type === 'dropdown') {

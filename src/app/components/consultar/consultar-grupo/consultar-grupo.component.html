@@ -11,8 +11,10 @@
             <hr>
             <div class="row">
                 <div class="col-sm">
+                    <!--Form Escoger Grupo a Consultar-->
                     <form [formGroup]="grupoForm">
                         <div class="form-group">
+                            <!--Zona-->
                             <label for="">Escoja una zona</label>
                             <select required class="form-control" [(ngModel)]="selectedOptionZona"
                                 formControlName="idZona" (change)="getRamas($event.target.value)">
@@ -20,23 +22,32 @@
                                     {{zonas[i].nombre}}
                                 </option>
                             </select>
+                            <!--End of Zona-->
+
+                            <!--Rama-->
                             <div class="my-2"></div>
                             <label for="">Escoja una rama</label>
-                            <select required class="form-control" [(ngModel)]="selectedOptionRama" formControlName="idRama"
-                                (change)="getGrupos($event.target.value)">
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama"
+                                formControlName="idRama" (change)="getGrupos($event.target.value)">
                                 <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id">
                                     {{ramas[i].nombre}}
                                 </option>
                             </select>
+                            <!--End of Rama-->
+
+                            <!--Grupo-->
                             <div class="my-2"></div>
                             <label for="">Escoja un grupo</label>
-                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo" formControlName="idGrupo">
+                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo"
+                                formControlName="idGrupo">
                                 <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id">
                                     {{grupos[i].nombre}}
                                 </option>
                             </select>
+                            <!--End of Grupo-->
                         </div>
                     </form>
+                    <!--End of Form-->
                 </div>
             </div>
             <div>
@@ -44,6 +55,7 @@
             </div>
             <hr>
 
+            <!--Info del Grupo-->
             <div class="container" *ngIf="show">
                 <div class="row" *ngIf="show">
                     <div class="col-sm">
@@ -61,14 +73,17 @@
                         </p>
                     </div>
                 </div>
+
+                <!--Encargado 1-->
                 <div class="my-4"></div>
-                <p *ngIf = "encargado1">Primer {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }} del grupo</p>
+                <p *ngIf="encargado1">Primer {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }} del grupo</p>
                 <div class="my-2"></div>
-                <div class="container-jefes"  *ngIf = "encargado1">
+                <div class="container-jefes" *ngIf="encargado1">
                     <div class="card-profile-image center">
                         <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
                             class="rounded-circle">
                     </div>
+
                     <p class="text-center"> {{encargado1.nombre}}
                     </p>
                     <hr>
@@ -87,7 +102,7 @@
                                 <p>Número de Celular</p>
                                 <p class="text-secondary">
                                     <i class="fa fa-phone"></i>
-                                   {{encargado1.celular}}
+                                    {{encargado1.celular}}
                                 </p>
                             </div>
                         </div>
@@ -96,18 +111,20 @@
                                 <p>Correo Electrónico</p>
                                 <p class="text-secondary">
                                     <i class="fa fa-at"></i>
-                                     {{encargado1.email}}
+                                    {{encargado1.email}}
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--End of Encargado 1-->
 
+                <!--Encargado 2-->
                 <div class="my-4"></div>
-                <p  *ngIf = "encargado2">Segundo {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }}  del grupo</p>
+                <p *ngIf="encargado2">Segundo {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }} del grupo</p>
 
                 <div class="my-2"></div>
-                <div class="container-jefes"  *ngIf = "encargado2">
+                <div class="container-jefes" *ngIf="encargado2">
                     <div class="card-profile-image center">
                         <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
                             class="rounded-circle">
@@ -145,7 +162,9 @@
                         </div>
                     </div>
                 </div>
+                <!--End of Encargado 2-->
 
+                <!--Lista de miembros del grupo-->
                 <hr>
                 <div class="col-sm">
                     <p>Miembros</p>
@@ -164,11 +183,13 @@
                                 <td>{{miembro.id}}</td>
                                 <td>{{miembro.celular}}</td>
                                 <td>{{miembro.email}}</td>
-                            </tr>                           
+                            </tr>
                         </tbody>
                     </table>
                 </div>
+                <!--End of Lista-->
             </div>
+            <!--End of Info del Grupo-->
         </div>
         <hr>
     </div>
