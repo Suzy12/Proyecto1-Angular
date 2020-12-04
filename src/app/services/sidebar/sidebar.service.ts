@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
+/*Reference: https://github.com/azouaoui-med/angular-pro-sidebar*/
+
 export class SidebarService {
   toggled: boolean = false;
   menus = [
