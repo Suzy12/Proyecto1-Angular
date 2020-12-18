@@ -14,8 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class IniciarSesionComponent implements OnInit {
 
-  loginForm: FormGroup
-  submitted: Boolean = false
+  loginForm: FormGroup;
+  submitted: Boolean = false;
   loading: Boolean = false;
 
   constructor(private formBuilder: FormBuilder,

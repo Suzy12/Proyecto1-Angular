@@ -99,6 +99,7 @@ export class SidebarService {
       ruta: 'cambiar-miembro-grupo'
     },
   ];
+
   constructor() { }
   toggle() {
     this.toggled = !this.toggled;

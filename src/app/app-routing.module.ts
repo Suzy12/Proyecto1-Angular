@@ -35,6 +35,7 @@ import { ModificarZonaComponent } from './components/modificar/modificar-zona/mo
 
 //Registrar
 import { RegistrarMovimientoComponent } from "./components/registrar/registrar-movimiento/registrar-movimiento.component"
+import { RegistrarMiembroComponent } from "./components/registrar/registrar-miembro/registrar-miembro.component"
 
 
 const routes: Routes = [
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'home', pathMatch: 'full', component: PaginaPrincipalComponent },
   { path: 'perfil', pathMatch: 'full', component: PaginaPerfilComponent },
   { path: 'registrar-movimiento', pathMatch: 'full', component: RegistrarMovimientoComponent },
+  { path: 'registrar-miembro', pathMatch: 'full', component: RegistrarMiembroComponent },
   { path: 'agregar-miembro-grupo', pathMatch: 'full', component: AgregarMiembroGrupoComponent },
   { path: 'cambiar-miembro-grupo', pathMatch: 'full', component: CambiarMiembroGrupoComponent },
   { path: 'editar-perfil', pathMatch: 'full', component: EditarPerfilComponent },

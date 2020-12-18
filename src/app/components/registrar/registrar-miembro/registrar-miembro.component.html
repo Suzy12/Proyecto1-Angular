@@ -1,0 +1,106 @@
+<app-nav></app-nav>
+<div class="separator"></div>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="my-5"></div>
+                <div class="container verticalseparator">
+                    <h2 class="text-muted text-center">¡Bienvenido!</h2>
+                    <p class="text-center">
+                        <small id="passwordHelpInline" class="text-muted">
+                            Bienvenido a The Social Seekers, muchas gracias por su interés en usar nuestra
+                            plataforma.
+                        </small>
+
+                    </p>
+                    <img class="login__image align-self-center" src="../../../assets/img/logo.png" width="100%"
+                        alt="" />
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="container">
+                    <form [formGroup]="registerForm">
+                        <h2 class="text-muted text-center">Registrarse en la Plataforma</h2>
+                        <p class="text-center">
+                            <small id="passwordHelpInline" class="text-muted"> Para tener acceso a la plataforma como
+                                miembro de un
+                                movimiento, debe indicar su cédula de indentificación y proveer una contraseña.
+                                Tome en cuenta que esta contraseña será la misma para todos los movimientos a los que
+                                pertenezca.
+                            </small>
+
+                        </p>
+                        <hr>
+                        <div class="form-group">
+                            <label for="">Número de Cédula </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-id-card"></span>
+                                    </span>
+                                </div>
+                                <input class="form-control" placeholder="Cédula" formControlName="id"
+                                    [ngClass]="{ 'is-invalid': submitted && form.id.errors }">
+                                <div *ngIf="submitted && form.id.errors" class="invalid-feedback">
+                                    <div *ngIf="form.id.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                            campo
+                                            cédula es obligatorio</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <label for="">Contraseña</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-lock"></span>
+                                        </span>
+                                    </div>
+                                    <input type="password" class="form-control" placeholder="Contraseña"
+                                        required="required" formControlName="pass"
+                                        [ngClass]="{ 'is-invalid': submitted && form.pass.errors }">
+                                    <div *ngIf="submitted && form.pass.errors" class="invalid-feedback">
+                                        <div *ngIf="form.pass.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo
+                                                contraseña es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <label for="">Confirmar Contraseña</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <span class="fa fa-lock"></span>
+                                        </span>
+                                    </div>
+                                    <input type="password" class="form-control" placeholder="Contraseña"
+                                        required="required" formControlName="confirmedPass"
+                                        [ngClass]="{ 'is-invalid': submitted && form.confirmedPass.errors }">
+                                    <div *ngIf="submitted && form.confirmedPass.errors" class="invalid-feedback">
+                                        <div *ngIf="form.confirmedPass.errors.required">
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                                campo
+                                                contraseña es obligatorio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="center">
+                            <button type="submit" class="btn btn-secondary center">Registrarse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
