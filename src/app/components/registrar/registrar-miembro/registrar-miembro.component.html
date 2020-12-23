@@ -86,9 +86,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && form.confirmedPass.errors }">
                                     <div *ngIf="submitted && form.confirmedPass.errors" class="invalid-feedback">
                                         <div *ngIf="form.confirmedPass.errors.required">
-                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
-                                                campo
-                                                contraseña es obligatorio</label>
+                                            <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El campo contraseña es obligatorio</label>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +94,10 @@
                         </div>
                         <hr>
                         <div class="center">
-                            <button type="submit" class="btn btn-secondary center">Registrarse</button>
+                            <button
+                                (click)="clickEvent()"
+                                type="submit" class="btn btn-secondary center">Registrarse
+                            </button>
                         </div>
                     </form>
                 </div>

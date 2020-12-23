@@ -49,6 +49,8 @@ export class MiembroService {
     return this.http.post(this.miembroUrl + '/modificar-asesor', info, {observe: 'response'})
   }
 
-
+  public modificarContra = (info) => {
+    return this.http.post(this.miembroUrl + '/modificar-contrasena', info, {observe: 'response'})
+  }
   
 }
