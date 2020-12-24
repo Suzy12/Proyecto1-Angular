@@ -5,7 +5,7 @@
     transition: padding-left 0.3s ease;
 
     @media screen and (min-width: 768px) {
-      padding-left: 250px;
+      padding-left: 300px;
     }
 
     .overlay {
@@ -62,4 +62,54 @@
 
 .collapse ul a:hover {
   color: gainsboro;
+}
+
+.dropbtn {
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn { color: rgb(223, 222, 222)}
+
+a .notification {
+  position: absolute;
+  top: 0;
+}
+
+span.badge {
+  float: right;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+
+.notifications{
+  margin-right: 3%;
+
 }

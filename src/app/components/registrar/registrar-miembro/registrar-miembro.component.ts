@@ -24,8 +24,7 @@ export class RegistrarMiembroComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       id: ['', [Validators.required]],
       pass: ['', [Validators.required]],
-      confirmedPass: ['', [Validators.required]],
-      //tipo: ['1', [Validators.required]]
+      confirmedPass: ['', [Validators.required]]
     });
   }
 
@@ -36,25 +35,30 @@ export class RegistrarMiembroComponent implements OnInit {
     let mem = registerInfo.id;
     let pass = registerInfo.pass;
     let confPass = registerInfo.confirmedPass;
+   
+    this.submitted = true;
+    if (this.registerForm.invalid) return;
+
     console.log(pass)
     console.log(confPass)
     if(pass == confPass){
-      //console.log("Entered")
+      console.log({idMiembro: mem, contrasena:pass});
       this.memService.modificarContra({idMiembro: mem, contrasena:pass}).subscribe(res =>{
-        this.authResponse(res)
+        this.response(res)
       })
     }
     else{
-      this.toastr.error("Las contraseñas con coinciden", 'Error de constraseña', { timeOut: 5000 });
+      this.toastr.error("Las contraseñas no coinciden", 'Error de constraseña', { timeOut: 5000 });
     }
-    this.submitted = true;
+    this.submitted = false;
   }
 
-  authResponse(res){
+  response(res){
     this.toastr.clear();
     console.log(res);
     if (res.body.success == false) {
-      this.toastr.error("La cédula ya se encuentra registrada", 'Error', { timeOut: 5000 });
+      console.log();
+      this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
     }
     else{

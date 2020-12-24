@@ -45,6 +45,7 @@ import { VerMiembrosComponent } from './components/consultar/ver-miembros/ver-mi
 
 import { LoginService } from './services/login/login.service'
 import { LoginGuard } from './services/login/login.guard';
+import { RoleGuard } from './services/login/role.guard';
 import { ConsultarInfoMovimientoComponent } from './components/consultar/consultar-info-movimiento/consultar-info-movimiento.component';
 import { RegistrarMovimientoComponent } from './components/registrar/registrar-movimiento/registrar-movimiento.component';
 import { EditarPerfilComponent } from './components/perfil/editar-perfil/editar-perfil.component';
@@ -104,7 +105,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     }, 
     LoginService,
-    LoginGuard
+    LoginGuard,
+    RoleGuard
   ],
   bootstrap: [AppComponent]
 })

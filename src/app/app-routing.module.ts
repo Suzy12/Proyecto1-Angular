@@ -37,6 +37,8 @@ import { ModificarZonaComponent } from './components/modificar/modificar-zona/mo
 import { RegistrarMovimientoComponent } from "./components/registrar/registrar-movimiento/registrar-movimiento.component"
 import { RegistrarMiembroComponent } from "./components/registrar/registrar-miembro/registrar-miembro.component"
 
+import { RoleGuard } from './services/login/role.guard'
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -45,27 +47,27 @@ const routes: Routes = [
   { path: 'perfil', pathMatch: 'full', component: PaginaPerfilComponent },
   { path: 'registrar-movimiento', pathMatch: 'full', component: RegistrarMovimientoComponent },
   { path: 'registrar-miembro', pathMatch: 'full', component: RegistrarMiembroComponent },
-  { path: 'agregar-miembro-grupo', pathMatch: 'full', component: AgregarMiembroGrupoComponent },
-  { path: 'cambiar-miembro-grupo', pathMatch: 'full', component: CambiarMiembroGrupoComponent },
+  { path: 'agregar-miembro-grupo', pathMatch: 'full', component: AgregarMiembroGrupoComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+  { path: 'cambiar-miembro-grupo', pathMatch: 'full', component: CambiarMiembroGrupoComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
   { path: 'editar-perfil', pathMatch: 'full', component: EditarPerfilComponent },
   { path: 'consultar-perfil', pathMatch: 'full', component: ConsultarPerfilComponent },
   {
     path: 'crear',
     children: [
       { path: '', redirectTo: 'grupo', pathMatch: 'full' },
-      { path: 'grupo', component: CrearGrupoComponent },
-      { path: 'miembro', component: CrearMiembroComponent},
-      { path: 'zona-rama', component: CrearZonaRamaComponent},
+      { path: 'grupo', component: CrearGrupoComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'miembro', component: CrearMiembroComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'zona-rama', component: CrearZonaRamaComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
     ]
   },
   {
     path: 'consultar',
     children: [
       { path: '', redirectTo: 'grupo', pathMatch: 'full' },
-      { path: 'grupo', component: ConsultarGrupoComponent },
-      { path: 'buscar', component: BuscarMiembroComponent },
-      { path: 'info-miembro', component: ConsultarInfoMiembroComponent },
-      { path: 'miembros', component: VerMiembrosComponent },
+      { path: 'grupo', component: ConsultarGrupoComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'buscar', component: BuscarMiembroComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'info-miembro', component: ConsultarInfoMiembroComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'miembros', component: VerMiembrosComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'movimiento', component: ConsultarInfoMovimientoComponent }
     ]
   },
@@ -73,11 +75,11 @@ const routes: Routes = [
     path: 'modificar',
     children: [
       { path: '', redirectTo: 'zona', pathMatch: 'full' },
-      { path: 'zona', component: ModificarZonaComponent },
-      { path: 'rama', component: ModificarRamaComponent },
-      { path: 'grupo', component: ModificarGrupoComponent },
-      { path: 'info-miembro', component: ModificarInfoMiembroComponent },
-      { path: 'movimiento', component: ModificarMovimientoComponent }
+      { path: 'zona', component: ModificarZonaComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'rama', component: ModificarRamaComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'grupo', component: ModificarGrupoComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'info-miembro', component: ModificarInfoMiembroComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'movimiento', component: ModificarMovimientoComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} }
     ]
   },
   { path: '**', redirectTo: '' }

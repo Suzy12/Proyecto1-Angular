@@ -14,6 +14,7 @@ export class PaginaPerfilComponent implements OnInit {
 
   movimiento: any = {};
   asesor: any = {};
+  rol = "";
 
 
   constructor(
@@ -24,6 +25,7 @@ export class PaginaPerfilComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.rol = this.storage.get('current-user-role-name');
     this.getMovimiento();
   }
 
@@ -35,7 +37,7 @@ export class PaginaPerfilComponent implements OnInit {
         let movimientoTemp: any = res.body;
         if (movimientoTemp.success == false) {
           this.toastr.error(movimientoTemp.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
+          console.log(movimientoTemp);
         } else {
           this.movimiento = movimientoTemp.movimiento;
           console.log(this.movimiento.idAsesor);

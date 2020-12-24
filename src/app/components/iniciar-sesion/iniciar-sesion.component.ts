@@ -16,7 +16,7 @@ export class IniciarSesionComponent implements OnInit {
 
   loginForm: FormGroup;
   submitted: Boolean = false;
-  loading: Boolean = false;
+  movimientos = [];
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -32,12 +32,32 @@ export class IniciarSesionComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       id: ['', [Validators.required]],
-      pass: ['', [Validators.required]]
-      //tipo: ['1', [Validators.required]]
+      pass: ['', [Validators.required]],
+      idMovimiento: ['', [Validators.required]]
     });
+    this.getMovimientos();
   }
 
   get form() { return this.loginForm.controls }
+
+  getMovimientos() {
+    this.movimientos = [];
+    this.movimientoService.getAllMovimientos().subscribe(
+      res => {
+        let movTemp: any = res.body;
+        if (movTemp.success == false) {
+          this.toastr.error(movTemp.error.message, 'Error', { timeOut: 5000 });
+          console.log("Error");
+        } else {
+          console.log(movTemp);
+          Object.values(movTemp.movimientos).forEach(element => {
+            this.movimientos.push(element);
+          });
+        }
+      },
+      err => console.log(err)
+    );
+  }
 
   //=============Iniciar Sesion===============
   login = () => {
@@ -68,13 +88,13 @@ export class IniciarSesionComponent implements OnInit {
       let loginInfo = this.loginForm.getRawValue();
       //this.guard.setSession(res.body.token);
       this.storage.set('current-user', loginInfo.id); //guardar cedula del usuario actual
-      this.storage.set('current-user-role', "1"); //guardar rol de asesor
-      this.storage.set('current-user-movimiento', res.body.movimiento); //guardar id del movimiento
-      this.loading = false;
+      this.storage.set('current-user-role', res.body.user.nivel_acceso); //guardar rol para fachada
+      this.storage.set('current-user-role-name', res.body.user.nombre_rol); //guardar nombre del rol
+      this.storage.set('current-user-role-bd', res.body.user.id_lider); //guardar rol como está en la BD
+      this.storage.set('current-user-movimiento', loginInfo.idMovimiento); //guardar id del movimiento
       this.loginForm.reset();
 
-      if (this.storage.get('current-user-role') == 1)
-        this.router.navigate(['/perfil']); //navegar a la pagina de perfil 
+      this.router.navigate(['/perfil']); //navegar a la pagina de perfil 
     }
   }
 

@@ -21,27 +21,33 @@ export class MenuComponent implements OnInit {
 
   menus = [];
   usuario: any = {};
+  rol = "";
 
   constructor(public sidebarservice: SidebarService,
     private miembroService: MiembroService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private router: Router,) {
-    this.menus = sidebarservice.getMenuList();
+    let numero_rol =  this.storage.get('current-user-role');;
+    this.menus = sidebarservice.getMenuList(numero_rol);
   }
 
   ngOnInit() {
+    //Get rol del usuario loggeado
+    this.rol = this.storage.get('current-user-role-name');
     //Get nombre del usuario loggeado
     let movimiento = this.storage.get('current-user-movimiento');
     let id = this.storage.get('current-user');
-    this.miembroService.getUnMiembroxID(movimiento, id).subscribe(
-      res => {
-        let usuarioTemp: any = res.body;
+    setTimeout(() => {
+      this.miembroService.getUnMiembroxID(movimiento, id).subscribe(
+        res => {
+          let usuarioTemp: any = res.body;
 
-        if (usuarioTemp.success == true)
-          this.usuario = usuarioTemp.miembro;
+          if (usuarioTemp.success == true)
+            this.usuario = usuarioTemp.miembro;
 
-      }
-    );
+        }
+      );
+    }, 500);
   }
 
   getSideBarState() {
