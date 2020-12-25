@@ -30,19 +30,15 @@ export class ConsultarInfoMiembroComponent implements OnInit {
       if (this.routeState) {
         console.log(this.routeState);
         this.miembro = this.routeState.miembro;
-        let ced = this.storage.get('current-user'); //id del usuario actual
-        if (ced != this.miembro.id) {
-          this.disable = true; //no modificar al asesor
-          this.gruposMiembro = this.routeState.grupos; 
-          Object.values(this.gruposMiembro).forEach((element, index) => {
-            let grupo: any = element;
-            this.getNombreZona(grupo.id_zona + "", index); //Get la zona del grupo actual
-          });
-          Object.values(this.gruposMiembro).forEach((element, index) => {
-            let grupo: any = element;
-            this.getNombreRama(grupo.id_zona + "", grupo.id_rama + "", index); //get la rama del grupo actual
-          });
-        }
+        this.gruposMiembro = this.routeState.grupos;
+        Object.values(this.gruposMiembro).forEach((element, index) => {
+          let grupo: any = element;
+          this.getNombreZona(grupo.id_zona + "", index); //Get la zona del grupo actual
+        });
+        Object.values(this.gruposMiembro).forEach((element, index) => {
+          let grupo: any = element;
+          this.getNombreRama(grupo.id_zona + "", grupo.id_rama + "", index); //get la rama del grupo actual
+        });
       }
     }
   }
