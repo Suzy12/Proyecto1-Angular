@@ -1,0 +1,42 @@
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <!--Informacion del Movimiento-->
+        <div class="container">
+            <div class="card-profile-image center">
+                <img src="{{movimiento.logo}}" class="rounded-circle">
+            </div>
+            <p class="text-center"> {{movimiento.nombre}}
+            </p>
+            <hr>
+            <div class="row">
+                <div class="col-sm">
+
+                    <!--Tabla de Telefonos-->
+                    <div class="col-sm">
+                        <p>Información de puestos</p>
+                        <table mdbTable class="fixed_headers" bordered="true">
+                            <thead>
+                                <tr>
+                                  <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                            <tr *ngFor="let grupo of gruposMiembro">
+                                <td>{{grupo.id_zona}}</td>
+                                <td>{{grupo.id_rama}}</td>
+                                <td>{{grupo.nombre}}</td>
+                                <td>{{grupo.nombre_lider}}</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <!--End of Tabla de Telefonos-->
+                </div>
+
+            </div>
+            <hr>
+        </div>
+        <!--End of Informacion del Movimiento-->
+    </div>
+</div>

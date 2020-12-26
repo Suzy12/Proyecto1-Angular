@@ -25,6 +25,7 @@ import { ConsultarGrupoComponent } from './components/consultar/consultar-grupo/
 import { ConsultarInfoMiembroComponent } from './components/consultar/consultar-info-miembro/consultar-info-miembro.component'
 import { VerMiembrosComponent } from './components/consultar/ver-miembros/ver-miembros.component'
 import { ConsultarInfoMovimientoComponent } from './components/consultar/consultar-info-movimiento/consultar-info-movimiento.component'
+import { VerPuestosComponent } from './components/consultar/ver-puestos/ver-puestos.component'
 
 //Modificar
 import { ModificarGrupoComponent } from './components/modificar/modificar-grupo/modificar-grupo.component'
@@ -68,7 +69,8 @@ const routes: Routes = [
       { path: 'buscar', component: BuscarMiembroComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'info-miembro', component: ConsultarInfoMiembroComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'miembros', component: VerMiembrosComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
-      { path: 'movimiento', component: ConsultarInfoMovimientoComponent }
+      { path: 'movimiento', component: ConsultarInfoMovimientoComponent },
+      { path: 'puestos', component: VerPuestosComponent }
     ]
   },
   {

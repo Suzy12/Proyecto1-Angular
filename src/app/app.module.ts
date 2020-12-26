@@ -51,6 +51,7 @@ import { RegistrarMovimientoComponent } from './components/registrar/registrar-m
 import { EditarPerfilComponent } from './components/perfil/editar-perfil/editar-perfil.component';
 import { ConsultarPerfilComponent } from './components/perfil/consultar-perfil/consultar-perfil.component';
 import { RegistrarMiembroComponent } from './components/registrar/registrar-miembro/registrar-miembro.component';
+import { VerPuestosComponent } from './components/consultar/ver-puestos/ver-puestos.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -84,7 +85,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RegistrarMovimientoComponent,
     EditarPerfilComponent,
     ConsultarPerfilComponent,
-    RegistrarMiembroComponent
+    RegistrarMiembroComponent,
+    VerPuestosComponent
   ],
   imports: [
     BrowserModule,
