@@ -1,6 +1,7 @@
 <app-nav-menu></app-nav-menu>
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <h3 class="text-center" id="title">Puestos</h3>
         <!--Informacion del Movimiento-->
         <div class="container">
             <div class="card-profile-image center">
@@ -15,7 +16,7 @@
                     <!--Tabla de Telefonos-->
                     <div class="col-sm">
                         <p>Información de puestos</p>
-                        <table mdbTable class="fixed_headers" bordered="true">
+                        <table mdbTable class="fixed_headers" striped="true">
                             <thead>
                                 <tr>
                                   <th *ngFor="let head of headElements" scope="col">{{head}} </th>
@@ -23,6 +24,7 @@
                               </thead>
                               <tbody>
                             <tr *ngFor="let grupo of gruposMiembro">
+                                <td>{{grupo.id_movimiento}}</td>
                                 <td>{{grupo.id_zona}}</td>
                                 <td>{{grupo.id_rama}}</td>
                                 <td>{{grupo.nombre}}</td>

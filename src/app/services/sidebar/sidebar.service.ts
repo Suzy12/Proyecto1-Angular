@@ -6,6 +6,21 @@ import { Injectable } from '@angular/core';
 
 /*Reference: https://github.com/azouaoui-med/angular-pro-sidebar*/
 
+/*
+La fachada se ve mediante el "rol", el cual se define por el nivel jerárquico del usuario
+Se tiene la siguiente jerarquía:
+1 - Miembro
+2 - Monitor
+3 - Jefe de Grupo
+4 - Jefe de Rama 
+5 - Jefe de Zona
+6 - Asesor*
+
+*Asesor no existe en este componente
+
+Se puede acceder cualquier componente que pertenezca a un rol menor
+*/
+
 export class SidebarService {
   toggled: boolean = false;
   menu = [
