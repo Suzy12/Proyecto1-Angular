@@ -77,7 +77,7 @@ export class SidebarService {
         },
         {
           title: 'Consultar la composición de mi(s) rama(s) y zona(s)',
-          ruta: 'consultar/composicion-rama-zona',
+          ruta: 'consultar/rama-zona',
           rol: '2'
         },
         {

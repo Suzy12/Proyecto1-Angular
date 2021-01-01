@@ -34,5 +34,14 @@ export class ZonaService {
   public modificarZona = (zonaInfo)  => {
     return this.http.post(this.zonaUrl + '/modificar-zona', zonaInfo, { observe: 'response' })
   }
+
+  public zonasMiembro = (idMovimiento, idMiembro)  => {
+    let params = {idMovimiento: idMovimiento, idMiembro: idMiembro};
+    return this.http.post(this.zonaUrl + '/consultar-zonas-miembro', params, { observe: 'response' })
+  }
   
+  public zonasLider = (idMovimiento, idMiembro)  => {
+    let params = {idMovimiento: idMovimiento, idMiembro: idMiembro};
+    return this.http.post(this.zonaUrl + '/consultar-zonas-lider', params, { observe: 'response' })
+  }
 }

@@ -44,5 +44,10 @@ export class RamaService {
   public modificarRama = (ramaInfo)  => {
     return this.http.post(this.ramaUrl + '/modificar-rama', ramaInfo, { observe: 'response', withCredentials: true })
   }
+
+  public ramaLider = (idMovimiento, idZona, idMiembro)  => {
+    let params = {idMovimiento: idMovimiento, idZona : idZona, idMiembro: idMiembro};
+    return this.http.post(this.ramaUrl + '/consultar-ramas-lider', params, { observe: 'response' })
+  }
   
 }
