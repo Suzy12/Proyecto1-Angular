@@ -13,17 +13,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ComposicionRamaZonaComponent implements OnInit {
   routeState: any;
-  gruposMiembro: any = [];
   zonas: any = [];
   zonas_leader: any = [];
   ramas: any = [];
-  grupos: any = [];
+  membersR : any = [];
+  membersZ : any = [];
   movimiento = this.storage.get('current-user-movimiento');
   ced = this.storage.get('current-user');
   zonaForm: FormGroup;
   ramaForm: FormGroup;
-  submitted: Boolean = false;
-  submittedRama: Boolean = false;
+  headElements = ["Nombre", "Dirección", "Email", "Celular"];
 
 
   constructor(private formBuilder: FormBuilder,
@@ -56,7 +55,8 @@ export class ComposicionRamaZonaComponent implements OnInit {
     this.ramaForm = this.formBuilder.group({
       idRama: ['', [Validators.required]],
       idZona: ['', [Validators.required]],
-      idMovimiento: this.movimiento
+      idMovimiento: this.movimiento,
+      nombre: ['', [Validators.required]]
     });
   }
 
@@ -64,19 +64,7 @@ export class ComposicionRamaZonaComponent implements OnInit {
     return this.zonaForm.controls;
   }
 
-  getRamas(zone){
-    this.ramas = [];
-    this.ramaService.ramaLider(this.movimiento, zone, this.ced).subscribe( res =>{
-      this.routeState = res.body;
-      Object.values(this.routeState.ramas).forEach((element, index) => {
-        let rama: any = element;
-        this.ramas.push(rama.nombre);
-      });
-    })
-  }
-
   consultarZona(){
-    //console.log(this.zonaForm.getRawValue());
     let zone = this.zonaForm.getRawValue().idZona;
     console.log(zone);
     this.getMembersZone(zone);
@@ -85,7 +73,23 @@ export class ComposicionRamaZonaComponent implements OnInit {
   getMembersZone(zone){
     this.zonaService.consultarMiembrosZona(this.movimiento, zone).subscribe(res =>{
       this.routeState = res.body;
-      console.log(this.routeState);
+      this.membersZ = this.routeState.miembros;
+      console.log(this.membersZ);
+    })
+  }
+
+
+  //------------------------------------------------------------------------------------------------------------------
+
+  getRamas(zone){
+    this.ramas = [];
+    this.ramaService.ramaLider(this.movimiento, zone, this.ced).subscribe( res =>{
+      this.routeState = res.body;
+      Object.values(this.routeState.ramas).forEach((element, index) => {
+        let rama: any = element;
+        this.ramas.push(rama);
+        console.log(rama);
+      });
     })
   }
 
@@ -97,8 +101,11 @@ export class ComposicionRamaZonaComponent implements OnInit {
   }
 
   getMembersBranch(zone, branch){
+    console.log(branch);
     this.ramaService.consultarMiembrosRama(this.movimiento, zone, branch).subscribe(res => {
-      console.log(res);
+      this.routeState = res.body;
+      this.membersR = this.routeState.miembros;
+      console.log(this.membersR);
     })
   }
 }

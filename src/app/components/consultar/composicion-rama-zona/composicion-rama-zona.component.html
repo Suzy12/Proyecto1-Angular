@@ -21,6 +21,24 @@
                         <div class="center">
                             <button type="submit" class="btn btn-secondary center">Consultar Zona</button>
                         </div>
+                        <div class="col-sm">
+                            <p></p>
+                            <table mdbTable class="fixed_headers" striped="true">
+                                <thead>
+                                    <tr>
+                                      <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                <tr *ngFor="let mem of membersZ">
+                                    <td>{{mem.nombre}}</td>
+                                    <td>{{mem.senas}}</td>
+                                    <td>{{mem.email}}</td>
+                                    <td>{{mem.celular}}</td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
                     </form>
                     <!--End of Form-->
                 </div>
@@ -46,14 +64,32 @@
                             <label for="">Seleccione el nombre de la rama</label>
                             <div class="my-2"></div>
                             <select required class="form-control" formControlName="idRama">
-                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i]">
-                                    {{ramas[i]}}
+                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">
+                                    {{ramas[i].nombre}}
                                 </option>
                             </select>
                         </div>
                         <hr>
                         <div class="center">
                             <button type="submit" class="btn btn-secondary center">Consultar Rama</button>
+                        </div>
+                        <div class="col-sm">
+                            <p></p>
+                            <table mdbTable class="fixed_headers" striped="true">
+                                <thead>
+                                    <tr>
+                                      <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                <tr *ngFor="let mem of membersR">
+                                    <td>{{mem.nombre}}</td>
+                                    <td>{{mem.senas}}</td>
+                                    <td>{{mem.email}}</td>
+                                    <td>{{mem.celular}}</td>
+                                </tr>
+                            </tbody>
+                            </table>
                         </div>
                     </form>
                     <!--End of Form-->
