@@ -18,6 +18,7 @@ export class VerPuestosComponent implements OnInit {
   movimiento = this.storage.get('current-user-movimiento');
   ced = this.storage.get('current-user');
   headElements = ["Movimiento", "Zona", "Rama", "Grupo", "Rol"];
+  nombreMovimiento = this.storage.get('current-movement');
 
 
   constructor(private router: Router,
@@ -28,23 +29,6 @@ export class VerPuestosComponent implements OnInit {
     @Inject(SESSION_STORAGE) private storage: StorageService,
     private toastr: ToastrService
   ) {
-    miembroService.getUnMiembroxID(this.movimiento, this.ced).subscribe(res =>{
-      console.log(res.body);
-      this.routeState = res.body;
-      this.gruposMiembro = this.routeState.grupos;  //Retorna solo del movimiento actual
-      Object.values(this.gruposMiembro).forEach((element, index) => {
-        let grupo: any = element;
-        this.getNombreMovimiento(grupo.id_movimiento + "", index); //Get movimiento actual
-      });
-      Object.values(this.gruposMiembro).forEach((element, index) => {
-        let grupo: any = element;
-        this.getNombreZona(grupo.id_zona + "", index); //Get la zona del grupo actual
-      });
-      Object.values(this.gruposMiembro).forEach((element, index) => {
-        let grupo: any = element;
-        this.getNombreRama(grupo.id_zona + "", grupo.id_rama + "", index); //get la rama del grupo actual
-      });
-    })
 
   }
 
@@ -81,7 +65,7 @@ export class VerPuestosComponent implements OnInit {
     }
 
     //=============Get info de un movimiento===============
-    getNombreMovimiento(mov, i) {
+    getNombreMovimiento() {
       this.movimientoService.getMovimiento(this.movimiento).subscribe(
         res => {
           let movTemp: any = res.body;
@@ -91,13 +75,24 @@ export class VerPuestosComponent implements OnInit {
           } else {
             console.log(movTemp)
             let movResult = movTemp.movimiento;
-            this.gruposMiembro[i].id_movimiento = movResult.nombre;
+            console.log(movResult.nombre);
+            this.nombreMovimiento = movResult.nombre;
           }
         }
       );
     }
 
   ngOnInit(): void {
+    this.miembroService.getUnMiembroxID(this.movimiento, this.ced).subscribe(res =>{
+      console.log(res.body);
+      this.routeState = res.body;
+      this.gruposMiembro = this.routeState.grupos;  //Retorna solo del movimiento actual
+      Object.values(this.gruposMiembro).forEach((element, index) => {
+        let grupo: any = element;
+        this.getNombreZona(grupo.id_zona + "", index); //Get la zona del grupo actual
+        this.getNombreRama(grupo.id_zona + "", grupo.id_rama + "", index); //get la rama del grupo actual
+      });
+    })
   }
 
 }

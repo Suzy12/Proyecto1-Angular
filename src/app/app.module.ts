@@ -42,10 +42,15 @@ import { CambiarMiembroGrupoComponent } from './components/cambiar-miembro-grupo
 import { ModificarMovimientoComponent } from './components/modificar/modificar-movimiento/modificar-movimiento.component';
 import { ConsultarGrupoComponent } from './components/consultar/consultar-grupo/consultar-grupo.component';
 import { VerMiembrosComponent } from './components/consultar/ver-miembros/ver-miembros.component';
+import { CrearNoticiaComponent } from './components/crear/crear-noticia/crear-noticia.component';
+import { VerNotificacionesComponent } from './components/consultar/ver-notificaciones/ver-notificaciones.component'
+import { VerComposicionMisGruposComponent } from './components/consultar/ver-composicion-mis-grupos/ver-composicion-mis-grupos.component'
+import { VerComposicionMisGruposLiderComponent } from './components/consultar/ver-composicion-mis-grupos-lider/ver-composicion-mis-grupos-lider.component'
 
 import { LoginService } from './services/login/login.service'
 import { LoginGuard } from './services/login/login.guard';
 import { RoleGuard } from './services/login/role.guard';
+
 import { ConsultarInfoMovimientoComponent } from './components/consultar/consultar-info-movimiento/consultar-info-movimiento.component';
 import { RegistrarMovimientoComponent } from './components/registrar/registrar-movimiento/registrar-movimiento.component';
 import { EditarPerfilComponent } from './components/perfil/editar-perfil/editar-perfil.component';
@@ -88,7 +93,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ConsultarPerfilComponent,
     RegistrarMiembroComponent,
     VerPuestosComponent,
-    ComposicionRamaZonaComponent
+    ComposicionRamaZonaComponent,
+    CrearNoticiaComponent,
+    VerNotificacionesComponent,
+    VerComposicionMisGruposComponent,
+    VerComposicionMisGruposLiderComponent
   ],
   imports: [
     BrowserModule,

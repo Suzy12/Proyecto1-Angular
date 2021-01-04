@@ -1,39 +1,44 @@
 <app-nav-menu></app-nav-menu>
 <div class="container-fluid">
     <div class="container card__container my-5 shadow-sm w-100 rounded">
-        <h3 class="text-center" id="title">Puestos</h3>
-        <!--Informacion del Movimiento-->
         <div class="container">
-            <div class="card-profile-image center">
-                <img src="{{movimiento.logo}}" class="rounded-circle">
-            </div>
-            <p class="text-center"> {{movimiento.nombre}}
+            <h2 class="text-center" id="title">Ver mis puestos en el movimiento</h2>
+            <p class="text-center">
+                <small id="passwordHelpInline" class="text-muted">
+                    En esta ventana se mostrarán todos los roles (asesor, jefe de zona, jefe de rama, jefe de grupo,
+                    monitor o miembro)
+                    que usted tiene en el movimiento {{nombreMovimiento}}.
+                    Considere que se mostrará el rol más alto que tiene en un nodo específico. Por ejemplo, si se
+                    muestra como
+                    jefe de zona en una fila, significa que es jefe de esa zona, jefe de rama de esa rama y jefe de
+                    grupo o monitor de ese grupo.
+                </small>
             </p>
             <hr>
             <div class="row">
                 <div class="col-sm">
 
-                    <!--Tabla de Telefonos-->
+                    <!--Tabla de Puestos-->
                     <div class="col-sm">
                         <p>Información de puestos</p>
                         <table mdbTable class="fixed_headers" striped="true">
                             <thead>
                                 <tr>
-                                  <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+                                    <th *ngFor="let head of headElements" scope="col">{{head}} </th>
                                 </tr>
-                              </thead>
-                              <tbody>
-                            <tr *ngFor="let grupo of gruposMiembro">
-                                <td>{{grupo.id_movimiento}}</td>
-                                <td>{{grupo.id_zona}}</td>
-                                <td>{{grupo.id_rama}}</td>
-                                <td>{{grupo.nombre}}</td>
-                                <td>{{grupo.nombre_lider}}</td>
-                            </tr>
-                        </tbody>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let grupo of gruposMiembro">
+                                    <td>{{nombreMovimiento}}</td>
+                                    <td>{{grupo.id_zona}}</td>
+                                    <td>{{grupo.id_rama}}</td>
+                                    <td>{{grupo.nombre}}</td>
+                                    <td>{{grupo.nombre_lider}}</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
-                    <!--End of Tabla de Telefonos-->
+                    <!--End of Tabla de Puestos-->
                 </div>
 
             </div>

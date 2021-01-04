@@ -6,6 +6,7 @@ import { LoginService } from '../../services/login/login.service'
 import { LoginGuard } from '../../services/login/login.guard';
 import { MovimientoService } from '../../services/movimientos/movimiento.service'
 import { ToastrService } from 'ngx-toastr';
+import { NoticiasService } from '../../services/noticias/noticias.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -24,7 +25,8 @@ export class IniciarSesionComponent implements OnInit {
     private guard: LoginGuard,
     private movimientoService: MovimientoService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private noticiasService: NoticiasService
   ) {
 
   }
@@ -94,7 +96,48 @@ export class IniciarSesionComponent implements OnInit {
       this.storage.set('current-user-movimiento', loginInfo.idMovimiento); //guardar id del movimiento
       this.loginForm.reset();
 
+      this.storage.set('current-user-notifications', 0);
+      let rol = this.storage.get('current-user-role');
+      if (rol === "6") {
+        this.noticiasService.consultarNoticiaAsesor(loginInfo.idMovimiento, loginInfo.id).subscribe(
+          res => {
+            this.response(res);
+          },
+          err => console.log(err)
+        );
+
+      } else {
+        this.noticiasService.consultarNoticia(loginInfo.idMovimiento, loginInfo.id).subscribe(
+          res => {
+            this.response(res);
+          },
+          err => console.log(err)
+        );
+      }
+
       this.router.navigate(['/perfil']); //navegar a la pagina de perfil 
+    }
+  }
+
+  response(res) {
+    let countNotificaciones = 0;
+    let noticiasTemp: any = res.body;
+    if (noticiasTemp.success == false) {
+      this.toastr.error(noticiasTemp.error.message, 'Error', { timeOut: 5000 });
+      console.log("Error");
+    } else {
+      console.log(noticiasTemp.noticias);
+      Object.values(noticiasTemp.noticias).forEach(element => {
+        Object.values(element).forEach(e => {
+          console.log(e);
+          let noticia: any = e;
+          if (!noticia.leido) {
+            countNotificaciones += 1;
+            console.log(countNotificaciones);
+            this.storage.set('current-user-notifications', countNotificaciones);
+          }
+        })
+      });
     }
   }
 

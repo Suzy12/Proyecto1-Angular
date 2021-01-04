@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { SidebarService } from '../../../services/sidebar/sidebar.service';
+import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -8,7 +9,11 @@ import { SidebarService } from '../../../services/sidebar/sidebar.service';
 })
 export class NavMenuComponent implements OnInit {
 
-  constructor(public sidebarservice: SidebarService) { }
+  counter = 0;
+
+  constructor(public sidebarservice: SidebarService,
+    @Inject(SESSION_STORAGE) public storage: StorageService
+    ) { }
   toggleSidebar() {
     this.sidebarservice.setSidebarState(!this.sidebarservice.getSidebarState());
   }
@@ -22,6 +27,9 @@ export class NavMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.counter = this.storage.get('current-user-notifications');
+
+
 
   }
 

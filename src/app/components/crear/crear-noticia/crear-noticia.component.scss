@@ -1,0 +1,29 @@
+.container h2 {
+    padding-top: 20px;
+}
+
+.btn-default {
+    background: transparent;
+    border-style: solid;
+    border-color: lightgray;
+}
+
+.card__container {
+    min-height: 80vh;
+    max-width: 700px;
+}
+
+.page-content {
+    display: inline-block;
+    width: 100%;
+    padding-top: 20px;
+    transition: padding-left 0.3s ease;
+}
+
+.form-control {
+    max-width: 50%;
+}
+
+.text-area{
+    min-width: 100%;
+}

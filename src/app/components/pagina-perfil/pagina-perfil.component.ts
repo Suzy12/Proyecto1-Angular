@@ -40,17 +40,7 @@ export class PaginaPerfilComponent implements OnInit {
           console.log(movimientoTemp);
         } else {
           this.movimiento = movimientoTemp.movimiento;
-          console.log(this.movimiento.idAsesor);
-          this.miembroService.getUnMiembroxID(movimiento, this.movimiento.idAsesor).subscribe(
-            res => {
-              let asesorTemp: any = res.body;
-
-              if (asesorTemp.success == true)
-                this.asesor = asesorTemp.miembro;
-
-            }
-          );
-
+          this.storage.set('current-movement', this.movimiento.nombre);
         }
       },
       err => console.log(err)

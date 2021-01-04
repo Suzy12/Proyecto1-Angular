@@ -26,6 +26,12 @@ export class RamaService {
     return this.http.post(this.ramaUrl + '/consultar-ramas-disponibles', params, { observe: 'response' })
   }
 
+  public getTodasRamasMiembro = (idMovimiento, idZona, idMiembro)  =>  {
+    let params = {idMovimiento: idMovimiento, idZona: idZona, idMiembro: idMiembro};
+    console.log(params);
+    return this.http.post(this.ramaUrl + '/consultar-todas-las-ramas-miembro', params, { observe: 'response' })
+  }
+
 
   public crearRama = (ramaInfo)  => {
     return this.http.post(this.ramaUrl + '/crear-rama', ramaInfo, { observe: 'response' })

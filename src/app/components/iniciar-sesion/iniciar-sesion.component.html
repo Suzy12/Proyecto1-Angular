@@ -22,6 +22,12 @@
                 {{movimientos[i].nombre}}
               </option>
             </select>
+            <div *ngIf="submitted && form.idMovimiento.errors" class="invalid-feedback">
+              <div *ngIf="form.idMovimiento.errors.required">
+                  <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                      campo del movimiento es obligatorio</label>
+              </div>
+           </div>
 
             <div class="my-3">
               <div class="form-group">

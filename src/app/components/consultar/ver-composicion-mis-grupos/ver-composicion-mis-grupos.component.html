@@ -1,0 +1,208 @@
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="container">
+            <h2 class="text-center" id="title">Ver composición de los grupos a los que pertenezco</h2>
+            <p class="text-center">
+                <small id="passwordHelpInline" class="text-muted">
+                    Esta funcionalidad es para consultar los miembros de los grupos en los
+                    que pertenece como miembro (si es monitor, no cuenta como parte del grupo).
+                    Para consultar los miembros del grupo, debe indicar una rama a la cual pertenece
+                    y se mostrará a cuál grupo de esa rama pertenece.
+                    Se mostrará el nombre, cédula, teléfono, correo y dirección de cada miembro. </small>
+            </p>
+            <hr>
+            <!--Form Consultar Nodo-->
+            <form [formGroup]="consultarForm" (ngSubmit)="consultar()" novalidate>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+
+                                <!--Rama-->
+                                <div class="my-2"></div>
+                                <label for="">Ramas en las que estoy</label>
+                                <select required class="form-control" [(ngModel)]="selectedOptionRama"
+                                    formControlName="idRama" (change)="getGrupoViejo($event.target.value)"
+                                    required="required" [ngClass]="{ 'is-invalid': submitted && form.idRama.errors }">
+                                    <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">
+                                        {{ramas[i].nombre}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && form.idRama.errors" class="invalid-feedback">
+                                    <div *ngIf="form.idRama.errors.required">
+                                        <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i>
+                                            Debe indicar una rama para el miembro</label>
+                                    </div>
+                                </div>
+
+                                <!--Grupo-->
+                                <div class="my-2"></div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <label for="">Grupo actual en la rama seleccionada: </label>
+                                        <p>
+                                            <b>
+                                                {{grupoViejo.nombre}}
+                                            </b>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="">Número del grupo actual: </label>
+                                        <p>
+                                            <b>
+                                                {{grupoViejo.id_grupo}}
+                                            </b>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-secondary center">Consultar</button>
+                    </div>
+                </div>
+            </form>
+            <!--End of Form-->
+            <hr>
+            <!--Info del Grupo-->
+            <div class="container" *ngIf="show">
+                <div class="row" *ngIf="show">
+                    <div class="col-sm">
+                        <p>Nombre del Grupo</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-user"></i>
+                            {{grupo.nombre}}
+                        </p>
+                    </div>
+                    <div class="col-sm">
+                        <p>Número del Grupo</p>
+                        <p class="text-secondary">
+                            <i class="fa fa-id-card"></i>
+                            {{grupo.id}}
+                        </p>
+                    </div>
+                </div>
+
+                <!--Encargado 1-->
+                <div class="my-4"></div>
+                <p *ngIf="encargado1">Primer {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }} del grupo</p>
+                <div class="my-2"></div>
+                <div class="container-jefes" *ngIf="encargado1">
+                    <div class="card-profile-image center">
+                        <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                            class="rounded-circle">
+                    </div>
+
+                    <p class="text-center"> {{encargado1.nombre}}
+                    </p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div>
+                                <p>Número de Cédula</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-id-card"></i>
+                                    {{encargado1.id}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div>
+                                <p>Número de Celular</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-phone"></i>
+                                    {{encargado1.celular}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div>
+                                <p>Correo Electrónico</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-at"></i>
+                                    {{encargado1.email}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Encargado 1-->
+
+                <!--Encargado 2-->
+                <div class="my-4"></div>
+                <p *ngIf="encargado2">Segundo {{ grupo.isMonitor == true ? 'monitor' : 'jefe' }} del grupo</p>
+
+                <div class="my-2"></div>
+                <div class="container-jefes" *ngIf="encargado2">
+                    <div class="card-profile-image center">
+                        <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                            class="rounded-circle">
+                    </div>
+                    <p class="text-center"> {{encargado2.nombre}}
+                    </p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div>
+                                <p>Número de Cédula</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-id-card"></i>
+                                    {{encargado2.id}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div>
+                                <p>Número de Celular</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-phone"></i>
+                                    {{encargado2.celular}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div>
+                                <p>Correo Electrónico</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-at"></i>
+                                    {{encargado2.email}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Encargado 2-->
+
+                <!--Tabla de Miembros-->
+                <div class="col-sm" *ngIf="show">
+                    <p>Miembros</p>
+                    <table class="fixed_headers">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Cédula</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Dirección</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let miembro of miembros">
+                                <td>{{miembro.nombre}}</td>
+                                <td>{{miembro.id}}</td>
+                                <td>{{miembro.celular}}</td>
+                                <td>{{miembro.email}}</td>
+                                <td>{{miembro.provincia}}, {{miembro.canton}}, {{miembro.distrito}}, {{miembro.senas}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--End of Tabla de Miembros-->
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,167 @@
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="container">
+            <h2 class="text-center" id="title">Crear Noticia</h2>
+            <p class="text-center">
+                <small id="passwordHelpInline" class="text-muted"> Para consultar los miembros de una zona, rama o
+                    grupo,
+                    debe indicar cuál de estas opciones consular.
+                    Seguidamente, debe indicar la zona, rama y/o grupo según lo escogido.
+                    Se mostrará el nombre, cédula, teléfono y correo de cada miembro. </small>
+            </p>
+            <hr>
+            <label> La noticia se puede ver a nivel de: </label>
+            <!--Form Consultar Nodo-->
+            <form [formGroup]="crearForm" (ngSubmit)="crearNoticia()" novalidate>
+                <div class="form-group">
+                    <div class="row">
+
+                        <!--Consultar por Movimiento-->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="tipo"
+                                    value="checkMovimiento" checked>
+                                <label class="form-check-label">Movimiento</label>
+                            </div>
+                        </div>
+
+                        <!--Consultar por Zona-->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="tipo" value="checkZona"
+                                    checked>
+                                <label class="form-check-label">Zona</label>
+                            </div>
+                        </div>
+
+                        <!--Consultar por Rama-->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="tipo" value="checkRama">
+                                <label class="form-check-label">Rama</label>
+                            </div>
+                        </div>
+
+                        <!--Consultar por Grupo-->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="tipo" value="checkGrupo">
+                                <label class="form-check-label">Grupo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <!--Zona-->
+                            <label for="">Escoja una zona</label>
+                            <select required class="form-control" [(ngModel)]="selectedOptionZona"
+                                formControlName="idZona" (change)="getRamas($event.target.value)"
+                                [ngClass]="{ 'is-invalid': submitted && form.idZona.errors }">
+                                <option *ngFor="let zona of zonas; let i = index" [value]="zonas[i].id_zona">
+                                    {{zonas[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idZona.errors" class="invalid-feedback">
+                                <div *ngIf="form.idZona.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                        campo de la zona es obligatorio</label>
+                                </div>
+                            </div>
+
+                            <!--Rama-->
+                            <div class="my-2"></div>
+                            <label for="">Escoja una rama</label>
+                            <select required class="form-control" [(ngModel)]="selectedOptionRama"
+                                formControlName="idRama" (change)="getGrupos($event.target.value)"
+                                [ngClass]="{ 'is-invalid': submitted && form.idRama.errors }">
+                                <option *ngFor="let rama of ramas; let i = index" [value]="ramas[i].id_rama">
+                                    {{ramas[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idRama.errors" class="invalid-feedback">
+                                <div *ngIf="form.idRama.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                        campo de la rama es obligatorio</label>
+                                </div>
+                            </div>
+
+                            <!--Grupo-->
+                            <div class="my-2"></div>
+                            <label for="">Escoja un grupo</label>
+                            <select required class="form-control" [(ngModel)]="selectedOptionGrupo"
+                                formControlName="idGrupo"[ngClass]="{ 'is-invalid': submitted && form.idGrupo.errors }">
+                                <option *ngFor="let grupo of grupos; let i = index" [value]="grupos[i].id_grupo">
+                                    {{grupos[i].nombre}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.idGrupo.errors" class="invalid-feedback">
+                                <div *ngIf="form.idGrupo.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                        campo del grupo es obligatorio</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <div class="my-2"></div>
+                            <label for="">Título de la noticia</label>
+                            <input type="text" class="form-control" placeholder="Título" required="required"
+                                formControlName="titulo" [ngClass]="{ 'is-invalid': submitted && form.titulo.errors }">
+                            <div *ngIf="submitted && form.titulo.errors" class="invalid-feedback">
+                                <div *ngIf="form.titulo.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                        campo del título de la noticia es obligatorio</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <div class="my-2"></div>
+                            <label for="">Contenido de la noticia</label>
+                            <textarea class="text-area" (keyup)="autoGrowTextZone($event)" required="required"
+                                formControlName="contenido"
+                                [ngClass]="{ 'is-invalid': submitted && form.contenido.errors }"></textarea>
+                            <div *ngIf="submitted && form.contenido.errors" class="invalid-feedback">
+                                <div *ngIf="form.contenido.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                        campo del contenido de la noticia es obligatorio</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <div class="my-2"></div>
+                            <label for="">Imágenes (opcional)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <img *ngFor='let url of urls' [src]="url" height="150"> <br />
+                            <input type='file' (change)="onSelectFile($event)" multiple>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="center">
+                    <button type="submit" class="btn btn-secondary center">Crear Noticia</button>
+                </div>
+            </form>
+            <!--End of Form-->
+            <div class="my-4"></div>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,7 @@ import { EditarPerfilComponent } from './components/perfil/editar-perfil/editar-
 import { CrearGrupoComponent } from './components/crear/crear-grupo/crear-grupo.component'
 import { CrearMiembroComponent } from './components/crear/crear-miembro/crear-miembro.component'
 import { CrearZonaRamaComponent } from './components/crear/crear-zona-rama/crear-zona-rama.component'
+import { CrearNoticiaComponent } from './components/crear/crear-noticia/crear-noticia.component';
 
 //Consultar
 import { BuscarMiembroComponent } from './components/consultar/buscar-miembro/buscar-miembro.component'
@@ -27,6 +28,9 @@ import { VerMiembrosComponent } from './components/consultar/ver-miembros/ver-mi
 import { ConsultarInfoMovimientoComponent } from './components/consultar/consultar-info-movimiento/consultar-info-movimiento.component'
 import { VerPuestosComponent } from './components/consultar/ver-puestos/ver-puestos.component'
 import { ComposicionRamaZonaComponent } from './components/consultar/composicion-rama-zona/composicion-rama-zona.component'
+import { VerNotificacionesComponent } from './components/consultar/ver-notificaciones/ver-notificaciones.component'
+import { VerComposicionMisGruposComponent } from './components/consultar/ver-composicion-mis-grupos/ver-composicion-mis-grupos.component'
+import { VerComposicionMisGruposLiderComponent } from './components/consultar/ver-composicion-mis-grupos-lider/ver-composicion-mis-grupos-lider.component'
 
 //Modificar
 import { ModificarGrupoComponent } from './components/modificar/modificar-grupo/modificar-grupo.component'
@@ -60,6 +64,7 @@ const routes: Routes = [
       { path: 'grupo', component: CrearGrupoComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'miembro', component: CrearMiembroComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'zona-rama', component: CrearZonaRamaComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'noticia', component: CrearNoticiaComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
     ]
   },
   {
@@ -72,7 +77,10 @@ const routes: Routes = [
       { path: 'miembros', component: VerMiembrosComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'movimiento', component: ConsultarInfoMovimientoComponent },
       { path: 'puestos', component: VerPuestosComponent },
-      { path: 'rama-zona', component: ComposicionRamaZonaComponent }
+      { path: 'composicion-rama-zona', component: ComposicionRamaZonaComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'composicion-grupos-lider', component: VerComposicionMisGruposLiderComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'composicion-grupos', component: VerComposicionMisGruposComponent },
+      { path: 'notificaciones', component: VerNotificacionesComponent }
     ]
   },
   {

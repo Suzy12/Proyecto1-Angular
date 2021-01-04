@@ -41,5 +41,10 @@ export class GrupoService {
     return this.http.post(this.grupoUrl + '/modificar-grupo', grupoInfo, { observe: 'response' })
   }
 
+  public consultarGruposDeLider = (idMovimiento, idZona, idRama, idMiembro)  =>  {
+    let params = { idMovimiento: idMovimiento, idZona: idZona, idRama: idRama , idMiembro: idMiembro}
+    return this.http.post(this.grupoUrl + '/consultar-grupos-lider', params, { observe: 'response' })
+  }
+
 
 }

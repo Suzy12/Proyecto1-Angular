@@ -9,12 +9,15 @@ import { ToastrService } from 'ngx-toastr';
 import { MiembroService } from '../../../services/miembros/miembro.service'
 
 @Component({
-  selector: 'app-consultar-grupo',
-  templateUrl: './consultar-grupo.component.html',
-  styleUrls: ['./consultar-grupo.component.scss']
+  selector: 'app-ver-composicion-mis-grupos-lider',
+  templateUrl: './ver-composicion-mis-grupos-lider.component.html',
+  styleUrls: ['./ver-composicion-mis-grupos-lider.component.scss']
 })
-export class ConsultarGrupoComponent implements OnInit {
+export class VerComposicionMisGruposLiderComponent implements OnInit {
 
+  //todas las zonas del miembro
+  //todas las ramas del miembro (en una zona)
+  //grupos de lider
   zonas: any = [];
   ramas: any = [];
   grupos: any = [];
@@ -22,13 +25,15 @@ export class ConsultarGrupoComponent implements OnInit {
   selectedOptionRama: any;
   selectedOptionGrupo: any;
   public show: boolean = false;
-  grupoForm: FormGroup;
+  consultarForm: FormGroup;
+  nodo: any = {};
+  miembros: any = [];
+  movimiento = this.storage.get('current-user-movimiento');
+  miembro = this.storage.get('current-user');
+  submitted = false;
   grupo: any = {};
   encargado1: any = false;
   encargado2: any = false;
-  miembros: any = [];
-  movimiento = this.storage.get('current-user-movimiento');
-
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -37,31 +42,29 @@ export class ConsultarGrupoComponent implements OnInit {
     private grupoService: GrupoService,
     private miembroService: MiembroService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getZonas();
-    this.grupoForm = this.formBuilder.group({
+    this.consultarForm = this.formBuilder.group({
       idMovimiento: this.movimiento,
       idZona: ['', [Validators.required]],
       idRama: ['', [Validators.required]],
       idGrupo: ['', [Validators.required]]
     });
   }
-  get form() { return this.grupoForm.controls }
 
+  get form() { return this.consultarForm.controls }
 
-  //=============Get all zonas del movimiento===============
   public getZonas() {
-    this.zonaService.getAllZonas(this.movimiento).subscribe(
+    this.zonaService.zonasMiembro(this.movimiento, this.miembro).subscribe(
       res => {
         let zonasTemp: any = res.body;
         if (zonasTemp.success == false) {
           this.toastr.error(zonasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-
+          console.log(zonasTemp);
           Object.values(zonasTemp.zonas).forEach(element => {
             this.zonas.push(element);
           });
@@ -71,18 +74,17 @@ export class ConsultarGrupoComponent implements OnInit {
     );
   }
 
-  //=============Get all ramas de la zona seleccionada===============
   getRamas(newZona) {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRamas(this.movimiento, newZona).subscribe(
+    this.ramaService.getTodasRamasMiembro(this.movimiento, newZona, this.miembro).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
           this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-
+          console.log(res);
           Object.values(ramasTemp.ramas).forEach(element => {
             this.ramas.push(element);
           });
@@ -94,17 +96,16 @@ export class ConsultarGrupoComponent implements OnInit {
       this.getGrupos(this.selectedOptionRama);
   }
 
-  //=============get all grupo de la zona y rama seleccionada===============
   getGrupos(newRama) {
     this.grupos = [];
-    this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
+    this.grupoService.consultarGruposDeLider(this.movimiento, this.selectedOptionZona, newRama, this.miembro).subscribe(
       res => {
         let gruposTemp: any = res.body;
         if (gruposTemp.success == false) {
           this.toastr.error(gruposTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-
+          console.log(gruposTemp);
           Object.values(gruposTemp.grupos).forEach(element => {
             this.grupos.push(element);
           });
@@ -114,22 +115,25 @@ export class ConsultarGrupoComponent implements OnInit {
     )
   }
 
-  
+
   //=============Consultar grupo seleccionado===============
-  consultarGrupo() {
-    let grupoInfo = this.grupoForm.getRawValue();
+  consultar() {
+    this.submitted = true;
+    if (this.consultarForm.invalid) {
+      return;
+    }
+    let grupoInfo = this.consultarForm.getRawValue();
     this.grupoService.getUnGrupo(grupoInfo).subscribe(res => {
       console.log(res);
       this.grupoSuccess(res);
       this.listaMiembros(res.body);
     }, error => console.log(error))
+    this.submitted = false;
   }
 
   grupoSuccess = (res) => {
     this.toastr.clear();
-
     this.encargado2 = false;
-    
     if (res.body.success == false) {
       this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
@@ -175,8 +179,4 @@ export class ConsultarGrupoComponent implements OnInit {
       }
     );
   }
-
-
-
-
 }

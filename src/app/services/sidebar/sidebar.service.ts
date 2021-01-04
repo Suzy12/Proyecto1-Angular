@@ -76,13 +76,18 @@ export class SidebarService {
           rol: '1'
         },
         {
-          title: 'Consultar la composición de mi(s) rama(s) y zona(s)',
-          ruta: 'consultar/rama-zona',
+          title: 'Consultar la composición de las rama(s) y zona(s) que lidero',
+          ruta: 'consultar/composicion-rama-zona',
           rol: '2'
         },
         {
-          title: 'Consultar la composición de mi(s) grupo(s)',
-          ruta: 'consultar/composicion-grupo',
+          title: 'Consultar la composición de los grupo(s) que lidero',
+          ruta: 'consultar/composicion-grupos-lider',
+          rol: '2'
+        },
+        {
+          title: 'Consultar la composición de los grupo(s) a los que pertenezco',
+          ruta: 'consultar/composicion-grupos',
           rol: '1'
         },
         {
@@ -91,7 +96,7 @@ export class SidebarService {
           rol: '2'
         },
         {
-          title: 'Consultar miembros',
+          title: 'Consultar miembros de cualquier grupo, rama o zona',
           ruta: 'consultar/miembros',
           rol: '2'
         },

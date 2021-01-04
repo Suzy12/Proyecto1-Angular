@@ -9,11 +9,11 @@ import { ToastrService } from 'ngx-toastr';
 import { MiembroService } from '../../../services/miembros/miembro.service'
 
 @Component({
-  selector: 'app-consultar-grupo',
-  templateUrl: './consultar-grupo.component.html',
-  styleUrls: ['./consultar-grupo.component.scss']
+  selector: 'app-ver-composicion-mis-grupos',
+  templateUrl: './ver-composicion-mis-grupos.component.html',
+  styleUrls: ['./ver-composicion-mis-grupos.component.scss']
 })
-export class ConsultarGrupoComponent implements OnInit {
+export class VerComposicionMisGruposComponent implements OnInit {
 
   zonas: any = [];
   ramas: any = [];
@@ -22,13 +22,16 @@ export class ConsultarGrupoComponent implements OnInit {
   selectedOptionRama: any;
   selectedOptionGrupo: any;
   public show: boolean = false;
-  grupoForm: FormGroup;
+  consultarForm: FormGroup;
+  submitted: Boolean = false;
+  nodo: any = {};
+  miembros: any = [];
+  movimiento = this.storage.get('current-user-movimiento');
+  miembro = this.storage.get('current-user');
+  grupoViejo: any = "";
   grupo: any = {};
   encargado1: any = false;
   encargado2: any = false;
-  miembros: any = [];
-  movimiento = this.storage.get('current-user-movimiento');
-
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -37,52 +40,31 @@ export class ConsultarGrupoComponent implements OnInit {
     private grupoService: GrupoService,
     private miembroService: MiembroService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.getZonas();
-    this.grupoForm = this.formBuilder.group({
+    this.getRamas();
+    this.consultarForm = this.formBuilder.group({
       idMovimiento: this.movimiento,
-      idZona: ['', [Validators.required]],
-      idRama: ['', [Validators.required]],
-      idGrupo: ['', [Validators.required]]
+      idRama: ['', [Validators.required]]
     });
   }
-  get form() { return this.grupoForm.controls }
 
+  get form() { return this.consultarForm.controls }
 
-  //=============Get all zonas del movimiento===============
-  public getZonas() {
-    this.zonaService.getAllZonas(this.movimiento).subscribe(
-      res => {
-        let zonasTemp: any = res.body;
-        if (zonasTemp.success == false) {
-          this.toastr.error(zonasTemp.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
-
-          Object.values(zonasTemp.zonas).forEach(element => {
-            this.zonas.push(element);
-          });
-        }
-      },
-      err => console.log(err)
-    );
-  }
-
-  //=============Get all ramas de la zona seleccionada===============
-  getRamas(newZona) {
+  //===================Get Ramas en las que esta el miembro consultado=========================
+  getRamas() {
     this.ramas = [];
     this.grupos = [];
-    this.ramaService.getRamas(this.movimiento, newZona).subscribe(
+    this.ramaService.consultarRamaDeMiembro(this.movimiento, this.miembro).subscribe(
       res => {
         let ramasTemp: any = res.body;
         if (ramasTemp.success == false) {
           this.toastr.error(ramasTemp.error.message, 'Error', { timeOut: 5000 });
           console.log("Error");
         } else {
-
+          console.log(ramasTemp);
+          this.selectedOptionZona = ramasTemp.ramas[0].id_zona + "";
           Object.values(ramasTemp.ramas).forEach(element => {
             this.ramas.push(element);
           });
@@ -91,45 +73,47 @@ export class ConsultarGrupoComponent implements OnInit {
       err => console.log(err)
     )
     if (this.selectedOptionRama != undefined)
-      this.getGrupos(this.selectedOptionRama);
+      this.getGrupoViejo(this.selectedOptionRama);
   }
 
-  //=============get all grupo de la zona y rama seleccionada===============
-  getGrupos(newRama) {
-    this.grupos = [];
-    this.grupoService.getGrupos(this.movimiento, this.selectedOptionZona, newRama).subscribe(
-      res => {
-        let gruposTemp: any = res.body;
-        if (gruposTemp.success == false) {
-          this.toastr.error(gruposTemp.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
 
-          Object.values(gruposTemp.grupos).forEach(element => {
-            this.grupos.push(element);
-          });
-        }
-      },
-      err => console.log(err)
-    )
+  //=============Get Grupo del cual el miembro sera eliminado (su grupo actual)==================
+  getGrupoViejo(newRama) {
+    console.log(this.selectedOptionZona);
+    console.log(newRama);
+    console.log(this.miembro);
+    this.grupoService.consultarGrupoDeMiembro(this.movimiento, this.selectedOptionZona, newRama + "", this.miembro).subscribe(res => {
+      let grupoTemp: any = res.body;
+      if (grupoTemp.success == false) {
+        this.toastr.error(grupoTemp.error.message, 'Error', { timeOut: 5000 });
+        console.log("Error");
+      } else {
+        console.log(grupoTemp);
+        this.grupoViejo = grupoTemp.grupo[0];
+        this.selectedOptionGrupo = ""+this.grupoViejo.id_grupo;
+      }
+    }, error => console.log(error));
   }
 
-  
   //=============Consultar grupo seleccionado===============
-  consultarGrupo() {
-    let grupoInfo = this.grupoForm.getRawValue();
+  consultar() {
+    this.submitted = true;
+    if (this.consultarForm.invalid) {
+      return;
+    }
+    let grupoInfo = {idMovimiento: this.movimiento, idZona: this.selectedOptionZona, idRama: this.selectedOptionRama, idGrupo: this.selectedOptionGrupo}
     this.grupoService.getUnGrupo(grupoInfo).subscribe(res => {
       console.log(res);
       this.grupoSuccess(res);
       this.listaMiembros(res.body);
     }, error => console.log(error))
+    this.submitted = false;
   }
 
   grupoSuccess = (res) => {
     this.toastr.clear();
-
     this.encargado2 = false;
-    
+
     if (res.body.success == false) {
       this.toastr.error(res.body.error.message, 'Error', { timeOut: 5000 });
       console.log("Error");
@@ -177,6 +161,5 @@ export class ConsultarGrupoComponent implements OnInit {
   }
 
 
-
-
 }
+

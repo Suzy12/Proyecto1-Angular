@@ -4,7 +4,16 @@
         <div class="col">
             <!--Container Consultar Zona-->
             <div class="container card__container my-5 shadow-sm rounded">
-                <h2 class="text-center" id="title">Consultar una Zona</h2>
+                <h2 class="text-center" id="title">Consultar zona a la que pertenezco</h2>
+                <p class="text-center">
+                    <small id="passwordHelpInline" class="text-muted"> Para agregar un miembro a un grupo, debe escribir
+                        el
+                        número de cédula
+                        del miembro.
+                        Si el miembro es parte del movimiento, se mostrarán las ramas disponibles
+                        para el miembro (ramas a las que no pertence) y
+                        los grupos de cada rama. </small>
+                </p>
                 <hr>
                 <div class="center">
                     <!--Form Consultar Zona-->
@@ -12,7 +21,8 @@
                         <div class="form-group">
                             <label for="">Seleccione el nombre de la zona </label>
                             <select required class="form-control" formControlName="idZona">
-                                <option *ngFor="let zona of zonas_leader; let i = index" [value]="zonas_leader[i].id_zona">
+                                <option *ngFor="let zona of zonas_leader; let i = index"
+                                    [value]="zonas_leader[i].id_zona">
                                     {{zonas_leader[i].nombre}}
                                 </option>
                             </select>
@@ -21,34 +31,129 @@
                         <div class="center">
                             <button type="submit" class="btn btn-secondary center">Consultar Zona</button>
                         </div>
+                        <hr>
+                        <div class="my-2"></div>
+                        <p *ngIf="encargado1">Primer jefe de la zona</p>
+                        <div class="container-jefes" *ngIf="encargado1">
+                            <div class="card-profile-image center">
+                                <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                                    class="rounded-circle">
+                            </div>
+                            <p class="text-center"> {{encargado1.nombre}}
+                            </p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Número de Cédula</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-id-card"></i>
+                                            {{encargado1.id}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Número de Celular</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-phone"></i>
+                                            {{encargado1.celular}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Correo Electrónico</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-at"></i>
+                                            {{encargado1.email}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End of container-->
+                        <!--Container Encargado 2-->
+                        <div class="my-2"></div>
+                        <p *ngIf="encargado2">Segundo jefe de la zona</p>
+                        <div class="container-jefes" *ngIf="encargado2">
+                            <div class="card-profile-image center">
+                                <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                                    class="rounded-circle">
+                            </div>
+                            <p class="text-center"> {{encargado2.nombre}}
+                            </p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Número de Cédula</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-id-card"></i>
+                                            {{encargado2.id}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Número de Celular</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-phone"></i>
+                                            {{encargado2.celular}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Correo Electrónico</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-at"></i>
+                                            {{encargado2.email}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End of Container-->
                         <div class="col-sm">
                             <p></p>
                             <table mdbTable class="fixed_headers" striped="true">
                                 <thead>
                                     <tr>
-                                      <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+                                        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
                                     </tr>
-                                  </thead>
-                                  <tbody>
-                                <tr *ngFor="let mem of membersZ">
-                                    <td>{{mem.nombre}}</td>
-                                    <td>{{mem.senas}}</td>
-                                    <td>{{mem.email}}</td>
-                                    <td>{{mem.celular}}</td>
-                                </tr>
-                            </tbody>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let mem of membersZ">
+                                        <td>{{mem.nombre}}</td>
+                                        <td>{{mem.id}}</td>
+                                        <td>{{mem.celular}}</td>
+                                        <td>{{mem.email}}</td>
+                                        <td>{{mem.provincia}}, {{mem.canton}}, {{mem.distrito}}, {{mem.senas}}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </form>
                     <!--End of Form-->
                 </div>
+                <hr>
             </div>
             <!--End of Container-->
         </div>
         <div class="col">
             <!--Container Consular Rama-->
             <div class="container card__container my-5 shadow-sm rounded">
-                <h2 class="text-center" id="title">Consultar una Rama</h2>
+                <h2 class="text-center" id="title">Consultar rama a la que pertenezco</h2>
+                <p class="text-center">
+                    <small id="passwordHelpInline" class="text-muted"> Para agregar un miembro a un grupo, debe escribir
+                        el
+                        número de cédula
+                        del miembro.
+                        Si el miembro es parte del movimiento, se mostrarán las ramas disponibles
+                        para el miembro (ramas a las que no pertence) y
+                        los grupos de cada rama. </small>
+                </p>
                 <hr>
                 <div class="center">
                     <!--Form Consultar Rama-->
@@ -56,7 +161,8 @@
                         <div class="form-group">
                             <label for="">Seleccione el nombre de la zona</label>
                             <div class="my-2"></div>
-                            <select required class="form-control" formControlName="idZona" (change)="getRamas($event.target.value)">
+                            <select required class="form-control" formControlName="idZona"
+                                (change)="getRamas($event.target.value)">
                                 <option *ngFor="let zona of zonas; let i = index" [value]="zonas[i].id_zona">
                                     {{zonas[i].nombre}}
                                 </option>
@@ -73,27 +179,114 @@
                         <div class="center">
                             <button type="submit" class="btn btn-secondary center">Consultar Rama</button>
                         </div>
+                        <hr>
+                        <!--Container Encargado 1-->
+                        <div class="my-2"></div>
+                        <p *ngIf="encargado1Rama">Primer jefe de la rama</p>
+                        <div class="container-jefes" *ngIf="encargado1Rama">
+                            <div class="card-profile-image center">
+                                <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                                    class="rounded-circle">
+                            </div>
+                            <p class="text-center"> {{encargado1Rama.nombre}}
+                            </p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Número de Cédula</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-id-card"></i>
+                                            {{encargado1Rama.id}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Número de Celular</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-phone"></i>
+                                            {{encargado1Rama.celular}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Correo Electrónico</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-at"></i>
+                                            {{encargado1Rama.email}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End of container-->
+                        <!--Container Encargado 2-->
+                        <div class="my-2"></div>
+                        <p *ngIf="encargado2Rama">Segundo jefe de la rama</p>
+                        <div class="container-jefes" *ngIf="encargado2Rama">
+                            <div class="card-profile-image center">
+                                <img src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                                    class="rounded-circle">
+                            </div>
+                            <p class="text-center"> {{encargado2Rama.nombre}}
+                            </p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Número de Cédula</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-id-card"></i>
+                                            {{encargado2Rama.id}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Número de Celular</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-phone"></i>
+                                            {{encargado2Rama.celular}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div>
+                                        <p>Correo Electrónico</p>
+                                        <p class="text-secondary">
+                                            <i class="fa fa-at"></i>
+                                            {{encargado2Rama.email}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End of Container-->
                         <div class="col-sm">
                             <p></p>
                             <table mdbTable class="fixed_headers" striped="true">
                                 <thead>
                                     <tr>
-                                      <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+                                        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
                                     </tr>
-                                  </thead>
-                                  <tbody>
-                                <tr *ngFor="let mem of membersR">
-                                    <td>{{mem.nombre}}</td>
-                                    <td>{{mem.senas}}</td>
-                                    <td>{{mem.email}}</td>
-                                    <td>{{mem.celular}}</td>
-                                </tr>
-                            </tbody>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let mem of membersR">
+                                        <td>{{mem.nombre}}</td>
+                                        <td>{{mem.id}}</td>
+                                        <td>{{mem.celular}}</td>
+                                        <td>{{mem.email}}</td>
+                                        <td>{{mem.provincia}}, {{mem.canton}}, {{mem.distrito}}, {{mem.senas}}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </form>
                     <!--End of Form-->
                 </div>
+                <hr>
             </div>
             <!--End of Container-->
         </div>

@@ -34,9 +34,6 @@ export class ConsultarInfoMiembroComponent implements OnInit {
         Object.values(this.gruposMiembro).forEach((element, index) => {
           let grupo: any = element;
           this.getNombreZona(grupo.id_zona + "", index); //Get la zona del grupo actual
-        });
-        Object.values(this.gruposMiembro).forEach((element, index) => {
-          let grupo: any = element;
           this.getNombreRama(grupo.id_zona + "", grupo.id_rama + "", index); //get la rama del grupo actual
         });
       }

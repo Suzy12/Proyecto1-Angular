@@ -8,15 +8,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class = "navbar-nav ml-auto d-flex justify-content-end notifications">
           <div class="dropdown">
-            <a class="dropbtn">
+            <a class="dropbtn" href = "/consultar/notificaciones">
               <i class="fa fa-bell"></i>
-              <span class="badge badge-pill badge-warning notification">5</span>
+              <span class="badge badge-pill badge-danger notification">{{this.storage.get('current-user-notifications')}}</span>
             </a>
-            <div class="dropdown-content">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
-            </div>
           </div>
         </ul>
         <ul class="navbar-nav d-flex justify-content-end">
