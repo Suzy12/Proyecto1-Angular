@@ -31,6 +31,7 @@ import { ComposicionRamaZonaComponent } from './components/consultar/composicion
 import { VerNotificacionesComponent } from './components/consultar/ver-notificaciones/ver-notificaciones.component'
 import { VerComposicionMisGruposComponent } from './components/consultar/ver-composicion-mis-grupos/ver-composicion-mis-grupos.component'
 import { VerComposicionMisGruposLiderComponent } from './components/consultar/ver-composicion-mis-grupos-lider/ver-composicion-mis-grupos-lider.component'
+import { VerAportesComponent } from './components/consultar/ver-aportes/ver-aportes.component';
 
 //Modificar
 import { ModificarGrupoComponent } from './components/modificar/modificar-grupo/modificar-grupo.component'
@@ -44,6 +45,7 @@ import { RegistrarMovimientoComponent } from "./components/registrar/registrar-m
 import { RegistrarMiembroComponent } from "./components/registrar/registrar-miembro/registrar-miembro.component"
 
 import { RoleGuard } from './services/login/role.guard'
+import { CrearReporteComponent } from './components/crear/crear-reporte/crear-reporte.component';
 
 
 const routes: Routes = [
@@ -65,6 +67,7 @@ const routes: Routes = [
       { path: 'miembro', component: CrearMiembroComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'zona-rama', component: CrearZonaRamaComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'noticia', component: CrearNoticiaComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'reporte', component: CrearReporteComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
     ]
   },
   {
@@ -80,7 +83,8 @@ const routes: Routes = [
       { path: 'composicion-rama-zona', component: ComposicionRamaZonaComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'composicion-grupos-lider', component: VerComposicionMisGruposLiderComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'composicion-grupos', component: VerComposicionMisGruposComponent },
-      { path: 'notificaciones', component: VerNotificacionesComponent }
+      { path: 'notificaciones', component: VerNotificacionesComponent },
+      { path: 'aportes', component: VerAportesComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} }
     ]
   },
   {

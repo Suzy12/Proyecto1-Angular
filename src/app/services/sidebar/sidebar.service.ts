@@ -111,7 +111,12 @@ export class SidebarService {
           rol: '1'
         },
         {
-          title: 'Consultar mis notificaciones',
+          title: 'Consultar mis aportes',
+          ruta: 'consultar/aportes',
+          rol: '5'
+        },
+        {
+          title: 'Consultar mis noticias',
           ruta: 'consultar/notificaciones',
           rol: '1'
         },
@@ -169,10 +174,10 @@ export class SidebarService {
     },
     {
       title: 'Descargar bandeja de aportes',
-      icon: 'fa fa-undo',
+      icon: 'fa fa-trash',
       active: false,
       type: 'simple',
-      ruta: 'descargar-bandeja',
+      ruta: 'consultar/aportes',
       rol: '5'
     },
   ];

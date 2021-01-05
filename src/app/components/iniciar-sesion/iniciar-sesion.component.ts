@@ -18,6 +18,7 @@ export class IniciarSesionComponent implements OnInit {
   loginForm: FormGroup;
   submitted: Boolean = false;
   movimientos = [];
+  countNotificaciones = 0;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -97,30 +98,44 @@ export class IniciarSesionComponent implements OnInit {
       this.loginForm.reset();
 
       this.storage.set('current-user-notifications', 0);
-      let rol = this.storage.get('current-user-role');
-      if (rol === "6") {
-        this.noticiasService.consultarNoticiaAsesor(loginInfo.idMovimiento, loginInfo.id).subscribe(
-          res => {
-            this.response(res);
-          },
-          err => console.log(err)
-        );
+      this.notificaciones(loginInfo);
 
-      } else {
-        this.noticiasService.consultarNoticia(loginInfo.idMovimiento, loginInfo.id).subscribe(
-          res => {
-            this.response(res);
-          },
-          err => console.log(err)
-        );
-      }
 
       this.router.navigate(['/perfil']); //navegar a la pagina de perfil 
     }
   }
 
+
+  notificaciones(loginInfo) {
+    let rol = this.storage.get('current-user-role');
+    if (rol == "6") {
+      this.noticiasService.consultarNoticiaAsesor(loginInfo.idMovimiento, loginInfo.id)
+        .toPromise()
+        .then(
+          res => { // Success
+            this.response(res);
+            this.storage.set('current-user-notifications', this.countNotificaciones);
+          },
+          msg => {
+            console.log(msg);
+          }
+        );
+    } else {
+      this.noticiasService.consultarNoticia(loginInfo.idMovimiento, loginInfo.id)
+        .toPromise()
+        .then(
+          res => { // Success
+            this.response(res);
+            this.storage.set('current-user-notifications', this.countNotificaciones);
+          },
+          msg => {
+            console.log(msg);
+          }
+        );
+    }
+  }
+
   response(res) {
-    let countNotificaciones = 0;
     let noticiasTemp: any = res.body;
     if (noticiasTemp.success == false) {
       this.toastr.error(noticiasTemp.error.message, 'Error', { timeOut: 5000 });
@@ -132,9 +147,8 @@ export class IniciarSesionComponent implements OnInit {
           console.log(e);
           let noticia: any = e;
           if (!noticia.leido) {
-            countNotificaciones += 1;
-            console.log(countNotificaciones);
-            this.storage.set('current-user-notifications', countNotificaciones);
+            this.countNotificaciones += 1;
+            console.log(this.countNotificaciones);
           }
         })
       });

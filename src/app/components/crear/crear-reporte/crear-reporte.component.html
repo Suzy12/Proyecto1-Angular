@@ -1,0 +1,51 @@
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="container">
+            <h2 class="text-center" id="title">Generar resportes mensuales de aportes</h2>
+            <p class="text-center">
+                <small id="passwordHelpInline" class="text-muted"> Para crear el reporte mensual
+                    debe escoger el tipo de reporte:
+                    <b>Reporte General: </b> Cantidad total de aportes. Por ejemplo: "En el mes de noviembre se
+                    recibieron 4000 aportes".
+                    <b>Reporte por Tipo de Aporte: </b> Cantidad total de aportes por tipo de aporte. Por ejemplo: "En
+                    el
+                    mes de noviembre se recibieron 1500 aportes de petitoria, 1800 de agradecimiento y 700 aportes
+                    de ofrecimiento". </small>
+            </p>
+            <hr>
+            <label> Tipo de Reporte: </label>
+            <!--Form Crear Reporte-->
+            <form [formGroup]="crearForm" (ngSubmit)="crearReporte()" novalidate>
+                <div class="form-group">
+                    <div class="row">
+
+                        <!--Generar Reporte General-->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="tipo" value="checkGeneral"
+                                    checked>
+                                <label class="form-check-label">Reporte General</label>
+                            </div>
+                        </div>
+
+                        <!--Generar Reporte Por Tipo de Aporte  -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" formControlName="tipo" value="checkPorTipo"
+                                    checked>
+                                <label class="form-check-label">Reporte por Tipo de Aporte</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="center">
+                    <button type="submit" class="btn btn-secondary center">Crear Reporte</button>
+                </div>
+            </form>
+            <!--End of Form-->
+            <div class="my-4"></div>
+        </div>
+    </div>
+</div>

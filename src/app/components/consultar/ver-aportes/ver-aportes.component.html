@@ -4,11 +4,39 @@
         <nav>
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link"><i class="fa fa-bell"></i> Noticias <span class="badge badge-danger">{{this.storage.get('current-user-notifications')}}</span></a>
+                    <a class="nav-link"><i class="fa fa-inbox"></i> Aportes <span
+                            class="badge badge-danger">{{this.storage.get('current-user-notifications')}}</span></a>
                 </li>
             </ul>
         </nav>
         <main class="inbox">
+            <div class="toolbar">
+                <div class="btn-group">
+                    <button type="button" (click) = "crearReporte()" class="btn btn-light">
+                        <span class="fa fa-plus-square"></span>
+                        <label class="ml-3">Crear Reporte</label>
+                    </button>
+                </div>
+                <button type="button" class="btn btn-light" (click)="openConfirmationDialog(descargar)">
+                    <span class="fa fa-trash-o"></span>
+                    <label class="ml-3">Descargar Bandeja</label>
+                </button>
+                <ng-template #descargar let-modal mw-500>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Descargar Bandeja de Aportes</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Está seguro que desea vaciar la bandeja de aportes del presente mes?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" (click)="modal.dismiss('Cross click')">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="accept()">Continuar</button>
+                    </div>
+                </ng-template>
+            </div>
             <ul class="messages" *ngFor="let noticia of noticias; let i = index" [value]="noticias[i].id_noticia">
                 <li [ngClass]="getClass(i)" (click)="openScrollableContent(longContent, i)">
                     <a>
@@ -43,22 +71,26 @@
                         <div class="modal-body">
                             <div class="card-body">
                                 <div class="media">
-                                    <img class="mr-3 rounded-circle img-thumbnail thumb-lg" src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png" alt="Generic placeholder image" />
+                                    <img class="mr-3 rounded-circle img-thumbnail thumb-lg"
+                                        src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
+                                        alt="Generic placeholder image" />
                                     <div class="media-body">
                                         <h5 class="mt-0 font-18 mb-1">{{noticias[i].id_miembro}}</h5>
-                                        <p class="text-muted font-14"><ins>Zona:</ins> {{noticias[i].id_zona}}, <ins>Rama:</ins> {{noticias[i].id_rama}}
-                                            <ins>Grupo: </ins> {{noticias[i].id_grupo}}</p>
+                                        <p class="text-muted font-14"><ins>Zona:</ins> {{noticias[i].id_zona}},
+                                            <ins>Rama:</ins> {{noticias[i].id_rama}}
+                                            <ins>Grupo: </ins> {{noticias[i].id_grupo}}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="my-2"></div>
-                            <div class = "ml-3">
+                            <div class="ml-3">
                                 <b>
-                                <span class="action"><i class="fa fa-envelope-o"></i></span>
-                                {{noticias[i].nombre}}
+                                    <span class="action"><i class="fa fa-envelope-o"></i></span>
+                                    {{noticias[i].nombre}}
                                 </b>
                             </div>
-                            <p class = "ml-3"> {{noticias[i].contenido}}</p>
+                            <p class="ml-3"> {{noticias[i].contenido}}</p>
                             <hr>
                             <ngb-carousel *ngIf="noticias[i].imagenes[0]">
                                 <ng-template ngbSlide *ngFor="let imagen of noticias[i].imagenes">

@@ -9,14 +9,12 @@ import { ZonaService } from '../../../services/zonas/zona.service'
 import { RamaService } from '../../../services/ramas/rama.service'
 import { GrupoService } from '../../../services/grupos/grupo.service'
 
-
 @Component({
-  selector: 'app-ver-notificaciones',
-  templateUrl: './ver-notificaciones.component.html',
-  styleUrls: ['./ver-notificaciones.component.scss'],
-
+  selector: 'app-ver-aportes',
+  templateUrl: './ver-aportes.component.html',
+  styleUrls: ['./ver-aportes.component.scss']
 })
-export class VerNotificacionesComponent implements OnInit {
+export class VerAportesComponent implements OnInit {
 
   closeResult: string;
   noticias = [];
@@ -165,6 +163,10 @@ export class VerNotificacionesComponent implements OnInit {
     }
   }
 
+  crearReporte(){
+    this.router.navigate(['/crear/reporte']);
+  }
+
   /* --------------------------------------------- */
   /* Modal Notificaciones */
 
@@ -194,6 +196,15 @@ export class VerNotificacionesComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  public openConfirmationDialog(descargar) {
+    this.modalService.open(descargar, { centered: true });
+  }
+
+  public accept() {
+    console.log("ACEPTADO");
+    this.modalService.dismissAll();
   }
 
 }

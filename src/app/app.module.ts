@@ -58,6 +58,8 @@ import { ConsultarPerfilComponent } from './components/perfil/consultar-perfil/c
 import { RegistrarMiembroComponent } from './components/registrar/registrar-miembro/registrar-miembro.component';
 import { VerPuestosComponent } from './components/consultar/ver-puestos/ver-puestos.component';
 import { ComposicionRamaZonaComponent } from './components/consultar/composicion-rama-zona/composicion-rama-zona.component';
+import { VerAportesComponent } from './components/consultar/ver-aportes/ver-aportes.component';
+import { CrearReporteComponent } from './components/crear/crear-reporte/crear-reporte.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -97,7 +99,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CrearNoticiaComponent,
     VerNotificacionesComponent,
     VerComposicionMisGruposComponent,
-    VerComposicionMisGruposLiderComponent
+    VerComposicionMisGruposLiderComponent,
+    VerAportesComponent,
+    CrearReporteComponent
   ],
   imports: [
     BrowserModule,

@@ -8,13 +8,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class = "navbar-nav ml-auto d-flex justify-content-end notifications">
           <div class="dropdown">
-            <a class="dropbtn" href = "/consultar/notificaciones">
-              <i class="fa fa-bell"></i>
-              <span class="badge badge-pill badge-danger notification">{{this.storage.get('current-user-notifications')}}</span>
+            <a class="dropbtn" href = "/consultar/aportes">
+              <i class="fa fa-inbox"></i>
+              <span class="badge badge-pill badge-warning notification">{{this.storage.get('current-user-notifications')}}</span>
+              <label class="notifications">Aportes</label>
             </a>
           </div>
         </ul>
-        <ul class="navbar-nav d-flex justify-content-end">
+        <ul class = "navbar-nav d-flex justify-content-end notifications">
+          <div class="dropdown">
+            <a class="dropbtn" href = "/consultar/notificaciones">
+              <i class="fa fa-bell"></i>
+              <span class="badge badge-pill badge-danger notification">{{this.storage.get('current-user-notifications')}}</span>
+              <label class="notifications">Noticias</label>
+            </a>
+          </div>
+        </ul>
+        <ul class="navbar-nav d-flex justify-content-end  notifications">
           <a href="#" class="nav-item active nav-link">Cerrar Sesión</a>
         </ul>
       </div>

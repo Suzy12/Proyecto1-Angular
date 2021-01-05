@@ -7,7 +7,6 @@ import { ZonaService } from '../../../services/zonas/zona.service';
 import { RamaService } from '../../../services/ramas/rama.service';
 import { GrupoService } from '../../../services/grupos/grupo.service';
 import { NoticiasService } from '../../../services/noticias/noticias.service';
-import { nodeModuleNameResolver } from 'typescript';
 
 @Component({
   selector: 'app-crear-noticia',
@@ -168,6 +167,8 @@ export class CrearNoticiaComponent implements OnInit {
         } else {
           this.toastr.success("La solicitud se realizó con éxito", 'Noticia Creada', { timeOut: 5000 });
           console.log("Éxito");
+          this.crearForm.reset();
+          this.urls = [];
         }
       },
       err => console.log(err)
