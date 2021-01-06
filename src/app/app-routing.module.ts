@@ -19,6 +19,7 @@ import { CrearGrupoComponent } from './components/crear/crear-grupo/crear-grupo.
 import { CrearMiembroComponent } from './components/crear/crear-miembro/crear-miembro.component'
 import { CrearZonaRamaComponent } from './components/crear/crear-zona-rama/crear-zona-rama.component'
 import { CrearNoticiaComponent } from './components/crear/crear-noticia/crear-noticia.component';
+import { AporteComponent} from './components/crear/aporte/aporte.component'
 
 //Consultar
 import { BuscarMiembroComponent } from './components/consultar/buscar-miembro/buscar-miembro.component'
@@ -68,6 +69,7 @@ const routes: Routes = [
       { path: 'zona-rama', component: CrearZonaRamaComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'noticia', component: CrearNoticiaComponent, canActivate: [RoleGuard], data: { allowedRoles: [2,3,4,5,6], redirectTo: '/perfil', key: 'current-user-role'} },
       { path: 'reporte', component: CrearReporteComponent, canActivate: [RoleGuard], data: { allowedRoles: [5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
+      { path: 'aporte', component: AporteComponent, canActivate: [RoleGuard], data: { allowedRoles: [1, 2, 3, 4, 5, 6], redirectTo: '/perfil', key: 'current-user-role'} },
     ]
   },
   {

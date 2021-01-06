@@ -60,6 +60,7 @@ import { VerPuestosComponent } from './components/consultar/ver-puestos/ver-pues
 import { ComposicionRamaZonaComponent } from './components/consultar/composicion-rama-zona/composicion-rama-zona.component';
 import { VerAportesComponent } from './components/consultar/ver-aportes/ver-aportes.component';
 import { CrearReporteComponent } from './components/crear/crear-reporte/crear-reporte.component';
+import { AporteComponent } from './components/crear/aporte/aporte.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -101,7 +102,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VerComposicionMisGruposComponent,
     VerComposicionMisGruposLiderComponent,
     VerAportesComponent,
-    CrearReporteComponent
+    CrearReporteComponent,
+    AporteComponent
   ],
   imports: [
     BrowserModule,

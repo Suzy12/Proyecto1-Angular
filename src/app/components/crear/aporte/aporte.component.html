@@ -1,0 +1,41 @@
+<app-nav-menu></app-nav-menu>
+<div class="container-fluid">
+    <div class="container card__container my-5 shadow-sm w-100 rounded">
+        <div class="container">
+            <h2 class="text-center" id="title">Crear un aporte</h2> 
+
+                 <!--Form Crear Zona-->
+                 <form [formGroup]="aporteForm" (ngSubmit)="submitAporte()" novalidate>
+                    <div class="form-group">
+                        <label for="">Seleccione el tipo de aporte </label>
+                        <select required class="form-control" formControlName="tipo">
+                            <option *ngFor="let zona of tipos_aportes; let i = index"
+                                [value]="tipos_aportes[i]">
+                                {{tipos_aportes[i]}}
+                            </option>
+                        </select>
+                        <label for="">Mensaje del aporte </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                            </div>
+                            <input type="text" class="form-control" placeholder="Mensaje" required="required"
+                                formControlName="contenido"
+                                [ngClass]="{ 'is-invalid': submitted && form.contenido.errors }">
+                            <div *ngIf="submitted && form.nombre.errors" class="invalid-feedback">
+                                <div *ngIf="form.nombre.errors.required">
+                                    <label class="font-weight-bold"><i class="fa fa-exclamation-circle"></i> El
+                                        campo de nombre de la zona es obligatorio</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="separacion">
+                    <div class="center">
+                        <button type="submit" class="btn btn-secondary center">Enviar aporte</button>
+                    </div>
+                </form>
+                <!--End of Form-->
+            <hr>
+        </div>
+    </div>
+</div>
