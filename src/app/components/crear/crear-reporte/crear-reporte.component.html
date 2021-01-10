@@ -16,7 +16,7 @@
             <hr>
             <label> Tipo de Reporte: </label>
             <!--Form Crear Reporte-->
-            <form [formGroup]="crearForm" (ngSubmit)="crearReporte()" novalidate>
+            <form [formGroup]="crearForm" (ngSubmit)="openConfirmationDialog(confirmar)" novalidate>
                 <div class="form-group">
                     <div class="row">
 
@@ -43,6 +43,22 @@
                 <div class="center">
                     <button type="submit" class="btn btn-secondary center">Crear Reporte</button>
                 </div>
+                <ng-template #confirmar let-modal mw-500>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Crear Reporte</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Una vez que se crea el reporte, este se enviará automáticamente a todo el movimiento como 
+                        una noticia. 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" (click)="modal.dismiss('Cross click')">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="accept()">Continuar</button>
+                    </div>
+                </ng-template>
             </form>
             <!--End of Form-->
             <div class="my-4"></div>

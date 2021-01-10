@@ -3,7 +3,6 @@
     flex-direction: row;
     background: #fff;
     border: 1px solid #e1e6ef;
-
 }
 
 .email-app nav {
@@ -221,8 +220,7 @@
 }
 
 ::ng-deep .modal-header,
-::ng-deep .modal-footer
-{
+::ng-deep .modal-footer {
     background-color: #f9f9f9;
 }
 
@@ -237,5 +235,113 @@
 .m-b-30 {
     margin-bottom: 30px;
 }
+
 //Reference: https://www.bootdey.com/snippets/view/bs4-beta-email-inbox
 //Reference: https://www.bootdey.com/snippets/view/contact-directory
+//Reference: https://www.bootdey.com/snippets/view/bs4-email-app
+
+.email-app .email-desc-wrapper {
+    width: 40%;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -ms-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+}
+
+.email-app .email-desc-wrapper .email-header {
+    margin-bottom: 1.5rem;
+}
+
+.email-app .email-desc-wrapper .email-header .email-date {
+    color: #727686;
+    font-size: 13px;
+    margin-bottom: 0.5rem;
+}
+
+.email-app .email-desc-wrapper .email-header .email-subject {
+    color: #394044;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    flex-shrink: 0;
+}
+
+.email-app .email-desc-wrapper .email-header .recipient {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1;
+    color: #727686;
+}
+
+.email-app .email-desc-wrapper .email-header .recipient span {
+    font-weight: 500;
+    color: #394044;
+}
+
+.email-app .email-desc-wrapper .email-body {
+    min-height: 350px;
+    color: #727686;
+    margin-bottom: 2rem;
+}
+
+.email-app .email-desc-wrapper .email-body p {
+    font-size: 13px;
+    margin-bottom: 1rem;
+    line-height: 2;
+}
+
+.email-app .email-desc-wrapper .email-action .btn,
+.email-app .email-desc-wrapper .email-action .wizard > .actions a,
+.wizard > .actions .email-app .email-desc-wrapper .email-action a,
+.email-app .email-desc-wrapper .email-action .fc button,
+.fc .email-app .email-desc-wrapper .email-action button {
+    margin-right: 0.7rem;
+}
+
+.email-app .email-desc-wrapper .email-action .btn:first-child i,
+.email-app .email-desc-wrapper .email-action .wizard > .actions a:first-child i,
+.wizard > .actions .email-app .email-desc-wrapper .email-action a:first-child i,
+.email-app .email-desc-wrapper .email-action .fc button:first-child i,
+.fc .email-app .email-desc-wrapper .email-action button:first-child i {
+    font-size: 13px;
+    margin-left: 0.5rem;
+}
+
+.email-app .email-desc-wrapper .email-action .btn:last-child i,
+.email-app .email-desc-wrapper .email-action .wizard > .actions a:last-child i,
+.wizard > .actions .email-app .email-desc-wrapper .email-action a:last-child i,
+.email-app .email-desc-wrapper .email-action .fc button:last-child i,
+.fc .email-app .email-desc-wrapper .email-action button:last-child i {
+    font-size: 13px;
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 575px) {
+    .email-app .email-toolbars-wrapper,
+    .email-app .email-desc-wrapper {
+        display: none;
+    }
+    .email-app .email-list-wrapper {
+        display:none;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+    .email-app .email-toolbars-wrapper {
+        display: none;
+    }
+    .email-app .email-desc-wrapper {
+        display: none;
+    }
+    .email-app .email-list-wrapper {
+        display: none;
+    }
+}
+
+.img-wrapper {
+    object-fit: contain;
+}

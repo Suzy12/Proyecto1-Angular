@@ -5,7 +5,7 @@
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link"><i class="fa fa-inbox"></i> Aportes <span
-                            class="badge badge-danger">{{this.storage.get('current-user-notifications')}}</span></a>
+                            class="badge badge-danger">{{this.aportes.length}}</span></a>
                 </li>
             </ul>
         </nav>
@@ -37,28 +37,24 @@
                     </div>
                 </ng-template>
             </div>
-            <ul class="messages" *ngFor="let noticia of noticias; let i = index" [value]="noticias[i].id_noticia">
-                <li [ngClass]="getClass(i)" (click)="openScrollableContent(longContent, i)">
+            <ul class="messages" *ngFor="let aporte of aportes; let i = index" [value]="aportes[i].id_aporte">
+                <li class = "message" (click)="openScrollableContent(longContent, i)">
                     <a>
                         <div class="actions">
                             <span class="action"><i class="fa fa-user-o"></i></span>
                             <span class="action"><i class="fa fa-envelope-o"></i></span>
                         </div>
                         <div class="header">
-                            <span class="from">{{noticias[i].id_miembro}}</span>
+                            <span class="from">{{aportes[i].nombreMiembro}} - {{aportes[i].id_emisor}}</span>
                             <span class="date">
-                                {{noticias[i].fecha_publicacion|date: "dd/MM/yyyy HH:mm:ss"}}
+                                {{aportes[i].fecha|date: "dd/MM/yyyy HH:mm:ss"}}
                             </span>
                         </div>
                         <div class="title">
-                            {{noticias[i].nombre}}
-                        </div>
-                        <div class="subtitle">
-                            <ins>Zona:</ins> {{noticias[i].id_zona}}, <ins>Rama:</ins> {{noticias[i].id_rama}}
-                            <ins>Grupo: </ins> {{noticias[i].id_grupo}}
+                            {{aportes[i].tipo}}
                         </div>
                         <div class="description">
-                            {{noticias[i].contenido}}
+                            {{aportes[i].contenido}}
                         </div>
                     </a>
                     <ng-template #longContent let-modal mw-500>
@@ -75,10 +71,8 @@
                                         src="https://isdalechiropractic.com/wp-content/uploads/2020/04/Gray-Circle.png"
                                         alt="Generic placeholder image" />
                                     <div class="media-body">
-                                        <h5 class="mt-0 font-18 mb-1">{{noticias[i].id_miembro}}</h5>
-                                        <p class="text-muted font-14"><ins>Zona:</ins> {{noticias[i].id_zona}},
-                                            <ins>Rama:</ins> {{noticias[i].id_rama}}
-                                            <ins>Grupo: </ins> {{noticias[i].id_grupo}}
+                                        <h5 class="mt-0 font-18 mb-1">{{aportes[i].nombreMiembro}}</h5>
+                                        <p class="text-muted font-14"><ins>Cédula:</ins> {{aportes[i].id_emisor}}
                                         </p>
                                     </div>
                                 </div>
@@ -87,22 +81,15 @@
                             <div class="ml-3">
                                 <b>
                                     <span class="action"><i class="fa fa-envelope-o"></i></span>
-                                    {{noticias[i].nombre}}
+                                    {{aportes[i].tipo}}
                                 </b>
                             </div>
-                            <p class="ml-3"> {{noticias[i].contenido}}</p>
+                            <p class="ml-3"> {{aportes[i].contenido}}</p>
                             <hr>
-                            <ngb-carousel *ngIf="noticias[i].imagenes[0]">
-                                <ng-template ngbSlide *ngFor="let imagen of noticias[i].imagenes">
-                                    <div class="picsum-img-wrapper d-flex justify-content-center">
-                                        <img src="{{imagen}}" height="400">
-                                    </div>
-                                </ng-template>
-                            </ngb-carousel>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light"
-                                (click)="modal.close('Close click')">Close</button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="modal.close('Close click')">Cerrar</button>
                         </div>
                     </ng-template>
                 </li>

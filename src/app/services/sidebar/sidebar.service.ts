@@ -196,33 +196,33 @@ export class SidebarService {
   }
 
   getMenuList(rol) {
-    if(rol >= "5"){
+    if (rol >= "5") {
       return this.menu;
     }
     return this.generarMenuxRol(rol);
   }
 
-  generarMenuxRol(rol){
+  generarMenuxRol(rol) {
     var menuRol: any = [];
     this.menu.forEach(element => {
       if (element.type === 'dropdown') {
         var submenu = [];
-        element.submenus.forEach( e => {
-          if(e.rol <= rol){
+        element.submenus.forEach(e => {
+          if (e.rol <= rol) {
             submenu.push(e);
             //console.log(e);
-          }    
+          }
         });
-        if(submenu.length > 0){
+        if (submenu.length > 0) {
           var nuevoElement = JSON.parse(JSON.stringify(element))
           nuevoElement.submenus = submenu;
           menuRol.push(nuevoElement);
-        }      
+        }
       } else {
-        if(element.rol <= rol){
+        if (element.rol <= rol) {
           console.log(element);
           menuRol.push(element);
-        } 
+        }
       }
     });
     console.log(menuRol);

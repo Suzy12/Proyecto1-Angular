@@ -33,6 +33,12 @@ export class NoticiasService {
     return this.http.post(this.noticiasUrl + '/leer-noticia', params, { observe: 'response' })
   }
 
+  public leerNoticiaAsesor = (idNoticia, idMiembro)  =>  {
+    let params = { idNoticia: idNoticia, idAsesor: idMiembro}
+    console.log(params);
+    return this.http.post(this.noticiasUrl + '/leer-noticia-asesor', params, { observe: 'response' })
+  }
+
   public getImagenesNoticia = (idNoticia)  =>  {
     let params = { idNoticia: idNoticia }
     console.log(params);

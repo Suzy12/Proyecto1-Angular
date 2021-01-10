@@ -22,6 +22,9 @@ export class VerNotificacionesComponent implements OnInit {
   noticias = [];
   movimiento = this.storage.get('current-user-movimiento');
   miembro = this.storage.get('current-user');
+  rol = this.storage.get('current-user-role');
+  noticiaActual: any = false;
+  notMiembro = true;
 
   constructor(
     private modalService: NgbModal,
@@ -36,11 +39,11 @@ export class VerNotificacionesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let rol = this.storage.get('current-user-role');
-    if (rol == "6") {
+    if(this.rol== "1") this.notMiembro = false;
+    if (this.rol == "6") {
       this.noticiasService.consultarNoticiaAsesor(this.movimiento, this.miembro).subscribe(
         res => {
-          this.response(res);        
+          this.response(res);
         },
         err => console.log(err)
       );
@@ -48,14 +51,14 @@ export class VerNotificacionesComponent implements OnInit {
     } else {
       this.noticiasService.consultarNoticia(this.movimiento, this.miembro).subscribe(
         res => {
-          this.response(res);       
+          this.response(res);
         },
         err => console.log(err)
       );
     }
   }
 
-  response(res){
+  response(res) {
     let noticiasTemp: any = res.body;
     if (noticiasTemp.success == false) {
       this.toastr.error(noticiasTemp.error.message, 'Error', { timeOut: 5000 });
@@ -70,32 +73,33 @@ export class VerNotificacionesComponent implements OnInit {
           this.getNombreRama(noticia.id_zona + "", noticia.id_rama + "", index);
           this.getNombreGrupo(noticia.id_zona + "", noticia.id_rama + "", noticia.id_grupo + "", index);
           this.getNombreMiembro(noticia.id_miembro, index);
-          this.getImagenesNoticia(noticia.id_noticia, index);
+          this.noticias[index].imagenes = false;
         })
       });
     }
   }
 
   getImagenesNoticia(idNoticia, i) {
-    this.noticiasService.getImagenesNoticia(idNoticia).subscribe(
-      res => {
-        let imagenesTemp: any = res.body;
-        if (imagenesTemp.success == false) {
-          this.toastr.error(imagenesTemp.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
-          console.log(imagenesTemp);
-          let images = [];
-          Object.values(imagenesTemp.imagenes).forEach(e => {
-            let img: any = e;
-            images.push(img.imagen);
-          })
-          this.noticias[i].imagenes = images;
-          console.log(this.noticias[i]);
+    this.noticiasService.getImagenesNoticia(idNoticia)
+      .toPromise()
+      .then(
+        res => { // Success
+          let imagenesTemp: any = res.body;
+          if (imagenesTemp.success == true && imagenesTemp.imagenes.length > 0) {
+            console.log(imagenesTemp);
+            let images = [];
+            Object.values(imagenesTemp.imagenes).forEach(e => {
+              let img: any = e;
+              images.push(img.imagen);
+            })
+            this.noticias[i].imagenes = images;
+            console.log(this.noticias[i]);
+          }
+        },
+        msg => {
+          console.log(msg);
         }
-      },
-      err => console.log(err)
-    );
+      );
 
   }
 
@@ -104,10 +108,7 @@ export class VerNotificacionesComponent implements OnInit {
     this.zonaService.getUnaZona(this.movimiento, zona).subscribe(
       res => {
         let zonaTemp: any = res.body;
-        if (zonaTemp.success == false) {
-          this.toastr.error(zonaTemp.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
+        if (zonaTemp.success == true) {
           let zonaResult = zonaTemp.zona;
           this.noticias[i].id_zona = zonaResult.nombre;
         }
@@ -120,10 +121,7 @@ export class VerNotificacionesComponent implements OnInit {
     this.ramaService.getUnaRama(this.movimiento, zona, rama).subscribe(
       res => {
         let ramaTemp: any = res.body;
-        if (ramaTemp.success == false) {
-          this.toastr.error(ramaTemp.error.message, 'Error', { timeOut: 5000 });
-          console.log("Error");
-        } else {
+        if (ramaTemp.success == true) {
           let ramaResult = ramaTemp.rama;
           this.noticias[i].id_rama = ramaResult.nombre;
         }
@@ -137,10 +135,7 @@ export class VerNotificacionesComponent implements OnInit {
     this.grupoService.getUnGrupo(grupoInfo).subscribe(res => {
       console.log(res);
       let result: any = res.body;
-      if (result.success == false) {
-        this.toastr.error(result.error.message, 'Error', { timeOut: 5000 });
-        console.log("Error");
-      } else {
+      if (result.success == true) {
         let grupoTemp: any = result.grupo;
         this.noticias[i].id_grupo = grupoTemp.nombre;
       }
@@ -153,6 +148,7 @@ export class VerNotificacionesComponent implements OnInit {
         let usuarioTemp: any = res.body;
         if (usuarioTemp.success == true)
           this.noticias[i].id_miembro = usuarioTemp.miembro.nombre;
+          this.noticias[i].email = usuarioTemp.miembro.email;
       }
     );
   }
@@ -169,21 +165,34 @@ export class VerNotificacionesComponent implements OnInit {
   /* Modal Notificaciones */
 
   openScrollableContent(longContent, i) {
-    this.modalService.open(longContent, { centered: true, scrollable: true, size: 'lg' });
+    if(!this.noticias[i].imagenes) this.getImagenesNoticia(this.noticias[i].id_noticia, i);
+    this.noticiaActual = this.noticias[i];
     if (!this.noticias[i].leido) {
       this.noticias[i].leido = true;
       let count = this.storage.get('current-user-notifications');
-      this.noticiasService.leerNoticia(this.noticias[i].id_noticia, this.miembro).subscribe(
-        res => {
-          let response: any = res.body;
-          if (response.success == true) {
-            count--;
-            this.storage.set('current-user-notifications', count);
-            console.log(this.storage.get('current-user-notifications'));
+      if (this.rol == "6") {
+        this.noticiasService.leerNoticiaAsesor(this.noticias[i].id_noticia, this.miembro).subscribe(
+          res => {
+            let response: any = res.body;
+            if (response.success == true) {
+              count--;
+              this.storage.set('current-user-notifications', count);
+            }
           }
-        }
-      );
+        );
+      }else{
+        this.noticiasService.leerNoticia(this.noticias[i].id_noticia, this.miembro).subscribe(
+          res => {
+            let response: any = res.body;
+            if (response.success == true) {
+              count--;
+              this.storage.set('current-user-notifications', count);
+            }
+          }
+        );
+      }
     }
+    this.modalService.open(longContent, { centered: true, scrollable: true, size: 'lg' });
   }
 
   private getDismissReason(reason: any): string {
@@ -196,4 +205,7 @@ export class VerNotificacionesComponent implements OnInit {
     }
   }
 
+  goToCrearNoticia(){
+    this.router.navigate(['/crear/noticia']); //navegar a la pagina de perfil 
+  }
 }

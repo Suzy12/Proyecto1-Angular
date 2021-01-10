@@ -27,7 +27,7 @@ export class AporteComponent implements OnInit {
 
   ngOnInit(): void {
     this.aporteForm = this.formBuilder.group({
-      tipo: ['', [Validators.required]],
+      tipo: ['Petitoria', [Validators.required]],
       contenido: ['', [Validators.required]],
       idEmisor: this.ced,
       idMovimiento: this.movimiento
@@ -45,7 +45,11 @@ export class AporteComponent implements OnInit {
           console.log("Error");
       }
       else{
-        this.toastr.success("Aporte enviado");
+        this.toastr.success("La solicutd se realizó con éxito", "Aporte enviado");
+        this.aporteForm.reset();
+        this.aporteForm.controls['idMovimiento'].setValue(this.movimiento);
+        this.aporteForm.controls['idEmisor'].setValue(this.ced);
+        this.aporteForm.controls['tipo'].setValue('Petitoria');
       }
     })
   }

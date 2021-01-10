@@ -6,7 +6,6 @@ import { LoginService } from '../../services/login/login.service'
 import { LoginGuard } from '../../services/login/login.guard';
 import { MovimientoService } from '../../services/movimientos/movimiento.service'
 import { ToastrService } from 'ngx-toastr';
-import { NoticiasService } from '../../services/noticias/noticias.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -26,8 +25,7 @@ export class IniciarSesionComponent implements OnInit {
     private guard: LoginGuard,
     private movimientoService: MovimientoService,
     @Inject(SESSION_STORAGE) private storage: StorageService,
-    private toastr: ToastrService,
-    private noticiasService: NoticiasService
+    private toastr: ToastrService
   ) {
 
   }
@@ -98,60 +96,9 @@ export class IniciarSesionComponent implements OnInit {
       this.loginForm.reset();
 
       this.storage.set('current-user-notifications', 0);
-      this.notificaciones(loginInfo);
 
 
       this.router.navigate(['/perfil']); //navegar a la pagina de perfil 
-    }
-  }
-
-
-  notificaciones(loginInfo) {
-    let rol = this.storage.get('current-user-role');
-    if (rol == "6") {
-      this.noticiasService.consultarNoticiaAsesor(loginInfo.idMovimiento, loginInfo.id)
-        .toPromise()
-        .then(
-          res => { // Success
-            this.response(res);
-            this.storage.set('current-user-notifications', this.countNotificaciones);
-          },
-          msg => {
-            console.log(msg);
-          }
-        );
-    } else {
-      this.noticiasService.consultarNoticia(loginInfo.idMovimiento, loginInfo.id)
-        .toPromise()
-        .then(
-          res => { // Success
-            this.response(res);
-            this.storage.set('current-user-notifications', this.countNotificaciones);
-          },
-          msg => {
-            console.log(msg);
-          }
-        );
-    }
-  }
-
-  response(res) {
-    let noticiasTemp: any = res.body;
-    if (noticiasTemp.success == false) {
-      this.toastr.error(noticiasTemp.error.message, 'Error', { timeOut: 5000 });
-      console.log("Error");
-    } else {
-      console.log(noticiasTemp.noticias);
-      Object.values(noticiasTemp.noticias).forEach(element => {
-        Object.values(element).forEach(e => {
-          console.log(e);
-          let noticia: any = e;
-          if (!noticia.leido) {
-            this.countNotificaciones += 1;
-            console.log(this.countNotificaciones);
-          }
-        })
-      });
     }
   }
 
