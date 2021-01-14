@@ -32,6 +32,23 @@
                         </div>
                         <hr>
                         <div class="my-2"></div>
+                        <div class="row" *ngIf="encargado1">
+                            <div class="col-sm">
+                                <p>Nombre de la Zona</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-user"></i>
+                                    {{zona.nombre}}
+                                </p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Número de la Zona</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-id-card"></i>
+                                    {{zona.id}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="my-2"></div>
                         <p *ngIf="encargado1">Primer jefe de la zona</p>
                         <div class="container-jefes" *ngIf="encargado1">
                             <div class="card-profile-image center">
@@ -181,6 +198,23 @@
                             <button type="submit" class="btn btn-secondary center">Consultar Rama</button>
                         </div>
                         <hr>
+                        <div class="my-2"></div>
+                        <div class="row" *ngIf="encargado1Rama">
+                            <div class="col-sm">
+                                <p>Nombre de la Rama</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-user"></i>
+                                    {{rama.nombre}}
+                                </p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Número de la Rama</p>
+                                <p class="text-secondary">
+                                    <i class="fa fa-id-card"></i>
+                                    {{rama.id}}
+                                </p>
+                            </div>
+                        </div>
                         <!--Container Encargado 1-->
                         <div class="my-2"></div>
                         <p *ngIf="encargado1Rama">Primer jefe de la rama</p>

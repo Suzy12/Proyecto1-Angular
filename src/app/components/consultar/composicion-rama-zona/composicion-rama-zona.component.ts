@@ -179,10 +179,10 @@ export class ComposicionRamaZonaComponent implements OnInit {
       let ramaTemp: any = res.body.rama;
       this.rama = ramaTemp;
       if (this.rama.encargado1 != undefined) {
-        this.encargado1 = this.rama.encargado1;
+        this.encargado1Rama = this.rama.encargado1;
         this.consultarEncargado1Rama();
       } if (this.rama.encargado2 != undefined) {
-        this.encargado2 = this.rama.encargado2;
+        this.encargado2Rama = this.rama.encargado2;
         this.consultarEncargado2Rama();
       }
     }
@@ -190,7 +190,7 @@ export class ComposicionRamaZonaComponent implements OnInit {
 
   //=============Get informacion del encargado 1===============
   consultarEncargado1Rama() {
-    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado1Rama).subscribe(
       res => {
         let encargadoTemp: any = res.body;
         this.encargado1Rama = encargadoTemp.miembro;
@@ -200,7 +200,7 @@ export class ComposicionRamaZonaComponent implements OnInit {
 
   //=============Get Informacion del encargado 2===============
   consultarEncargado2Rama() {
-    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2).subscribe(
+    this.miembroService.getUnMiembroxID(this.movimiento, this.encargado2Rama).subscribe(
       res => {
         let encargadoTemp: any = res.body;
         this.encargado2Rama = encargadoTemp.miembro;

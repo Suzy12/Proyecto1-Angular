@@ -19,7 +19,7 @@
             <select required class="form-control" formControlName="idMovimiento" required="required"
               [ngClass]="{ 'is-invalid': submitted && form.idMovimiento.errors }">
               <option *ngFor="let movimiento of movimientos; let i = index" [value]="movimientos[i].id_movimiento">
-                {{movimientos[i].nombre}}
+                {{movimientos[i].nombre}} - {{movimientos[i].id_movimiento}}
               </option>
             </select>
             <div *ngIf="submitted && form.idMovimiento.errors" class="invalid-feedback">
